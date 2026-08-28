@@ -1,8 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
-
-const adminClient = () =>
-  createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
-// TODO(T5): replace inline client with `import { adminClient } from '@/lib/db'`
+import { adminClient } from '@/lib/db';
 
 async function main() {
   const sb = adminClient();
