@@ -1,0 +1,133 @@
+/* ==========================================================================
+   Five-state completion (Task 20) — refuse, error, loading, offline.
+   Tokens per Design.md §2/§4 (see app/globals.css). NEVER hardcode colors.
+
+   §0 discipline: the REFUSE surface is DELIBERATELY NEUTRAL — it uses only
+   `--refuse-*` and neutral role tokens. It must contain NO red (`--err-*`)
+   anywhere. The error card is the app's ONLY red surface.
+   ========================================================================== */
+
+/* ---- REFUSE: neutral gravity, zero red, no mascot ------------------------- */
+.refuse {
+  margin-top: var(--sp-5);
+  padding: var(--sp-6);
+  background: var(--refuse-bg);
+  border: 1px solid var(--refuse-brd);
+  border-radius: var(--r-md);
+  text-align: center;
+}
+.refuseH {
+  margin: 0;
+  font-size: var(--fs-h2);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text);
+}
+.refuseSub {
+  margin: var(--sp-3) auto 0;
+  max-width: 46ch;
+  font-size: var(--fs-read);
+  color: var(--refuse-fg);
+}
+.refuseMeta {
+  margin: var(--sp-4) 0 0;
+  font-size: var(--fs-caption);
+  color: var(--text-muted);
+}
+.refuseActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  justify-content: center;
+  margin-top: var(--sp-5);
+}
+.quietBtn {
+  min-height: 44px;
+  padding-inline: var(--sp-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--text);
+  font-size: var(--fs-body);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 120ms var(--ease-standard), border-color 120ms var(--ease-standard);
+}
+.quietBtn:hover { background: var(--accent-weak); border-color: var(--accent); }
+
+/* ---- ERROR: the app's ONLY red surface ------------------------------------ */
+.error {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  margin-top: var(--sp-5);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--err-bg);
+  border: 1px solid var(--err-fg);
+  border-radius: var(--r-md);
+  color: var(--err-fg);
+}
+.errorMsg { margin: 0; flex: 1 1 12ch; font-weight: 500; color: var(--err-fg); }
+.errorBtn {
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding-inline: var(--sp-5);
+  border: 0;
+  border-radius: var(--r-sm);
+  background: var(--err-fg);
+  color: var(--err-bg);          /* err-bg/err-fg are opposite ends → contrast in both themes */
+  font-size: var(--fs-body);
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 120ms var(--ease-standard);
+}
+.errorBtn:hover { filter: brightness(1.08); }
+
+/* ---- LOADING: three shimmer bars, no spinner ------------------------------ */
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  margin-top: var(--sp-5);
+  max-width: 68ch;
+}
+.bar {
+  height: 16px;
+  border-radius: var(--r-sm);
+  background: linear-gradient(90deg,
+    var(--surface-2) 25%, var(--border) 50%, var(--surface-2) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+.bar1 { width: 96%; }
+.bar2 { width: 100%; }
+.bar3 { width: 62%; }
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+/* Under reduced motion: drop the sweep entirely, leave calm static bars. */
+@media (prefers-reduced-motion: reduce) {
+  .bar { animation: none; background: var(--surface-2); }
+}
+
+/* ---- OFFLINE: fixed top banner, warm caution (never red) ------------------ */
+.offline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;                  /* above the top bar and evidence sheet */
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-2) var(--gutter);
+  background: var(--warn-bg);
+  color: var(--warn-fg);
+  border-bottom: 1px solid var(--warn-line);
+  font-size: var(--fs-body);
+  font-weight: 500;
+}
+.offlineText { flex: 1 1 auto; min-width: 0; }
