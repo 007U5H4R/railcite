@@ -1,1 +1,8 @@
 /* app/app.css — component-shared layout styles land here in later tasks. */
+
+.topbar { height: 56px; display: flex; align-items: center; gap: var(--sp-4);
+  padding: 0 var(--gutter); border-bottom: var(--border-hair); background: var(--surface); }
+.wordmark { font-weight: 600; font-size: var(--fs-h3); letter-spacing: -0.01em; }
+.topbar-spacer { flex: 1; }
+.trust-footer { padding: var(--sp-3) var(--gutter); border-top: var(--border-hair);
+  color: var(--text-muted); font-size: var(--fs-caption); background: var(--surface-2); }
