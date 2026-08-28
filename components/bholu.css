@@ -1,17 +1,23 @@
-/* Bholu greeter motion — one 2.2s lamp-sway on mount, then still (Design.md §6.2).
-   The arm+lamp group pivots at the shoulder; transform-box: view-box keeps the pivot
-   in viewBox units so it stays correct at any rendered `size`. */
-@keyframes bholu-sway {
-  0%, 100% { transform: rotate(0deg); }
-  35%      { transform: rotate(-7deg); }
-  70%      { transform: rotate(4deg); }
+/* Bholu mascot — the supplied guard-elephant image (public/bholu.png). Decorative, narrow use
+   (empty-state greeter + offline banner). Gentle, reduced-motion-respecting entrance; the offline
+   variant is dimmed + warmed so the cool-green lantern reads as a degraded/amber state. */
+.bholu {
+  max-width: 100%;
+  height: auto;
+  user-select: none;
+  -webkit-user-drag: none;
 }
-.bholu { color: var(--text-muted); }
-.bholu-lamp-greet {
-  animation: bholu-sway 2.2s ease-in-out 1;
-  transform-box: view-box;
-  transform-origin: 59px 53px;
+.bholu-greet {
+  animation: bholu-rise 620ms cubic-bezier(0, 0, 0.2, 1) both;
+}
+@keyframes bholu-rise {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+.bholu-offline {
+  filter: grayscale(0.3) sepia(0.35) saturate(1.25) brightness(0.95);
+  opacity: 0.9;
 }
 @media (prefers-reduced-motion: reduce) {
-  .bholu-lamp-greet { animation: none; }
+  .bholu-greet { animation: none; }
 }
