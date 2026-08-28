@@ -1,0 +1,90 @@
+/* ==========================================================================
+   ConclusionCard + CitationChip — the cited conclusion (core trust surface).
+   Tokens per Design.md §2/§4 (see app/globals.css). The card sits on --paper
+   (the reading surface), NOT --surface-2, so the conclusion reads as document.
+   ========================================================================== */
+
+/* ---- The card: the reading surface for the cited answer --------------------- */
+.card {
+  position: relative;                 /* mobile popover anchors here (see @media) */
+  background: var(--paper);           /* reading surface — NOT --surface-2        */
+  border: var(--border-hair);
+  border-radius: var(--r-md);
+  box-shadow: var(--e-1);
+  padding: var(--sp-6);
+  margin-top: var(--sp-5);
+}
+
+/* ---- Conclusion blocks: staggered serif paragraphs ------------------------- */
+.block { margin: 0; color: var(--text); }
+.block + .block { margin-top: var(--sp-4); }
+
+/* ---- Citation chip: inline [n] button -------------------------------------- */
+/* display:inline so it flows within the serif line and the global 44px
+   min-height (globals.css) is ignored; the real 44px hit area comes from the
+   ::after overlay (Fitts's Law) rather than from inflating the visible box.   */
+.chip {
+  display: inline;
+  position: relative;
+  color: var(--cite);
+  background: transparent;
+  border: 0;
+  padding: 2px 6px;
+  border-radius: var(--r-xs);
+  font-size: 0.85em;
+  cursor: pointer;
+  transition: background-color 120ms var(--ease-standard);
+}
+.chip:hover,
+.chip:focus-visible { background: var(--accent-weak); }
+/* Fitts: expand the touch/click target to ~44px without changing the visual box */
+.chip::after {
+  content: '';
+  position: absolute;
+  inset: -10px;
+}
+
+/* ---- Chip wrapper: positioning context for the popover --------------------- */
+.chipWrap { position: relative; }
+
+/* ---- Hover/focus popover (desktop): above the chip, left-anchored ---------- */
+.popover {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  margin-bottom: var(--sp-1);
+  min-width: 260px;
+  max-width: 340px;
+  background: var(--surface);
+  border: var(--border-hair);
+  border-radius: var(--r-md);
+  box-shadow: var(--e-2);
+  padding: var(--sp-3);
+  display: grid;
+  gap: var(--sp-1);
+  z-index: 30;
+  font-size: var(--fs-caption);
+  line-height: 1.45;
+}
+.popSnippet { color: var(--text-muted); }
+.popWarn { color: var(--warn-fg); }
+.popOk { color: var(--ok-fg); }
+
+/* ---- Mobile / single-column: keep the popover inside the viewport ---------- */
+/* At <=1023px the layout is one narrow column, so a 340px popover anchored to
+   the chip would overflow the right edge and force horizontal page scroll.
+   Re-anchor it to the card (always within the viewport) and pin it with left+
+   right insets so it can never exceed the viewport width.                     */
+@media (max-width: 1023px) {
+  .chipWrap { position: static; }
+  .popover {
+    left: var(--sp-4);
+    right: var(--sp-4);
+    top: 100%;
+    bottom: auto;
+    margin-top: var(--sp-2);
+    margin-bottom: 0;
+    min-width: 0;
+    max-width: none;
+  }
+}

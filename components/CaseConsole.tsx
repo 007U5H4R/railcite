@@ -7,13 +7,16 @@ import { CaseInput } from './CaseInput';
 import { EmptyState } from './EmptyState';
 import { AuthGate } from './AuthGate';
 import { TransparencyLine } from './TransparencyLine';
+import { ConclusionCard } from './ConclusionCard';
 import { useCaseQuery } from '@/hooks/useCaseQuery';
 import { signInWithGoogle } from '@/lib/supabase-browser';
+import type { SourceView } from '@/lib/types';
 
 export function CaseConsole() {
   const [text, setText] = useState('');
   const [scope, setScope] = useState<Scope>({ verifiedOnly: false, domain: null });
   const { s, submit, retry, reset } = useCaseQuery();
+  const [openSource, setOpenSource] = useState<SourceView | null>(null);  // T19 consumes this
 
   useEffect(() => {                       // restore draft after OAuth round-trip
     try { const d = localStorage.getItem('railcite:draft');
@@ -35,7 +38,8 @@ export function CaseConsole() {
         {s.state === 'loading' && <p>TODO(T20 skeleton)</p>}
         {s.state === 'error' && <p>TODO(T20 error): {s.message} <button onClick={retry}>Try again</button></p>}
         {s.state === 'done' && s.data.status === 'refused' && <p>TODO(T20 refuse)</p>}
-        {s.state === 'done' && s.data.status === 'answered' && <p>TODO(T18 conclusion)</p>}
+        {s.state === 'done' && s.data.status === 'answered' && (
+          <ConclusionCard blocks={s.data.blocks} sources={s.data.sources} onCite={src => setOpenSource(src)} />)}
       </div>
     </Shell>
   );
