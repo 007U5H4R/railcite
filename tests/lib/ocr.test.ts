@@ -9,7 +9,9 @@ const slip = existsSync(dataDir)
   ? readdirSync(dataDir).find(f => /correction/i.test(f) && f.endsWith('.pdf'))
   : undefined;
 
-describe.skipIf(!hasBins || !slip)('ocrPdf (integration — scanned correction slip)', () => {
+// Slow (~100s: renders + OCRs 41 real pages). Opt-in so the default TDD loop stays fast:
+//   RUN_OCR_IT=1 npm test   (also run at the Phase-2 QA gate + final whole-branch review).
+describe.skipIf(!hasBins || !slip || !process.env.RUN_OCR_IT)('ocrPdf (integration — scanned correction slip)', () => {
   it('extracts non-trivial text from the scanned correction slip', async () => {
     const pages = await ocrPdf(path.join(dataDir, slip!));
     expect(pages.length).toBeGreaterThan(0);
