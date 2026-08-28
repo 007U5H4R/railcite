@@ -1,42 +1,181 @@
+/* ==========================================================================
+   RailCite design tokens — copied verbatim from Design.md §2 (Design Tokens
+   & Brand System) and §4 (Motion & Micro-Interactions Spec, easing values).
+   ========================================================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ---- §2.1 Color — Primary: "Signal Indigo" ---------------------------
+     institutional authority, railway signal ink; hue 258 */
+  --indigo-50:  oklch(0.970 0.012 258);
+  --indigo-100: oklch(0.940 0.026 258);
+  --indigo-200: oklch(0.880 0.048 258);
+  --indigo-300: oklch(0.800 0.072 258);
+  --indigo-400: oklch(0.680 0.108 258);
+  --indigo-500: oklch(0.580 0.132 258);
+  --indigo-600: oklch(0.500 0.142 258);   /* ← primary action */
+  --indigo-700: oklch(0.420 0.126 258);
+  --indigo-800: oklch(0.340 0.100 258);
+  --indigo-900: oklch(0.260 0.070 258);
+
+  /* ---- §2.1 Color — Neutral: "Ink & Paper" -------------------------------
+     warm paper at the top, cool ink at the bottom; hue 258 @ very low chroma */
+  --paper:      oklch(0.992 0.004 90);     /* warm document white — reading surface   */
+  --n-50:       oklch(0.975 0.004 258);
+  --n-100:      oklch(0.955 0.005 258);    /* app background (light)                   */
+  --n-200:      oklch(0.912 0.006 258);    /* hairline borders                         */
+  --n-300:      oklch(0.850 0.008 258);
+  --n-400:      oklch(0.700 0.010 258);    /* muted / superseded text                  */
+  --n-500:      oklch(0.580 0.012 258);    /* secondary text                           */
+  --n-600:      oklch(0.480 0.014 258);    /* refuse-state text                        */
+  --n-700:      oklch(0.380 0.014 258);    /* body text                                */
+  --n-800:      oklch(0.280 0.012 258);    /* headings                                 */
+  --n-900:      oklch(0.200 0.010 258);    /* max ink                                  */
+  --n-950:      oklch(0.150 0.010 258);    /* dark-mode background                      */
+
+  /* ---- §2.1 Color — Semantic: legal-status system -----------------------
+     these carry meaning; never decorative */
+
+  /* IN-FORCE / VERIFIED — sober pine green, not lime (hue 155) */
+  --ok-fg:      oklch(0.430 0.095 155);
+  --ok-bg:      oklch(0.955 0.030 155);
+  --ok-marker:  oklch(0.550 0.110 155);    /* timeline "in-force" node                 */
+
+  /* OCR / VERIFY-AGAINST-ORIGINAL — warm amber caution (hue 75) */
+  --warn-fg:    oklch(0.470 0.110 70);
+  --warn-bg:    oklch(0.955 0.055 80);
+  --warn-line:  oklch(0.720 0.140 75);
+
+  /* SUPERSEDED — muted, historical; pairs with strikethrough */
+  --past-fg:    var(--n-400);
+  --past-bg:    var(--n-100);
+
+  /* NO-RULE-FOUND / REFUSE — DELIBERATELY NEUTRAL, never red (see §0) */
+  --refuse-fg:  var(--n-600);
+  --refuse-bg:  var(--n-50);
+  --refuse-brd: var(--n-300);
+
+  /* TRUE SYSTEM ERROR — the only red in the app (hue 25) */
+  --err-fg:     oklch(0.500 0.170 25);
+  --err-bg:     oklch(0.960 0.045 25);
+
+  /* ---- §2.1 Color — Semantic role tokens (light) ------------------------ */
+  --bg:            var(--n-100);
+  --surface:       var(--paper);          /* cards, conclusion, reading surface        */
+  --surface-2:     var(--n-50);           /* rails, wells                              */
+  --border:        var(--n-200);
+  --text:          var(--n-800);
+  --text-muted:    var(--n-500);
+  --accent:        var(--indigo-600);
+  --accent-weak:   var(--indigo-50);
+  --cite:          var(--indigo-600);     /* citation-chip color                       */
+  --focus-ring:    var(--indigo-500);
+
+  /* ---- §2.2 Typography — fluid type scale (minor-third 1.2) ------------- */
+  --fs-caption: clamp(0.75rem, 0.72rem + 0.15vw, 0.813rem);   /* meta, badges          */
+  --fs-body:    clamp(0.938rem, 0.90rem + 0.2vw, 1.0rem);     /* UI body               */
+  --fs-read:    clamp(1.0rem, 0.95rem + 0.3vw, 1.125rem);     /* quoted passage / note */
+  --fs-h3:      clamp(1.125rem, 1.05rem + 0.4vw, 1.35rem);
+  --fs-h2:      clamp(1.35rem, 1.2rem + 0.7vw, 1.75rem);
+  --fs-h1:      clamp(1.75rem, 1.5rem + 1.2vw, 2.5rem);
+  --fs-display: clamp(2.25rem, 1.8rem + 2.4vw, 3.5rem);       /* landing hero only     */
+
+  /* ---- §2.3 Spacing — 4px base grid, fluid gutters ----------------------- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-8: 48px;
+  --sp-10: 64px;
+  --gutter: clamp(16px, 4vw, 32px);   /* page padding: 16 mobile → 32 desktop */
+
+  /* ---- §2.3 Radius — restrained (institutional, not playful) ------------ */
+  --r-xs: 4px;      /* badges */
+  --r-sm: 6px;      /* inputs, chips */
+  --r-md: 8px;      /* cards */
+  --r-lg: 12px;     /* sheets/panels */
+  --r-full: 999px;  /* status dots only */
+
+  /* ---- §2.3 Elevation — exactly one shadow step + hairline borders ------ */
+  --e-0: none;                                             /* rails, inline             */
+  --e-1: 0 1px 2px oklch(0.2 0.01 258 / 0.06),
+         0 1px 1px oklch(0.2 0.01 258 / 0.04);             /* cards                     */
+  --e-2: 0 8px 24px oklch(0.2 0.01 258 / 0.12);            /* drawers, sheets, popover  */
+  --border-hair: 1px solid var(--border);
+
+  /* ---- §4 Motion — spring / easing tokens -------------------------------- */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);      /* 200ms — most UI          */
+  --ease-exit:     cubic-bezier(0.4, 0, 1, 1);      /* 140ms — dismiss          */
+  --ease-enter:    cubic-bezier(0, 0, 0.2, 1);      /* 240ms — reveal           */
 }
 
+/* ---- Dark overrides — defined twice so the [data-theme] toggle wins both
+   directions: OS preference (media query, guarded off when the user has
+   explicitly chosen light) and explicit user choice ([data-theme="dark"]). */
+
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme="light"]) {
+    --bg: var(--n-950);
+    --surface: oklch(0.220 0.012 258);
+    --surface-2: oklch(0.190 0.010 258);
+    --border: oklch(0.320 0.012 258);
+    --text: var(--n-100);
+    --text-muted: var(--n-400);
+    --accent: var(--indigo-400);
+    --accent-weak: oklch(0.280 0.045 258);
+    --cite: var(--indigo-300);
+    --ok-bg: oklch(0.280 0.045 155);
+    --ok-fg: oklch(0.800 0.100 155);
+    --warn-bg: oklch(0.280 0.055 80);
+    --warn-fg: oklch(0.820 0.110 80);
+    --refuse-bg: oklch(0.210 0.010 258);
+    --refuse-fg: var(--n-300);
+    --refuse-brd: oklch(0.340 0.012 258);
+    --err-bg: oklch(0.280 0.060 25);
+    --err-fg: oklch(0.780 0.130 25);
+    --past-bg: oklch(0.240 0.010 258);
   }
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+:root[data-theme="dark"] {
+  --bg: var(--n-950);
+  --surface: oklch(0.220 0.012 258);
+  --surface-2: oklch(0.190 0.010 258);
+  --border: oklch(0.320 0.012 258);
+  --text: var(--n-100);
+  --text-muted: var(--n-400);
+  --accent: var(--indigo-400);
+  --accent-weak: oklch(0.280 0.045 258);
+  --cite: var(--indigo-300);
+  --ok-bg: oklch(0.280 0.045 155);
+  --ok-fg: oklch(0.800 0.100 155);
+  --warn-bg: oklch(0.280 0.055 80);
+  --warn-fg: oklch(0.820 0.110 80);
+  --refuse-bg: oklch(0.210 0.010 258);
+  --refuse-fg: var(--n-300);
+  --refuse-brd: oklch(0.340 0.012 258);
+  --err-bg: oklch(0.280 0.060 25);
+  --err-fg: oklch(0.780 0.130 25);
+  --past-bg: oklch(0.240 0.010 258);
 }
 
+/* ---- Base rules ---------------------------------------------------------- */
+
+* { box-sizing: border-box; }
+html { color-scheme: light dark; }
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: var(--font-sans), "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  font-size: var(--fs-body); line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+.reading { font-family: var(--font-serif), "IBM Plex Serif", Georgia, serif;
+  font-size: var(--fs-read); line-height: 1.65; max-width: 68ch; }
+.mono { font-family: var(--font-mono), "IBM Plex Mono", ui-monospace, monospace;
+  font-variant-numeric: tabular-nums; }
+:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; border-radius: var(--r-xs); }
+button, a, input, textarea, [role="button"] { min-height: 44px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
