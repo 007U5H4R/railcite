@@ -18,7 +18,7 @@ it('parses an answered tool call', async () => {
   const req = create.mock.calls[0][0];
   expect(req.model).toBe('claude-sonnet-5');
   expect(req.tool_choice).toEqual({ type: 'tool', name: 'record_conclusion' });
-  expect(req.temperature).toBe(0);
+  expect(req.temperature).toBeUndefined();  // claude-sonnet-5 rejects sampling params — must NOT be sent
 });
 it('parses refusal', async () => {
   create.mockResolvedValue(toolUse({ status: 'refused' }));

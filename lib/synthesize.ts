@@ -52,7 +52,9 @@ const TOOL = {
 export async function synthesize(caseText: string, sources: PromptSource[]): Promise<SynthesisResult> {
   const client = new Anthropic({ apiKey: requireEnv('ANTHROPIC_API_KEY') });
   const msg = await client.messages.create({
-    model: 'claude-sonnet-5', max_tokens: 2000, temperature: 0,
+    // NOTE: claude-sonnet-5 (and the 4.7/4.8/5 family) removed sampling params —
+    // sending `temperature` returns 400 invalid_request_error. Do not re-add it.
+    model: 'claude-sonnet-5', max_tokens: 2000,
     system: SYSTEM_PROMPT,
     tools: [TOOL], tool_choice: { type: 'tool', name: 'record_conclusion' },
     messages: [{ role: 'user', content: buildUserPrompt(caseText, sources) }],
