@@ -1,0 +1,10 @@
+[
+  { "file": "IRCM VOL-I.pdf",  "title": "Indian Railway Commercial Manual — Vol. I (Coaching)",
+    "doc_type": "manual", "domain": "coaching", "commodity": null },
+  { "file": "IRCM VOL-II.pdf", "title": "Indian Railway Commercial Manual — Vol. II (Goods)",
+    "doc_type": "manual", "domain": "goods", "commodity": null },
+  { "file": "IRCM VOL-II Correction Slip.pdf", "title": "IRCM Vol. II — Correction Slip",
+    "doc_type": "correction_slip", "domain": "goods", "commodity": null },
+  { "file": "IR_Map.pdf", "title": "Indian Railways Network Map",
+    "doc_type": "manual", "domain": null, "commodity": null }
+]
