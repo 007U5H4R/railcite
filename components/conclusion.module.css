@@ -13,10 +13,14 @@
   box-shadow: var(--e-1);
   padding: var(--sp-6);
   margin-top: var(--sp-5);
+  /* --paper is always light (never dark-overridden), so text on it must be a
+     theme-independent dark ink — NOT var(--text), which is near-white in dark
+     mode and would render light-on-white. */
+  color: var(--n-800);
 }
 
 /* ---- Conclusion blocks: staggered serif paragraphs ------------------------- */
-.block { margin: 0; color: var(--text); }
+.block { margin: 0; color: var(--n-800); }
 .block + .block { margin-top: var(--sp-4); }
 
 /* ---- Citation chip: inline [n] button -------------------------------------- */
