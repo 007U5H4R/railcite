@@ -1,0 +1,200 @@
+/* ==========================================================================
+   Evidence panel — StatusBadge, SourceCard, SourcesPanel, SourceReader,
+   EvidencePanel (Task 19). Tokens per Design.md §2/§4 (see app/globals.css).
+   Desktop: EvidencePanel fills the Shell `evidence` <aside> in normal flow.
+   <1024px: EvidencePanel becomes a fixed bottom sheet (see @media block).
+   ========================================================================== */
+
+/* ---- StatusBadge: icon + color + text, never color alone ------------------ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: 2px var(--sp-2);
+  border-radius: var(--r-xs);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+.verified { color: var(--ok-fg); background: var(--ok-bg); }
+.ocr { color: var(--warn-fg); background: var(--warn-bg); }
+.superseded { color: var(--past-fg); background: var(--past-bg); }
+.inForce { color: var(--ok-fg); background: var(--ok-bg); }
+
+/* ---- SourceCard: one bordered region per source (Law of Common Region) ---- */
+.card {
+  position: relative;
+  border: var(--border-hair);
+  border-radius: var(--r-md);
+  background: var(--surface);
+}
+.card.active {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  animation: cite-pulse 400ms var(--ease-standard);
+}
+@keyframes cite-pulse {
+  from { background: var(--accent-weak); }
+  to { background: transparent; }
+}
+.openBtn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: inherit;
+  padding: var(--sp-4);
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+}
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-2);
+}
+.docLabel {
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.meta {
+  display: block;
+  font-size: var(--fs-caption);
+  color: var(--text-muted);
+  margin-bottom: var(--sp-2);
+}
+.snippet {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+  color: var(--text);
+}
+
+/* ---- SourcesPanel: the <ol> of cards --------------------------------------- */
+.sourcesList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+/* ---- SourceReader: right-side panel (desktop) / full sheet (mobile) ------- */
+.overlay { position: fixed; inset: 0; z-index: 100; }
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--n-900);
+  opacity: 0.4;
+  cursor: default;
+}
+.readerPanel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 480px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  background: var(--surface);
+  border-left: var(--border-hair);
+  box-shadow: var(--e-2);
+  padding: var(--sp-5);
+  overflow-y: auto;
+  z-index: 101;
+}
+@media (max-width: 767px) {
+  .readerPanel { width: 100%; border-left: none; }
+}
+.readerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+.readerMeta { color: var(--text-muted); font-size: var(--fs-caption); }
+.closeBtn {
+  min-width: 44px;
+  min-height: 44px;
+  border: var(--border-hair);
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+}
+.pageRef { margin: 0; color: var(--text-muted); font-size: var(--fs-caption); }
+.readerBody { margin: 0; color: var(--text); }
+.openOriginal {
+  align-self: flex-start;
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+.openOriginal:hover, .openOriginal:focus-visible { text-decoration: underline; }
+
+/* ---- EvidencePanel: tabs + body -------------------------------------------- */
+.evidencePanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  height: 100%;
+}
+.tabBar {
+  display: flex;
+  gap: var(--sp-2);
+  flex: 0 0 auto;
+}
+.tab {
+  flex: 1;
+  min-height: 44px;
+  border: var(--border-hair);
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 120ms var(--ease-standard), color 120ms var(--ease-standard);
+}
+.tab[aria-selected="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--paper);
+}
+.evidenceBody { flex: 1 1 auto; overflow-y: auto; min-height: 0; }
+.lineagePlaceholder { margin: 0; padding: var(--sp-4) 0; color: var(--text-muted); font-size: var(--fs-caption); }
+
+/* ---- <1024px: EvidencePanel becomes a fixed, collapsible bottom sheet ----- */
+@media (max-width: 1023px) {
+  .evidencePanel {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+    max-height: 56px;
+    overflow: hidden;
+    background: var(--surface);
+    border-top: var(--border-hair);
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+    box-shadow: var(--e-2);
+    padding-bottom: env(safe-area-inset-bottom);
+    transition: max-height 240ms var(--ease-standard);
+  }
+  .evidencePanel.expanded { max-height: 60dvh; }
+  .tabBar { flex: 0 0 56px; padding: var(--sp-3) var(--sp-4); }
+  .evidenceBody { padding: 0 var(--sp-4) var(--sp-4); }
+}
