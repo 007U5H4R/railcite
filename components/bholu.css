@@ -1,0 +1,17 @@
+/* Bholu greeter motion — one 2.2s lamp-sway on mount, then still (Design.md §6.2).
+   The arm+lamp group pivots at the shoulder; transform-box: view-box keeps the pivot
+   in viewBox units so it stays correct at any rendered `size`. */
+@keyframes bholu-sway {
+  0%, 100% { transform: rotate(0deg); }
+  35%      { transform: rotate(-7deg); }
+  70%      { transform: rotate(4deg); }
+}
+.bholu { color: var(--text-muted); }
+.bholu-lamp-greet {
+  animation: bholu-sway 2.2s ease-in-out 1;
+  transform-box: view-box;
+  transform-origin: 59px 53px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bholu-lamp-greet { animation: none; }
+}

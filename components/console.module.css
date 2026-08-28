@@ -1,0 +1,175 @@
+/* ==========================================================================
+   Case Console — landing surface (Task 17)
+   On-token (app/globals.css §2) and authored responsive: no horizontal scroll
+   at 375px. Only relative units + fixed control HEIGHTS; no fixed widths that
+   could overflow a phone. box-sizing:border-box is set globally.
+   ========================================================================== */
+
+/* ---- Case input card --------------------------------------------------- */
+.inputWrap {
+  width: 100%;
+  background: var(--surface);
+  border: var(--border-hair);
+  border-radius: var(--r-md);
+  box-shadow: var(--e-1);
+  padding: var(--sp-5);
+}
+
+.textarea {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  color: var(--text);
+  font-family: inherit;                 /* sans body — serifless */
+  font-size: var(--fs-read);
+  line-height: 1.6;
+  padding: 0;
+  /* Autosize where supported; rows={4} + min-height is the fallback. */
+  field-sizing: content;
+  min-height: 7.5rem;
+}
+.textarea::placeholder { color: var(--text-muted); }
+.textarea:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.inputBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-top: var(--sp-4);
+}
+
+.hint {
+  color: var(--text-muted);
+  font-size: var(--fs-caption);
+}
+
+.primaryBtn {
+  flex-shrink: 0;
+  height: 48px;
+  padding: 0 var(--sp-5);
+  border: none;
+  border-radius: var(--r-sm);
+  background: var(--accent);
+  color: #fff;
+  font-family: inherit;
+  font-size: var(--fs-body);
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 160ms var(--ease-standard);
+}
+.primaryBtn:hover:not(:disabled) { background: var(--indigo-700); }
+.primaryBtn:disabled {
+  background: var(--n-300);
+  color: var(--n-500);
+  cursor: not-allowed;
+}
+
+/* ---- Empty state — Bholu greeter + hero ------------------------------- */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-5);
+  padding-top: var(--sp-8);
+  text-align: center;
+}
+
+.h1 {
+  margin: 0;
+  max-width: 22ch;
+  font-size: var(--fs-display);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  text-align: center;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+.sub {
+  margin: 0;
+  max-width: 48ch;
+  font-size: var(--fs-h3);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-muted);
+  text-align: center;
+  text-wrap: pretty;
+}
+
+.examples {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  width: 100%;
+  max-width: 42rem;
+}
+
+.exampleChip {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: var(--sp-4);
+  border: var(--border-hair);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  cursor: pointer;
+  overflow-wrap: break-word;
+  transition: background 160ms var(--ease-standard), border-color 160ms var(--ease-standard);
+}
+.exampleChip:hover {
+  background: var(--accent-weak);
+  border-color: var(--accent);
+}
+
+/* ---- Transparency line (searching…) ----------------------------------- */
+.transparency {
+  margin: var(--sp-4) 0 0;
+  font-family: var(--font-mono), "IBM Plex Mono", ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-caption);
+  color: var(--text-muted);
+}
+
+/* ---- Scope rail -------------------------------------------------------- */
+.rail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.railHeading {
+  margin: 0 0 var(--sp-2);
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.railRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 44px;
+  font-size: var(--fs-body);
+  color: var(--text);
+}
+
+.railNote {
+  color: var(--text-muted);
+  font-size: var(--fs-caption);
+}
