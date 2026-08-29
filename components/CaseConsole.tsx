@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { CaseInput } from './CaseInput';
 import { EmptyState } from './EmptyState';
 import { AuthGate } from './AuthGate';
@@ -12,8 +13,8 @@ import { ErrorState } from './ErrorState';
 import { RefuseState } from './RefuseState';
 import { OfflineBanner, useOnline } from './OfflineBanner';
 import { useCaseQuery } from '@/hooks/useCaseQuery';
-import { signInWithGoogle } from '@/lib/supabase-browser';
-import type { QueryResponse, SourceView } from '@/lib/types';
+import { signInWithGoogle, getAccessToken } from '@/lib/supabase-browser';
+import type { CaseDetail, QueryResponse, SourceView } from '@/lib/types';
 import styles from './console.module.css';
 
 type AnsweredResponse = Extract<QueryResponse, { status: 'answered' }>;
@@ -38,17 +39,70 @@ const DOMAINS: { label: string; value: string | null }[] = [
 export function CaseConsole() {
   const [text, setText] = useState('');
   const [scope, setScope] = useState<Scope>({ verifiedOnly: false, domain: null });
-  const { s, submit, retry, reset } = useCaseQuery();
+  const { s, submit, retry, reset, reopen } = useCaseQuery();
   const [openSource, setOpenSource] = useState<SourceView | null>(null);      // card click -> reader
   const [activeChunkId, setActiveChunkId] = useState<string | null>(null);    // chip click -> highlight
+  const [savedIds, setSavedIds] = useState<Set<string>>(new Set());           // case ids toggled saved
+  const [savePending, setSavePending] = useState(false);
 
   useEffect(() => {                       // restore draft after OAuth round-trip
     try { const d = localStorage.getItem('railcite:draft');
       if (d) { setText(d); localStorage.removeItem('railcite:draft'); } } catch {}
   }, []);
 
+  // R4 reopen: /ask?case=<id> (from HistoryDrawer) rehydrates the full cited answer without
+  // re-querying. useSearchParams (not a one-shot window.location read) so clicking a
+  // *different* history case while already on /ask — the common path, since the drawer is
+  // reachable from every route — re-triggers this without a full page reload.
+  const reopenId = useSearchParams().get('case');
+  useEffect(() => {
+    if (!reopenId) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const token = await getAccessToken();
+        if (!token || cancelled) return;
+        const res = await fetch(`/api/cases?id=${encodeURIComponent(reopenId)}`,
+          { headers: { authorization: `Bearer ${token}` } });
+        if (!res.ok || cancelled) return;
+        const { case: c }: { case: CaseDetail } = await res.json();
+        if (!c || cancelled) return;
+        setText(c.question);
+        setScope({ verifiedOnly: c.verified_only, domain: c.domain });
+        // Full rehydration when the row carries its result; otherwise the question/scope
+        // prefill above is still applied (partial reopen) — there's just no cited answer
+        // to show without re-asking, since older/incomplete rows may have no `result`.
+        if (c.result) {
+          reopen(c.id, c.result);
+          if (c.is_saved) setSavedIds(prev => new Set(prev).add(c.id));
+        }
+      } catch { /* reopen is a convenience, not critical path — fail silently */ }
+    })();
+    return () => { cancelled = true; };
+  }, [reopenId, reopen]);
+
   const doSubmit = () => void submit({ case_text: text, verified_only: scope.verifiedOnly, domain: scope.domain });
   const onSignIn = () => { try { localStorage.setItem('railcite:draft', text); } catch {}; void signInWithGoogle(); };
+
+  const caseId = s.state === 'done' ? s.caseId : null;
+  const toggleSave = async () => {
+    if (!caseId) return;
+    const nextSaved = !savedIds.has(caseId);
+    setSavePending(true);
+    try {
+      const token = await getAccessToken();
+      if (!token) return;
+      const res = await fetch('/api/cases', { method: 'PATCH',
+        headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
+        body: JSON.stringify({ id: caseId, is_saved: nextSaved }) });
+      if (res.ok) setSavedIds(prev => {
+        const next = new Set(prev);
+        if (nextSaved) next.add(caseId); else next.delete(caseId);
+        return next;
+      });
+    } catch { /* non-blocking: the toggle simply doesn't visually flip */ }
+    finally { setSavePending(false); }
+  };
 
   // Offline fallback: when the network drops, surface the last cited answer we persisted
   // (T15 writes `railcite:last` on every answered response). Read-only — no live retrieval.
@@ -103,7 +157,10 @@ export function CaseConsole() {
       {s.state === 'done' && s.data.status === 'answered' && (
         <>
           <ConclusionCard blocks={s.data.blocks} sources={s.data.sources}
-            onCite={src => setActiveChunkId(src.chunk_id)} />
+            onCite={src => setActiveChunkId(src.chunk_id)}
+            isSaved={caseId != null && savedIds.has(caseId)}
+            saveDisabled={caseId == null || savePending}
+            onToggleSave={caseId == null ? null : toggleSave} />
           <div className={styles.sourcesHead}>
             Sources <span className={styles.sourcesCount}>{s.data.sources.length}</span>
           </div>

@@ -118,20 +118,22 @@ export function HistoryDrawer({ open, onClose, triggerRef }: {
   );
 }
 
+// R4 reopen: each case is a real navigation (not a button) to /ask?case=<id>, which
+// CaseConsole reads to rehydrate the cited answer. onPick still fires (closes the drawer).
 function CaseGroup({ label, cases, onPick }: { label: string; cases: RecentCase[]; onPick: () => void }) {
   if (cases.length === 0) return null;
   return (
     <>
       <div className={styles.group}>{label}</div>
       {cases.map(c => (
-        <button key={c.id} type="button" className={styles.item} onClick={onPick}>
+        <Link key={c.id} href={`/ask?case=${encodeURIComponent(c.id)}`} className={styles.item} onClick={onPick}>
           <span
             className={`${styles.dot} ${c.status === 'answered' ? styles.dotOk : styles.dotNo}`}
             role="img"
             aria-label={c.status === 'answered' ? 'answered' : 'no rule found'}
           />
           <span className={styles.q}>{c.question}</span>
-        </button>
+        </Link>
       ))}
     </>
   );

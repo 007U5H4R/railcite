@@ -18,16 +18,34 @@ function leadText(sources: SourceView[]): string {
   return `Cited from ${n} ${noun}`;
 }
 
-export function ConclusionCard({ blocks, sources, onCite }: {
-  blocks: ConclusionBlock[]; sources: SourceView[]; onCite: (s: SourceView) => void }) {
+export function ConclusionCard({ blocks, sources, onCite, isSaved = false, saveDisabled = false,
+  onToggleSave = null }: {
+  blocks: ConclusionBlock[]; sources: SourceView[]; onCite: (s: SourceView) => void;
+  // R4: bookmark toggle for the current case. onToggleSave is null when there's no live
+  // case to save against (e.g. the offline cached-answer fallback in CaseConsole) — the
+  // button just doesn't render then, rather than rendering disabled-forever.
+  isSaved?: boolean; saveDisabled?: boolean; onToggleSave?: (() => void) | null;
+}) {
   const still = useReducedMotion();
   const byN = new Map(sources.map(s => [s.n, s]));
   return (
     <section aria-label="Cited conclusion" aria-live="polite" className={styles.card}>
-      <p className={styles.lead}>
-        <span className={styles.leadDot} aria-hidden="true" />
-        {leadText(sources)}
-      </p>
+      <div className={styles.leadRow}>
+        <p className={styles.lead}>
+          <span className={styles.leadDot} aria-hidden="true" />
+          {leadText(sources)}
+        </p>
+        {onToggleSave && (
+          <button type="button" className={`${styles.saveBtn} ${isSaved ? styles.saveBtnOn : ''}`}
+            aria-pressed={isSaved} aria-label={isSaved ? 'Saved' : 'Save case'}
+            disabled={saveDisabled} onClick={onToggleSave}>
+            <svg viewBox="0 0 24 24" fill={isSaved ? 'currentColor' : 'none'} stroke="currentColor"
+              strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M6 4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V20l-6-4-6 4V4.5Z" />
+            </svg>
+          </button>
+        )}
+      </div>
       {blocks.filter(b => b.citations.length > 0).map((b, i) => (   // defense in depth vs P0
         <motion.p key={i} className={`reading ${styles.block}`}
           initial={still ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
