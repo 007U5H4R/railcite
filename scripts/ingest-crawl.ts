@@ -46,7 +46,7 @@ async function dbSizeMB(): Promise<number> {
   } catch { return -1; }
 }
 
-async function download(url: string, dest: string): Promise<void> {
+async function fetchToFile(url: string, dest: string): Promise<void> {
   const ctrl = new AbortController();
   const to = setTimeout(() => ctrl.abort(), 60000);
   try {
@@ -59,6 +59,14 @@ async function download(url: string, dest: string): Promise<void> {
     if (buf.length < 800) throw new Error('empty/too small');
     await writeFile(dest, buf);
   } finally { clearTimeout(to); }
+}
+
+async function download(url: string, dest: string): Promise<void> {
+  // The gov server is HTTPS-only (refuses :80), but ~540 manifest hrefs are http:// — normalize
+  // them or they all fail. One retry absorbs transient network blips over a multi-thousand-doc run.
+  const u = url.replace(/^http:\/\//i, 'https://');
+  try { await fetchToFile(u, dest); }
+  catch { await sleep(1500); await fetchToFile(u, dest); }
 }
 
 async function ingestOne(e: Entry, tmp: string, sb: ReturnType<typeof adminClient>): Promise<{ status: 'ok' | 'ocr' | 'skip'; chunks: number }> {
