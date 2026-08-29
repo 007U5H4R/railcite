@@ -24,4 +24,6 @@
   flex-direction: column;
   padding: 0 var(--gutter) 108px;
 }
-.main { flex: 1; }
+/* Breathing room below the sticky frosted top bar so the case field (and any route's first
+   card) doesn't butt up against it. */
+.main { flex: 1; margin-top: var(--sp-3); }
