@@ -7,6 +7,7 @@ import { AuthGate } from './AuthGate';
 import { TransparencyLine } from './TransparencyLine';
 import { ConclusionCard } from './ConclusionCard';
 import { SourcesPanel } from './SourcesPanel';
+import { DraftedNote } from './DraftedNote';
 import { SourceReader } from './SourceReader';
 import { LoadingSkeleton } from './LoadingSkeleton';
 import { ErrorState } from './ErrorState';
@@ -165,6 +166,10 @@ export function CaseConsole() {
             Sources <span className={styles.sourcesCount}>{s.data.sources.length}</span>
           </div>
           <SourcesPanel sources={s.data.sources} activeChunkId={activeChunkId} onOpen={setOpenSource} />
+          {s.data.note?.length > 0 && (
+            <DraftedNote note={s.data.note} sources={s.data.sources}
+              onCite={src => setActiveChunkId(src.chunk_id)} />
+          )}
         </>)}
       {cachedLast && s.state !== 'done' && (
         <ConclusionCard blocks={cachedLast.blocks} sources={cachedLast.sources} onCite={() => {}} />)}
