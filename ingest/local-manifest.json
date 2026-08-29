@@ -1,10 +1,640 @@
 [
-  { "file": "IRCM VOL-I.pdf",  "title": "Indian Railway Commercial Manual — Vol. I (Coaching)",
-    "doc_type": "manual", "domain": "coaching", "commodity": null },
-  { "file": "IRCM VOL-II.pdf", "title": "Indian Railway Commercial Manual — Vol. II (Goods)",
-    "doc_type": "manual", "domain": "goods", "commodity": null },
-  { "file": "IRCM VOL-II Correction Slip.pdf", "title": "IRCM Vol. II — Correction Slip",
-    "doc_type": "correction_slip", "domain": "goods", "commodity": null },
-  { "file": "IR_Map.pdf", "title": "Indian Railways Network Map",
-    "doc_type": "manual", "domain": null, "commodity": null }
+  {
+    "file": "IRCM VOL-I.pdf",
+    "title": "Indian Railway Commercial Manual — Vol. I (Coaching)",
+    "doc_type": "manual",
+    "domain": "coaching",
+    "commodity": null
+  },
+  {
+    "file": "IRCM VOL-II.pdf",
+    "title": "Indian Railway Commercial Manual — Vol. II (Goods)",
+    "doc_type": "manual",
+    "domain": "goods",
+    "commodity": null
+  },
+  {
+    "file": "IRCM VOL-II Correction Slip.pdf",
+    "title": "IRCM Vol. II — Correction Slip",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null
+  },
+  {
+    "file": "IR_Map.pdf",
+    "title": "Indian Railways Network Map",
+    "doc_type": "manual",
+    "domain": null,
+    "commodity": null
+  },
+  {
+    "file": "RMC_Compendium_Demurrage_Wharfage_Waiver_updated_till_2025.pdf",
+    "title": "Compendium_Demurrage-Wharfage-Waiver_updated till 2025",
+    "doc_type": "circular",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": null,
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Compendium_Demurrage-Wharfage-Waiver_updated%20till%202025.pdf"
+  },
+  {
+    "file": "RMC_Compendium_CRT_Haulage_Charge_HubSpoke_March_2026_with_links_1.pdf",
+    "title": "Compendium_CRT-Haulage Charge-Hub & Spoke_updated till Mar 2026",
+    "doc_type": "circular",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": null,
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Compendium_CRT-Haulage%20Charge-HubSpoke__March%202026%20with%20links%20(1).pdf"
+  },
+  {
+    "file": "RMC_Comoendium_eTRR_2025_1.pdf",
+    "title": "Compendium_eT-RR_updated till 2025",
+    "doc_type": "circular",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": null,
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Comoendium_eTRR_2025%20(1).pdf"
+  },
+  {
+    "file": "RMC_Compendium_Provision_of_Weighbridge_2025_2.pdf",
+    "title": "Compendium_Provision of Weighbridge_updated till 2025",
+    "doc_type": "circular",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": null,
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Compendium_Provision%20of%20Weighbridge_2025%20(2).pdf"
+  },
+  {
+    "file": "RMC_Compendium_Weighment_Punitive_Charge_February_2026_with_links.pdf",
+    "title": "Compendium_Weighment & Punitive Charge_updated till Feb 2026",
+    "doc_type": "circular",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": null,
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Compendium_Weighment_Punitive%20Charge_February%202026%20with%20links.pdf"
+  },
+  {
+    "file": "RMC_Compendium_System_of_charging_freight_in_case_of_siding_2025.pdf",
+    "title": "Compendium_System of Charging Freight in case of Sidings_updated till Feb 2026",
+    "doc_type": "circular",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": null,
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Compendium_System%20of%20charging%20freight%20in%20case%20of%20siding_2025.pdf"
+  },
+  {
+    "file": "RMC_Compendium_E_payment_2025.pdf",
+    "title": "Compendium_E-Payment_updated till 2025",
+    "doc_type": "circular",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": null,
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Compendium_E%20payment_2025.pdf"
+  },
+  {
+    "file": "RMC_Compendium_eRD_2025.pdf",
+    "title": "Compendium_eRD_updated till Feb 2026",
+    "doc_type": "circular",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": null,
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Compendium_eRD%20_2025.pdf"
+  },
+  {
+    "file": "RMC_JPP_Consolidated_Instructions_compressed.pdf",
+    "title": "Consolidated instructions regarding JPP of India Post & Indian Railways",
+    "doc_type": "circular",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": null,
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/FREIGHT_MARKETING_2023/JPP%20Consolidated%20Instructions_compressed.pdf"
+  },
+  {
+    "file": "DWW_Corrig_62_Rate_of_Stabling_Charge_dated_22_04_2026_001.pdf",
+    "title": "Corrigendum No. 62 of Rates Master Circular/Demurrage-Wharfage-Waiver/2016/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/DWW Corrigendum No.62",
+    "issue_date": "2026-04-22",
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Rate%20of%20Stabling%20Charge%20dated%2022_04_2026_001.pdf"
+  },
+  {
+    "file": "DWW_Corrig_59_Free_time_for_BCNHL_rake_in_case_of_EOL_terminals_0001.pdf",
+    "title": "Corrigendum No.59 of Rates Master Circular/Demurrage-Wharfage-Waiver/2016/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/DWW Corrigendum No.59",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2025/Free%20time%20for%20BCNHL%20rake%20in%20case%20of%20EOL%20terminals_0001.pdf"
+  },
+  {
+    "file": "DWW_Corrig_56_Review_of_Demurrage_and_Penal_Demurrage_Corrigendum_No_56_dated_19_03_.pdf",
+    "title": "Corrigendum No.56 of Rates Master Circular/Demurrage-Wharfage-Waiver/2016/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/DWW Corrigendum No.56",
+    "issue_date": "2025-03-19",
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Review%20of%20Demurrage%20and%20Penal%20Demurrage%20(Corrigendum%20No_56)%20dated%2019_03_2025.pdf"
+  },
+  {
+    "file": "DWW_Corrig_55_Free_time_for_loading_and_unloading_of_Hopper_wagons_when_supplied_in_.pdf",
+    "title": "Corrigendum No.55 of Rates Master Circulars/Demurrage-Wharfage-Waiver/2016/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/DWW Corrigendum No.55",
+    "issue_date": "2024-12-31",
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2024/Free%20time%20for%20loading%20and%20unloading%20of%20Hopper%20wagons%20when%20supplied%20in%20place%20of%20Open%20Wagons%20dated%2031_12_2024_0001%20(1).pdf"
+  },
+  {
+    "file": "DWW_Corrig_54_Free_time_for_loading_and_unloading_of_consignment_handled_by_crane_fo.pdf",
+    "title": "Corrigendum No.54 of Rates Master Circular/Demurrage-Wharfage-Waiver/2016/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/DWW Corrigendum No.54",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2024/Free%20time%20for%20loading%20and%20unloading%20of%20consignment%20handled%20by%20crane%20for%20EOL%20terminals.pdf"
+  },
+  {
+    "file": "DWW_Corrig_53_Waiver_of_Demurrage_and_Wharfage_Charge_dated_17_10_2024_0001.pdf",
+    "title": "Corrigendum No. 53 of Rates Master Circular/Demurrage-Wharfage-Waiver/2016/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/DWW Corrigendum No.53",
+    "issue_date": "2024-10-17",
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2024/Waiver%20of%20Demurrage%20and%20Wharfage%20Charge%20dated%2017_10_2024_0001.pdf"
+  },
+  {
+    "file": "DWW_Corrig_52_rates_circular.pdf",
+    "title": "Corrigendum No. 52  of Rates Master Circular/Demurrage-Wharfage-Waiver/2016/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/DWW Corrigendum No.52",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2024/rates_circular.pdf"
+  },
+  {
+    "file": "DWW_Corrig_51_Corrigendum_No_51_regarding_free_time_for_loading_of_bagged_consignmen.pdf",
+    "title": "Corrigendum No. 51 of Rates Master Circular/Demurrage-Wharfage-Waiver/2016/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/DWW Corrigendum No.51",
+    "issue_date": "2024-02-29",
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2024/Corrigendum%20No_51%20regarding%20free%20time%20for%20loading%20of%20bagged%20consignment%20in%20open%20wagons%20in%20the%20case%20of%20freight%20%20dated%2029_02_2024.pdf"
+  },
+  {
+    "file": "DWW_Corrig_50_Corrigendum_No_50.pdf",
+    "title": "Corrigendum No. 50 of Rates Master Circular/Demurrage-Wharfage-Waiver/2016/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/DWW Corrigendum No.50",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2024/Corrigendum%20No_50.pdf"
+  },
+  {
+    "file": "DWW_Corrig_49_Free_time_and_allowances_in_case_of_seven_old_steel_plants_dated_27_02.pdf",
+    "title": "Corrigendum No. 49 of Rates Master Circular/Demurrage-Wharfage-Waiver/2016/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/DWW Corrigendum No.49",
+    "issue_date": "2024-02-27",
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2024/Free%20time%20and%20allowances%20in%20case%20of%20seven%20old%20steel%20plants%20dated%2027_02_2024.pdf"
+  },
+  {
+    "file": "DWW_Corrig_48_Additional_free_time_dated_21_02_2024.pdf",
+    "title": "Corrigedum No. 48 to Rates Master Circular/Demurrage-Wharfage-Waiver/2016/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/DWW Corrigendum No.48",
+    "issue_date": "2024-02-21",
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2024/Additional%20free%20time%20dated%2021_02_2024.pdf"
+  },
+  {
+    "file": "DWW_Corrig_47_Reckoning_of_free_time_for_removal_of_consignment_dated_24_01_2024_i.pdf",
+    "title": "Corrigendum No.47 to Rates Master Circular/Demurrage-Wharfage-Waiver/2016/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/DWW Corrigendum No.47",
+    "issue_date": "2024-01-24",
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2024/Reckoning%20of%20free%20time%20for%20removal%20of%20consignment%20-(%20%20dated%2024_01_2024%20(i).pdf"
+  },
+  {
+    "file": "WGH_Corrig_93_PCC_Loading_tol_of_ACT1_and_ACT2.pdf",
+    "title": "Corrigendum No.93 to Rates Master Circular/PCC/CC+8/2020/0 Corri no.50 to RMC on Block Rakes/Mini Rake and Corri No.12 to RMC/weighment/2019",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/Weighment Corrigendum No.93",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2023/PCC%20%26%20Loading%20tol%20of%20ACT1%20and%20ACT2.pdf"
+  },
+  {
+    "file": "WGH_Corrig_14_Dispensation_from_weighment_in_case_of_empty_containers_.pdf",
+    "title": "Corrigendum No.14 of Rates Master Circular/Weighment/2019/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/Weighment Corrigendum No.14",
+    "issue_date": "2025-04-22",
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2025/Dispensation%20from%20weighment%20in%20case%20of%20empty%20containers%20dated%2022_04_2025_0001.pdf"
+  },
+  {
+    "file": "WGH_Corrig_13_Dispensation_from_weighment_in_case_of_emtpy_containers_.pdf",
+    "title": "Corrigendum No. 13 of Rates Master Circular/Weighment/2019/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/Weighment Corrigendum No.13",
+    "issue_date": "2024-04-12",
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2024/Dispensation%20from%20weighment%20in%20case%20of%20emtpy%20containers%20dated%2012_04_2024.pdf"
+  },
+  {
+    "file": "WGH_Corrig_08_2d6c249e_ae6f_498a_9ae1_7152d4ede645.pdf",
+    "title": "Corrigendum No.08 to Rates Master Circular/Weighment/2019/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/Weighment Corrigendum No.8",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2023/2d6c249e-ae6f-498a-9ae1-7152d4ede645.pdf"
+  },
+  {
+    "file": "WGH_Corrig_06_corrigendum_6_to_rmc_weighemnt0001.pdf",
+    "title": "Corrigendum No. 6 to RMC/Weighment/2014/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/Weighment Corrigendum No.6",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/downloads/Freight_Rate_2019/corrigendum%206%20to%20rmc%20weighemnt0001.pdf"
+  },
+  {
+    "file": "WGH_Corrig_05_Corrigendum_5_Weighment_2019_0_060622.pdf",
+    "title": "Corrigendum No 5 to Rates Master Circular Weighment 2019-0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/Weighment Corrigendum No.5",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2022/Corrigendum-5-Weighment-2019-0-060622.pdf"
+  },
+  {
+    "file": "WGH_Corrig_04_Corri_4_RMC_Weighment_180518.pdf",
+    "title": "Corrigendum No. 4 to RMC/Weighment/2014/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/Weighment Corrigendum No.4",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/downloads/Freight_Rate_2018/Corri_4_RMC_Weighment_180518.pdf"
+  },
+  {
+    "file": "WGH_Corrig_03_Loading_Tolerance_BCCW_wagons.pdf",
+    "title": "Corrigendum No.3 to RMC/Weighment/2014/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/Weighment Corrigendum No.3",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/downloads/Freight_Rate_2018/Loading%20Tolerance_BCCW_wagons.pdf"
+  },
+  {
+    "file": "WGH_Corrig_02_Corrigendum_No_2_to_Rates_Madter_Circular_weighment20190.pdf",
+    "title": "Corrigendum No.2 to Rates Master Circular/Weighment/2019/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/Weighment Corrigendum No.2",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2020/Corrigendum%20No_2%20to%20Rates%20Madter%20Circular%20weighment20190.pdf"
+  },
+  {
+    "file": "CRT_Corrig_64_Rationalization_of_Freight_Rate_16_04_Copy_1.pdf",
+    "title": "Corrigendum No 64 of Rates Master Circular/CRT/CCR/Hub and Spoke/2015",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/CRT-Hub&Spoke Corrigendum No.64",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Rationalization%20of%20Freight%20Rate%2016_04%20-%20Copy(1).pdf"
+  },
+  {
+    "file": "CRT_Corrig_62_Haulage_Charge_for_transportation_of_Bulk_Cement_Cement_.pdf",
+    "title": "Corrigendum No. 62 of Rates Master Circular/CRT-CCR-Hub&Spoke/2015/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/CRT-Hub&Spoke Corrigendum No.62",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2025/Haulage%20Charge%20for%20transportation%20of%20Bulk%20Cement(Cement%20in%20loose%20form)%20in%20Tank%20Containers.pdf"
+  },
+  {
+    "file": "CRT_Corrig_61_De_notification_of_stainless_steel_in_Coil_form_dt_20_11.pdf",
+    "title": "Corrigendum No. 61 of Rates Master Circular/CRT-CCR-Hub&Spoke/2015/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/CRT-Hub&Spoke Corrigendum No.61",
+    "issue_date": "2025-11-20",
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2025/De-notification%20of%20stainless%20steel%20in%20Coil%20form%20%20dt_20_11_2025_001.pdf"
+  },
+  {
+    "file": "CRT_Corrig_58_Transportation_product_Mini_Rake_Container_regarding_ext.pdf",
+    "title": "Corrigendum No.58 of Rates Master Circular/CRT-CCR-Hub&Spoke/2015/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/CRT-Hub&Spoke Corrigendum No.58",
+    "issue_date": "2024-12-24",
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2024/Transportation%20product%20Mini%20Rake%20(Container)%20regarding%20extension%20of%20guidelines%20dated%2024_12_2024_0001.pdf"
+  },
+  {
+    "file": "CRT_Corrig_57_De_notification_of_Stainless_steel_in_coil_form_Notified.pdf",
+    "title": "Corrigendum No. 57 of  Rates Master Circular/CRT-CCR-Hub&Spoke/2015/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/CRT-Hub&Spoke Corrigendum No.57",
+    "issue_date": "2024-12-09",
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2024/De-notification%20of%20Stainless%20steel%20in%20coil%20form%20%20Notified%20Commodity%20Group%20dated%2009_12_2024_0001.pdf"
+  },
+  {
+    "file": "CRT_Corrig_56_Charging_of_bulk_cement_cement_in_loose_form_when_transp.pdf",
+    "title": "Corrigendum No. 56 of Rates Master Circular/CRT-CCR-Hub&Spoke/2015/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/CRT-Hub&Spoke Corrigendum No.56",
+    "issue_date": "2024-06-13",
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2024/Charging%20of%20bulk%20cement%20(cement%20in%20loose%20form)%20when%20transported%20in%20normal%20containers%20dated%2013_06_2024.pdf"
+  },
+  {
+    "file": "CRT_Corrig_55_Transportation_product_09_05_2024.pdf",
+    "title": "Corrigendum No. 55 of Rates Master Circular/CRT-CCR-Hub & Spoke/2015/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/CRT-Hub&Spoke Corrigendum No.55",
+    "issue_date": "2024-05-09",
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2024/Transportation%20product-09_05_2024.pdf"
+  },
+  {
+    "file": "CRT_Corrig_54_Haulage_Charge_on_round_trip_basis_for_transportation_of.pdf",
+    "title": "Corrigendum No.54 of Rates Master Circular/CRT-CCR-Hub&Spoke/2015/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/CRT-Hub&Spoke Corrigendum No.54",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2024/Haulage%20Charge%20on%20round%20trip%20basis%20for%20transportation%20of%20container%20traffic.pdf"
+  },
+  {
+    "file": "CRT_Corrig_53_Corri_53.pdf",
+    "title": "Corrigendum No. 53 to Rates Master Circular /CRT-CCR-Hub&Spoke/2015/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/CRT-Hub&Spoke Corrigendum No.53",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2023/Corri-53.pdf"
+  },
+  {
+    "file": "CRT_Corrig_52_Round_Trip_Circular_230430_172543.pdf",
+    "title": "Corrigendum No.52 of Rates Master Circular/CRT-CCR-Hub&Spoke/2015/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/CRT-Hub&Spoke Corrigendum No.52",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/pdf/Round%20Trip%20Circular_230430_172543.pdf"
+  },
+  {
+    "file": "CRT_Corrig_51_Haulage_Charge_for_movement_of_bulk_cement_cement_in_loo.pdf",
+    "title": "Corrigendum No.51 to Rates Master Circular/CRT-CCR-Hub&Spoke/2015/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/CRT-Hub&Spoke Corrigendum No.51",
+    "issue_date": "2023-02-21",
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/irpersonel/Vacancy_Circular/2023/Haulage%20Charge%20for%20movement%20of%20bulk%20cement%20(cement%20in%20loose%20form)%20in%20containers%20dated%2021_02_2023.pdf"
+  },
+  {
+    "file": "CRT_Corrig_50_Haulage_Charge_290422.pdf",
+    "title": "Corrigendum No.50 to Rates Master Circular/CRT-CCR-Hub&Spoke/2015/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/CRT-Hub&Spoke Corrigendum No.50",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/pdf/Haulage-Charge-290422.pdf"
+  },
+  {
+    "file": "WBR_Corrig_09_Continuance_280918.pdf",
+    "title": "Corrigendum No. 9 to RMC/Weighbridge/2014/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/Weighbridge Corrigendum No.9",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates-Letters/2018/Continuance_280918.pdf"
+  },
+  {
+    "file": "WBR_Corrig_08_Corri_8_RMC_Weighbridge_130318.pdf",
+    "title": "Corrigendum No. 8 to RMC/Weighbridge/2014/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/Weighbridge Corrigendum No.8",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/downloads/Freight_Rate_2018/Corri_8_RMC_Weighbridge_130318.pdf"
+  },
+  {
+    "file": "WBR_Corrig_06_Scan_29March.pdf",
+    "title": "Corrigendum No.6 to RMC/Weighbridges/2014/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/Weighbridge Corrigendum No.6",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/Scan_29March.pdf"
+  },
+  {
+    "file": "WBR_Corrig_05_RMC_Weighbridge_301015_Corrigendum_5.pdf",
+    "title": "Corrigendum No. 5 to RMC / Weighbridge / 2014/ 0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/Weighbridge Corrigendum No.5",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/RMC_Weighbridge_301015_Corrigendum-5.pdf"
+  },
+  {
+    "file": "WBR_Corrig_04_RMC_WB_150415_Corrigendum_4.pdf",
+    "title": "Corrigendum No. 4 to RMC/  Weighbridge / 2014 / 0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/Weighbridge Corrigendum No.4",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/RMC_WB_150415_Corrigendum-4.pdf"
+  },
+  {
+    "file": "WBR_Corrig_03_RMC_WB_051114_Corrigendum_3.pdf",
+    "title": "Corrigendum No. 3 to RMC/ Weighbridge / 2014 / 0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/Weighbridge Corrigendum No.3",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/RMC_WB_051114_Corrigendum-3.pdf"
+  },
+  {
+    "file": "WBR_Corrig_02_Permission_for_Weightometer_and_Pre_weighbin_system_of_w.pdf",
+    "title": "Corrigendum No.2 to Rates Master Circular/Provision of Weighbridge/2019/0  dt.11.01.2022",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/Weighbridge Corrigendum No.2",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Master_Circulars/2022/Permission%20for%20Weightometer%20and%20Pre-%20weighbin%20system%20of%20weighment%20in%20private%20sidings.pdf"
+  },
+  {
+    "file": "WBR_Corrig_01_Corri_to_RMC_Weighbridge_090714.pdf",
+    "title": "Corrigendum No. 1 to RMC/Weighbridge / 2014 / 0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/Weighbridge Corrigendum No.1",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/Corri-to-RMC_Weighbridge_090714.pdf"
+  },
+  {
+    "file": "SDG_Corrig_39_Additional_free_time_for_cleaning_activities_of_tank_wag.pdf",
+    "title": "Corrigendum No.39 of Rates Master Circular/Demurrage-Wharfage-Waiver/2016/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/Siding-charging Corrigendum No.39",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2023/Additional%20free%20time%20for%20cleaning%20activities%20of%20tank%20wagons%20in%20private%20sidings%20and%20goods%20sheds.pdf"
+  },
+  {
+    "file": "SDG_Corrig_27_Free_time_for_loading_of_bagged_consignment_in_Open_Wago.pdf",
+    "title": "Corrigendum No.27 to Rates Master Circular/Demurrage-Wharfage-Waiver/2016/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/Siding-charging Corrigendum No.27",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2022/Free%20time%20for%20loading%20of%20bagged%20consignment%20in%20Open%20Wagons%20in%20the%20case%20of%20freight%20terminals%20sidings%20goods%20sheds%20steel%20plants.pdf"
+  },
+  {
+    "file": "SDG_Corrig_25_Additional_free_time_for_cleaning_activities_of_tank_wag.pdf",
+    "title": "Corrigendum No.25 to Rates Master Circular/Demurrage-Wharfage-Waiver/2016/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/Siding-charging Corrigendum No.25",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2022/Additional%20free%20time%20for%20cleaning%20activities%20of%20tank%20wagons%20in%20private%20sidings%20and%20goods%20shed%20in%20case%20of%20edible%20oil%20when%20there%20is%20change%20of%20product.pdf"
+  },
+  {
+    "file": "SDG_Corrig_11_Debit_Credit_Hours_In_Case_Of_Private_Sidings.pdf",
+    "title": "Corrigendum No.11 to Rates Master Circular/Demurrage-Wharfage-Waiver/2016/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/Siding-charging Corrigendum No.11",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2020/Debit%20Credit%20Hours%20In%20Case%20Of%20Private%20Sidings.pdf"
+  },
+  {
+    "file": "SDG_Corrig_02_Permission_for_Weightometer_and_Pre_weighbin_system_of_w.pdf",
+    "title": "Corrigendum No.2 to Rates Master Circular/Provision of Weighbridge/2019/0  dt.11.01.2022",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/Siding-charging Corrigendum No.2",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Master_Circulars/2022/Permission%20for%20Weightometer%20and%20Pre-%20weighbin%20system%20of%20weighment%20in%20private%20sidings.pdf"
+  },
+  {
+    "file": "EPY_Corrig_03_Corrig_3_rmc_200519.pdf",
+    "title": "Corrigendum No.3 to Rates Master Circular/E-Payment/2014/1",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/E-payment Corrigendum No.3",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/downloads/Freight_Marketing_2019/Corrig_3_rmc_200519.pdf"
+  },
+  {
+    "file": "EPY_Corrig_02_Corri_2_RMC_e_payment.pdf",
+    "title": "Corrigendum No. 2 to Rates Master Circular / E-payment / 2014 / 1",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/E-payment Corrigendum No.2",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/Corri_2_RMC_e_payment.pdf"
+  },
+  {
+    "file": "ERD_Corrig_04_e_RD_Submission_of_Letter_of_Credit_LC_in_case_of_goods_.pdf",
+    "title": "Corrigendum No.4 to Rates Master Circular/e-RD/2019/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/eRD Corrigendum No.4",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2022/e-RD%20-%20Submission%20of%20Letter%20of%20Credit%20(LC)%20in%20case%20of%20goods%20traffic%20pertaining%20to%20Bangladesh%20(3).pdf"
+  },
+  {
+    "file": "ERD_Corrig_03_e_RD_Dispensing_with_Physical_submission_of_Forwarding_N.pdf",
+    "title": "Corrigendum No.03 to Rates Master Circularle-RD/2019/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/eRD Corrigendum No.3",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2022/e-RD%20Dispensing%20with%20Physical%20submission%20of%20Forwarding%20Note.pdf"
+  },
+  {
+    "file": "ERD_Corrig_02_Premium_Indent_revision_in_guidelines_dated_11_march_202.pdf",
+    "title": "Premium Indent-revision in guidelies - Corrigendum No.02 to Rates Circular No.32 of 2020",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/eRD Corrigendum No.2",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Freight-Rate-Circular-2021/Premium%20Indent-revision%20in%20guidelines%20dated%2011%20march%202021.pdf"
+  },
+  {
+    "file": "ETR_Corrig_02_Corr_2_eT_RR_310821.pdf",
+    "title": "Corrigendum No.2 to Rates Master Circular/eT-RR/2019/0",
+    "doc_type": "correction_slip",
+    "domain": "goods",
+    "commodity": null,
+    "circular_no": "RMC/eTRR Corrigendum No.2",
+    "issue_date": null,
+    "source_url": "https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Freight-Rate-Circular-2021/Corr-2-eT-RR-310821.pdf"
+  }
 ]

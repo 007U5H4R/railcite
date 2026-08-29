@@ -20,6 +20,14 @@ it('parses an answered tool call', async () => {
   expect(req.tool_choice).toEqual({ type: 'tool', name: 'record_conclusion' });
   expect(req.temperature).toBeUndefined();  // claude-sonnet-5 rejects sampling params — must NOT be sent
 });
+it('answered with no note field → defaults note to [] (never throws)', async () => {
+  // Regression: the tool's input_schema marks `note` optional (only `status` is required), so the
+  // model may return an answered result without it. synthesize() must default it, not ZodError.
+  create.mockResolvedValue(toolUse({ status: 'answered',
+    blocks: [{ text: 'Waiver needs Finance concurrence above Rs.25,000 [1].', citations: [1] }] }));
+  expect(await synthesize('case', SOURCES)).toEqual({ status: 'answered',
+    blocks: [{ text: 'Waiver needs Finance concurrence above Rs.25,000 [1].', citations: [1] }], note: [] });
+});
 it('parses refusal', async () => {
   create.mockResolvedValue(toolUse({ status: 'refused' }));
   expect(await synthesize('case', SOURCES)).toEqual({ status: 'refused' });

@@ -27,7 +27,9 @@ export function buildUserPrompt(caseText: string, sources: PromptSource[]): stri
 
 const Block = z.object({ text: z.string().min(1), citations: z.array(z.number().int()) });
 const ToolInput = z.discriminatedUnion('status', [
-  z.object({ status: z.literal('answered'), blocks: z.array(Block).min(1), note: z.array(Block) }),
+  // `note` is optional in the tool's input_schema (only `status` is required), so the model may
+  // omit it on an answered result; keep Zod in lockstep and let synthesize() default it to [].
+  z.object({ status: z.literal('answered'), blocks: z.array(Block).min(1), note: z.array(Block).optional() }),
   z.object({ status: z.literal('refused') }),
 ]);
 
