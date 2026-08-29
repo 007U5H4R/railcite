@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { ConclusionBlock, SourceView } from '@/lib/types';
 import { CitationChip } from './CitationChip';
+import { analytics } from '@/lib/analytics';
 import styles from './DraftedNote.module.css';
 
 // synthesize.ts's SYSTEM_PROMPT asks the model to open the note with "Sub:"/"Ref:" lines and
@@ -96,6 +97,7 @@ export function DraftedNote({ note, sources, onCite }: {
     try {
       await navigator.clipboard.writeText(buildNoteText(note, sources));
       setCopied(true);
+      analytics.draftNoteCopied();
     } catch {
       /* clipboard unavailable/denied — non-blocking, just no confirmation */
     }
@@ -110,6 +112,7 @@ export function DraftedNote({ note, sources, onCite }: {
     document.body.appendChild(a);
     a.click();
     a.remove();
+    analytics.draftNoteExported();
     setTimeout(() => URL.revokeObjectURL(url), 0);
   };
 

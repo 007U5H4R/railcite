@@ -2,6 +2,7 @@
 import { useCallback, useRef, useState } from 'react';
 import type { QueryRequest, QueryResponse } from '@/lib/types';
 import { getAccessToken } from '@/lib/supabase-browser';
+import { analytics } from '@/lib/analytics';
 
 export type CaseQueryState =
   | { state: 'idle' } | { state: 'loading'; searched: number | null }
@@ -30,6 +31,7 @@ export function useCaseQuery() {
   const submit = useCallback(async (req: QueryRequest) => {
     last.current = req;
     setS({ state: 'loading', searched: null });
+    analytics.caseSubmitted();               // funnel entry — fires on the user's submit, before auth/network
     try {
       fetch('/api/stats').then(r => r.json())
         .then(st => setS(cur => cur.state === 'loading' ? { state: 'loading', searched: st.chunks } : cur))
@@ -43,7 +45,10 @@ export function useCaseQuery() {
       if (!res.ok) { setS({ state: 'error', message: `Request failed (${res.status})` }); return; }
       const data: QueryResponse = await res.json();
       if (data.status === 'answered') {
+        analytics.conclusionGenerated(data.sources.length);   // property is a COUNT, never the citation text
         try { localStorage.setItem('railcite:last', JSON.stringify({ req, data, at: Date.now() })); } catch {}
+      } else {
+        analytics.noRuleFoundShown();                         // honesty signal — a refuse was shown
       }
       setS({ state: 'done', data, caseId: null });
       // Non-blocking: the answer is already on screen; attach the case id once (if) it saves.
