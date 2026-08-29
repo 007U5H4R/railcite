@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getAccessToken } from '@/lib/supabase-browser';
 import type { CaseSummary } from '@/lib/types';
 
@@ -14,34 +14,36 @@ export interface RecentCase {
 
 // R4: fetches GET /api/cases (newest first) and maps rows -> RecentCase. Same return shape
 // as the stub it replaces ({ cases, loading, error }), so HistoryDrawer needs no change.
-export function useRecentCases(): { cases: RecentCase[]; loading: boolean; error: string | null } {
+export function useRecentCases(): {
+  cases: RecentCase[]; loading: boolean; error: string | null; refresh: () => void;
+} {
   const [cases, setCases] = useState<RecentCase[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const token = await getAccessToken();
-        if (!token) { if (!cancelled) setCases([]); return; }       // signed out: no history to show
-        const res = await fetch('/api/cases', { headers: { authorization: `Bearer ${token}` } });
-        if (!res.ok) throw new Error(`Request failed (${res.status})`);
-        const body: { cases: CaseSummary[] } = await res.json();
-        if (cancelled) return;
-        setCases(body.cases.map(r => ({ id: r.id, question: r.question, status: r.status, createdAt: r.created_at })));
-      } catch {
-        if (!cancelled) setError('Failed to load cases');
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
-    return () => { cancelled = true; };
+  // Exposed so callers can re-fetch on demand — the HistoryDrawer calls this each time it
+  // opens, since the drawer is mounted once in the Shell and would otherwise show the list
+  // as it was at app-load (i.e. empty) forever, never reflecting cases added since.
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const token = await getAccessToken();
+      if (!token) { setCases([]); return; }                        // signed out: no history to show
+      const res = await fetch('/api/cases', { headers: { authorization: `Bearer ${token}` } });
+      if (!res.ok) throw new Error(`Request failed (${res.status})`);
+      const body: { cases: CaseSummary[] } = await res.json();
+      setCases(body.cases.map(r => ({ id: r.id, question: r.question, status: r.status, createdAt: r.created_at })));
+    } catch {
+      setError('Failed to load cases');
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  return { cases, loading, error };
+  useEffect(() => { void refresh(); }, [refresh]);                 // initial load
+
+  return { cases, loading, error, refresh };
 }
 
 // Buckets cases into the drawer's date groups. Kept out of the component so R4's real

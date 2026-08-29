@@ -18,8 +18,12 @@ export function HistoryDrawer({ open, onClose, triggerRef }: {
 }) {
   const dialogRef = useRef<HTMLDivElement>(null);
   const [query, setQuery] = useState('');
-  const { cases, loading, error } = useRecentCases();
+  const { cases, loading, error, refresh } = useRecentCases();
   const { user } = useSession();
+
+  // Re-fetch each time the drawer opens so newly-saved cases appear (the drawer is mounted
+  // once in the Shell, so a mount-only fetch would show the app-load snapshot forever).
+  useEffect(() => { if (open) void refresh(); }, [open, refresh]);
 
   useEffect(() => {
     if (!open) return;
