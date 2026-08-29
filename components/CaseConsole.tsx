@@ -1,12 +1,14 @@
 'use client';
-import { useEffect, useMemo, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { CaseInput } from './CaseInput';
 import { EmptyState } from './EmptyState';
 import { AuthGate } from './AuthGate';
 import { TransparencyLine } from './TransparencyLine';
 import { ConclusionCard } from './ConclusionCard';
 import { SourcesPanel } from './SourcesPanel';
+import { DraftedNote } from './DraftedNote';
+import { LineagePanel } from './LineagePanel';
 import { SourceReader } from './SourceReader';
 import { LoadingSkeleton } from './LoadingSkeleton';
 import { ErrorState } from './ErrorState';
@@ -40,6 +42,7 @@ export function CaseConsole() {
   const [text, setText] = useState('');
   const [scope, setScope] = useState<Scope>({ verifiedOnly: false, domain: null });
   const { s, submit, retry, reset, reopen } = useCaseQuery();
+  const router = useRouter();
   const [openSource, setOpenSource] = useState<SourceView | null>(null);      // card click -> reader
   const [activeChunkId, setActiveChunkId] = useState<string | null>(null);    // chip click -> highlight
   const [savedIds, setSavedIds] = useState<Set<string>>(new Set());           // case ids toggled saved
@@ -54,7 +57,9 @@ export function CaseConsole() {
   // re-querying. useSearchParams (not a one-shot window.location read) so clicking a
   // *different* history case while already on /ask — the common path, since the drawer is
   // reachable from every route — re-triggers this without a full page reload.
-  const reopenId = useSearchParams().get('case');
+  const params = useSearchParams();
+  const reopenId = params.get('case');
+  const newSignal = params.get('new');
   useEffect(() => {
     if (!reopenId) return;
     let cancelled = false;
@@ -80,6 +85,27 @@ export function CaseConsole() {
     })();
     return () => { cancelled = true; };
   }, [reopenId, reopen]);
+
+  // "Ask another" (below an answer) and the drawer's "New case" both reset to a clean slate:
+  // idle state, empty field, cursor back in the case field, scrolled to top. Each question is
+  // a discrete case (the previous is saved in History), so the next is a full reset — not a
+  // conversational continuation.
+  const askAnother = useCallback(() => {
+    setText('');
+    reset();
+    requestAnimationFrame(() => {
+      document.querySelector('textarea')?.focus();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }, [reset]);
+
+  // The drawer's "New case" links to /ask?new=1 — a one-shot signal that resets even when
+  // already on /ask, where identical-route navigation would otherwise keep this state intact.
+  useEffect(() => {
+    if (!newSignal) return;
+    askAnother();
+    router.replace('/ask');   // consume the signal so a refresh doesn't re-fire it
+  }, [newSignal, askAnother, router]);
 
   const doSubmit = () => void submit({ case_text: text, verified_only: scope.verifiedOnly, domain: scope.domain });
   const onSignIn = () => { try { localStorage.setItem('railcite:draft', text); } catch {}; void signInWithGoogle(); };
@@ -155,17 +181,32 @@ export function CaseConsole() {
           } : null}
           onRephrase={() => document.querySelector('textarea')?.focus()} />)}
       {s.state === 'done' && s.data.status === 'answered' && (
-        <>
-          <ConclusionCard blocks={s.data.blocks} sources={s.data.sources}
-            onCite={src => setActiveChunkId(src.chunk_id)}
-            isSaved={caseId != null && savedIds.has(caseId)}
-            saveDisabled={caseId == null || savePending}
-            onToggleSave={caseId == null ? null : toggleSave} />
-          <div className={styles.sourcesHead}>
-            Sources <span className={styles.sourcesCount}>{s.data.sources.length}</span>
+        <div className={styles.answerGrid}>
+          <div className={styles.answerMain}>
+            <ConclusionCard blocks={s.data.blocks} sources={s.data.sources}
+              onCite={src => setActiveChunkId(src.chunk_id)}
+              isSaved={caseId != null && savedIds.has(caseId)}
+              saveDisabled={caseId == null || savePending}
+              onToggleSave={caseId == null ? null : toggleSave} />
+            <div className={styles.sourcesHead}>
+              Sources <span className={styles.sourcesCount}>{s.data.sources.length}</span>
+            </div>
+            <SourcesPanel sources={s.data.sources} activeChunkId={activeChunkId} onOpen={setOpenSource} />
+            {/* Lineage sits between the evidence and the note it feeds: sources -> how they
+                supersede/amend each other -> the note drafted from them. */}
+            {s.data.lineage && <LineagePanel lineage={s.data.lineage} />}
+            {s.data.note?.length > 0 && (
+              <DraftedNote note={s.data.note} sources={s.data.sources}
+                onCite={src => setActiveChunkId(src.chunk_id)} />
+            )}
+            <button type="button" className={styles.askAnother} onClick={askAnother}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+              Ask another question
+            </button>
           </div>
-          <SourcesPanel sources={s.data.sources} activeChunkId={activeChunkId} onOpen={setOpenSource} />
-        </>)}
+        </div>)}
       {cachedLast && s.state !== 'done' && (
         <ConclusionCard blocks={cachedLast.blocks} sources={cachedLast.sources} onCite={() => {}} />)}
 

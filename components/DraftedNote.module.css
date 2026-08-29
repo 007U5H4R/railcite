@@ -1,0 +1,160 @@
+/* ==========================================================================
+   DraftedNote — the drafted justification note (Phase 4a). Ported from the
+   mockup's `.note` disclosure (docs/redesign-mockup.html) onto the redesign
+   tokens (app/globals.css). Sits on --surface like ConclusionCard/SourceCard;
+   the doc-inner "well" uses --surface-2 (rails/wells), per the mockup's
+   --card vs --card-2 split. --paper/--surface-2 are always light (LIGHT-ONLY
+   app, html{color-scheme:light} in globals.css) so text here uses --n-800/
+   --n-700, not --text, mirroring conclusion.module.css's own convention.
+   ========================================================================== */
+
+/* ---- The disclosure card ---------------------------------------------- */
+.note {
+  background: var(--surface);
+  border: var(--border-hair);
+  border-radius: var(--r-lg);
+  box-shadow: var(--e-1);
+  margin-top: var(--sp-4);
+}
+
+/* ---- Summary: icon + heading/subtext + chevron ------------------------- */
+.summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-4);
+}
+.summary::-webkit-details-marker { display: none; }
+.summary::marker { content: ''; }
+
+.icon {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: var(--r-sm);
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+  background: var(--accent-weak);
+}
+.icon svg { width: 20px; height: 20px; }
+
+.headText {
+  min-width: 0;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--n-800);
+}
+.subtext {
+  display: block;
+  font-weight: 400;
+  color: var(--text-muted);
+  font-size: 11.5px;
+  margin-top: 1px;
+}
+
+.chevron {
+  margin-left: auto;
+  flex: none;
+  color: var(--text-muted);
+  display: grid;
+  place-items: center;
+  transition: transform 200ms var(--ease-standard);
+}
+.chevron svg { width: 16px; height: 16px; }
+.note[open] .chevron { transform: rotate(180deg); }
+@media (prefers-reduced-motion: reduce) {
+  .chevron { transition: none; }
+}
+
+/* ---- Body: the doc-inner "well" ----------------------------------------- */
+.docWrap { padding: 2px var(--sp-4) var(--sp-4); }
+.docInner {
+  background: var(--surface-2);
+  border-radius: var(--r-md);
+  padding: var(--sp-4) var(--sp-5);
+  line-height: 1.68;
+  font-size: 14px;
+  color: var(--n-700);
+}
+
+/* Sub:/Ref: mono key-value lines */
+.kv {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.kv + .kv { margin-top: 7px; }
+.kv b { color: var(--n-800); font-weight: 600; }
+
+/* Numbered justification points */
+.points {
+  margin: 13px 0 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.point { color: var(--n-800); }
+
+/* Closing trust caveat — always visible, never suppressed */
+.close {
+  margin: 13px 0 0;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ---- Actions: Copy / Export + transient confirmation -------------------- */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-top: var(--sp-4);
+  flex-wrap: wrap;
+}
+.btn,
+.btnSolid {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: background-color 160ms var(--ease-standard), border-color 160ms var(--ease-standard);
+}
+.btn {
+  border: var(--border-hair);
+  background: var(--surface);
+  color: var(--n-800);
+  box-shadow: var(--e-1);
+}
+.btn svg { width: 15px; height: 15px; color: var(--text-muted); }
+.btn:hover { background: var(--accent-weak); border-color: var(--accent); }
+
+/* --accent (#2f7bf0) is only 4.03:1 against white — fine for the icon-only solid buttons
+   elsewhere (goBtn/.act need just the 3:1 non-text floor) but this button carries a 13px
+   text label, which needs the full 4.5:1 AA text threshold. --indigo-700 clears it (5.6:1)
+   while staying visibly "the same blue" one step down the existing hover ramp. */
+.btnSolid {
+  border: 1px solid transparent;
+  background: var(--indigo-700);
+  color: var(--accent-ink);
+  box-shadow: var(--e-accent);
+}
+.btnSolid svg { width: 15px; height: 15px; color: var(--accent-ink); }
+.btnSolid:hover { background: var(--indigo-800); }
+
+/* Transient "Copied ✓" — visible AND announced (aria-live="polite" on the element) */
+.liveHint {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ok-fg);
+  min-height: 1em;
+}

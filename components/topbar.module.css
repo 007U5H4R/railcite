@@ -1,5 +1,8 @@
 /* Header (ported from docs/redesign-mockup.html header.top / .brand / .icbtn).
-   Sticky, translucent glass veil over the pastel ground. The wordmark uses the
+   Sticky FROSTED-GLASS panel over the pastel ground. Earlier this was a gradient that
+   faded to transparent at its lower edge with only an 8px blur, so scrolled content bled
+   through it; now it's an even tint + heavy blur + saturation (refraction) + a drop shadow
+   and lit top edge (depth), so content dissolves cleanly behind it. The wordmark uses the
    two-tone dotless-i tittle technique: a dotless-i stem + a colour-controlled ::after dot
    (blue on Rail's i, --text on Cite's i). Icon button bumped to 44px for touch a11y. */
 .top {
@@ -9,10 +12,18 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 18px 2px 12px;
-  background: linear-gradient(rgba(247, 248, 252, .82), rgba(247, 248, 252, .3) 70%, transparent);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  padding: 16px 16px 13px;
+  /* Translucent tint — opaque enough to obscure scrolled content on its own (in case the
+     compositor drops backdrop-filter), still glassy over the pastel ground. */
+  background: rgba(246, 248, 252, 0.82);
+  /* High blur frosts the scrolled content; saturate+brightness give the glass its refraction. */
+  backdrop-filter: blur(24px) saturate(200%) brightness(1.03);
+  -webkit-backdrop-filter: blur(24px) saturate(200%) brightness(1.03);
+  /* Rounded bottom corners to match the soft-card system (--r-lg = 22px). */
+  border-radius: 0 0 var(--r-lg) var(--r-lg);
+  /* Depth: a soft cast shadow lifting the bar off the content + a lit top edge. */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 14px 34px -16px rgba(24, 54, 120, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 .iconBtn {
   width: 44px; height: 44px;

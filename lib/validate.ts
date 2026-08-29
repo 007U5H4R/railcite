@@ -1,6 +1,8 @@
 import type { ConclusionBlock, SynthesisResult } from './types';
 
-const STRUCTURAL = /^(sub:|ref:|submitted)/i;
+// Structural note lines ("Sub:"/"Ref:"/"Submitted…") are allowed through with zero citations.
+// Exported as the single source of truth — DraftedNote imports this so the two can't drift.
+export const STRUCTURAL = /^(sub:|ref:|submitted)/i;
 
 function clean(citations: number[], sourceCount: number): number[] {
   const seen = new Set<number>(); const out: number[] = [];

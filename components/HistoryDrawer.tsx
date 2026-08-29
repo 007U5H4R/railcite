@@ -77,7 +77,7 @@ export function HistoryDrawer({ open, onClose, triggerRef }: {
           </button>
         </div>
 
-        <Link href="/ask" className={styles.newCase} onClick={onClose}>
+        <Link href="/ask?new=1" className={styles.newCase} onClick={onClose}>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 5v14M5 12h14" />
           </svg>
