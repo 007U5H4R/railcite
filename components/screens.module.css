@@ -1,0 +1,126 @@
+/* ==========================================================================
+   Home / Saved / You screens (R4d–f). Shared styles for the three real
+   screens, on-token throughout (app/globals.css). One module serving several
+   small related components — same precedent as auth.module.css (AccountChip
+   + AuthGate). Case-row visuals are NOT redefined here: CaseListCard reuses
+   HistoryDrawer.module.css's .item/.dot/.q directly; the signed-out hero
+   reuses console.module.css's .emptyCard/.h1/.sub + auth.module.css's
+   .googleBtn (see SignInPrompt.tsx).
+   ========================================================================== */
+
+/* ---- Home: corpus stat line + primary "New case" CTA -------------------- */
+.statLine {
+  margin: 2px 0 var(--sp-4);
+  color: var(--text-muted);
+  font-size: var(--fs-caption);
+}
+.primaryCta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  width: 100%;
+  min-height: 52px;
+  margin-bottom: var(--sp-5);
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-radius: var(--r-md);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: var(--e-accent);
+  transition: background-color 160ms var(--ease-standard);
+}
+.primaryCta:hover { background: var(--indigo-700); }
+.primaryCta svg { width: 20px; height: 20px; }
+
+.sectionGap { margin-top: var(--sp-5); }
+
+/* ---- Case list card (Home's recent cases, Saved's bookmarks) ------------ */
+.listCard {
+  background: var(--surface);
+  border: var(--border-hair);
+  border-radius: var(--r-lg);
+  box-shadow: var(--e-1);
+  padding: var(--sp-2);
+}
+.row { display: flex; align-items: center; gap: var(--sp-2); }
+.row > a { flex: 1; min-width: 0; }
+
+.listEmpty {
+  background: var(--surface);
+  border: var(--border-hair);
+  border-radius: var(--r-lg);
+  box-shadow: var(--e-1);
+  padding: var(--sp-6);
+  text-align: center;
+}
+.listEmptyText { margin: 0; color: var(--text-muted); font-size: var(--fs-body); }
+
+.hint {
+  margin: 2px 2px 0;
+  padding-top: var(--sp-2);
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: var(--fs-caption);
+}
+
+/* ---- Un-save control (Saved screen row action) --------------------------- */
+.unsaveBtn {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-sm);
+  border: 0;
+  background: var(--accent-weak);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background-color 160ms var(--ease-standard);
+}
+.unsaveBtn:hover { background: var(--indigo-200); }
+.unsaveBtn svg { width: 18px; height: 18px; }
+
+/* ---- You: profile card ---------------------------------------------------- */
+.profileCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: var(--surface);
+  border: var(--border-hair);
+  border-radius: var(--r-lg);
+  box-shadow: var(--e-1);
+  padding: var(--sp-6) var(--sp-5);
+}
+.avatarLg { width: 76px; height: 76px; border-radius: var(--r-full); object-fit: cover; }
+.avatarLgFallback {
+  width: 76px; height: 76px;
+  border-radius: var(--r-full);
+  background: var(--accent-weak);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 28px;
+}
+.profileName { margin: var(--sp-3) 0 0; font-size: var(--fs-h3); font-weight: 700; color: var(--text); }
+.profileEmail { margin: 2px 0 0; color: var(--text-muted); font-size: var(--fs-body); }
+.signOutRow { margin-top: var(--sp-4); }
+.inlineError { margin: var(--sp-2) 0 0; color: var(--err-fg); font-size: var(--fs-caption); }
+
+/* ---- You: About RailCite card --------------------------------------------- */
+.aboutCard {
+  margin-top: var(--sp-5);
+  background: var(--surface);
+  border: var(--border-hair);
+  border-radius: var(--r-lg);
+  box-shadow: var(--e-1);
+  padding: var(--sp-5);
+}
+.aboutH { margin: 0 0 var(--sp-3); font-size: var(--fs-h3); font-weight: 700; color: var(--text); }
+.aboutList { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-3); }
+.aboutItem { display: flex; align-items: flex-start; gap: var(--sp-3); color: var(--text); font-size: var(--fs-body); line-height: 1.5; }
+.aboutIcon { flex: none; width: 20px; height: 20px; margin-top: 2px; color: var(--ok-marker); }
+.aboutIcon svg { width: 100%; height: 100%; }

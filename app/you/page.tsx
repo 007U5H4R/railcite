@@ -1,9 +1,7 @@
-// You route. Minimal real shell for now (R4 fills in the account + preferences screen).
+import { YouScreen } from '@/components/YouScreen';
+
+// You route (R4f) — the account screen: Google profile, sign out, and RailCite's trust
+// posture. Renders inside the app Shell provided by app/layout.tsx.
 export default function YouPage() {
-  return (
-    <section className="route-screen" aria-labelledby="you-title">
-      <h1 id="you-title" className="route-title">You</h1>
-      <p className="route-lede">Your account, sign-in, and RailCite preferences.</p>
-    </section>
-  );
+  return <YouScreen />;
 }
