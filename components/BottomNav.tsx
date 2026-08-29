@@ -31,10 +31,10 @@ const TABS = [
   { href: '/you', label: 'You', icon: IconYou },
 ] as const;
 
-export function BottomNav() {
+export function BottomNav({ inert }: { inert?: boolean }) {
   const pathname = usePathname();
   return (
-    <nav className={styles.nav} aria-label="Primary">
+    <nav className={styles.nav} aria-label="Primary" inert={inert}>
       <div className={styles.bar}>
         {TABS.map(t => {
           const active = pathname === t.href;

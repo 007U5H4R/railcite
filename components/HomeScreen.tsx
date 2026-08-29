@@ -67,7 +67,7 @@ export function HomeScreen() {
       </Link>
 
       <div className={consoleStyles.sourcesHead}>
-        Recent cases {!loading && !error && <span className={consoleStyles.sourcesCount}>{cases.length}</span>}
+        Recent cases {!loading && !error && <span className={consoleStyles.sourcesCount}>{Math.min(cases.length, CASE_CAP)}</span>}
       </div>
       <CaseListCard
         cases={cases.slice(0, CASE_CAP)}

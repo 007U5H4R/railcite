@@ -45,13 +45,13 @@ export function Shell({ children }: { children: React.ReactNode }) {
         </svg>
       </div>
 
-      <div className={styles.app}>
+      <div className={styles.app} inert={drawerOpen}>
         <TopBar onOpenDrawer={openDrawer} toggleRef={toggleRef} />
         <main className={styles.main}>{children}</main>
         <TrustFooter />
       </div>
 
-      <BottomNav />
+      <BottomNav inert={drawerOpen} />
       <HistoryDrawer open={drawerOpen} onClose={closeDrawer} triggerRef={toggleRef} />
     </>
   );
