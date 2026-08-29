@@ -5,14 +5,32 @@
    could overflow a phone. box-sizing:border-box is set globally.
    ========================================================================== */
 
-/* ---- Case input card --------------------------------------------------- */
-.inputWrap {
+/* ---- Case field (ported from mockup .casefield) ------------------------ */
+.casefield {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
   width: 100%;
   background: var(--surface);
   border: var(--border-hair);
-  border-radius: var(--r-md);
+  border-radius: var(--r-lg);
   box-shadow: var(--e-1);
-  padding: var(--sp-5);
+  padding: var(--sp-3) var(--sp-4);
+}
+
+.caseCol {
+  flex: 1;
+  min-width: 0;
+}
+
+.caseLabel {
+  display: block;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 11.5px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
 }
 
 .textarea {
@@ -25,59 +43,53 @@
   background: transparent;
   color: var(--text);
   font-family: inherit;                 /* sans body — serifless */
-  font-size: var(--fs-read);
-  line-height: 1.6;
+  font-size: var(--fs-body);
+  font-weight: 500;
+  line-height: 1.4;
   padding: 0;
-  /* Autosize where supported; rows={4} + min-height is the fallback. */
+  /* Autosize where supported; rows={1} is the fallback — compact like the mockup's
+     single-line casefield, but free to grow for a long, multi-sentence case. */
   field-sizing: content;
-  min-height: 7.5rem;
+  min-height: 1.4em;
 }
-.textarea::placeholder { color: var(--text-muted); }
+.textarea::placeholder { color: var(--text-muted); font-weight: 400; }
 .textarea:disabled { opacity: 0.6; cursor: not-allowed; }
 
-.inputBar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--sp-3);
-  margin-top: var(--sp-4);
-}
-
-.hint {
-  color: var(--text-muted);
-  font-size: var(--fs-caption);
-}
-
-.primaryBtn {
-  flex-shrink: 0;
-  height: 48px;
-  padding: 0 var(--sp-5);
-  border: none;
+.goBtn {
+  flex: none;
+  width: 44px;
+  height: 44px;
   border-radius: var(--r-sm);
+  border: none;
   background: var(--accent);
-  color: #fff;
-  font-family: inherit;
-  font-size: var(--fs-body);
-  font-weight: 600;
-  white-space: nowrap;
+  color: var(--accent-ink);
+  display: grid;
+  place-items: center;
   cursor: pointer;
+  box-shadow: var(--e-accent);
   transition: background 160ms var(--ease-standard);
 }
-.primaryBtn:hover:not(:disabled) { background: var(--indigo-700); }
-.primaryBtn:disabled {
+.goBtn svg { width: 18px; height: 18px; }
+.goBtn:hover:not(:disabled) { background: var(--indigo-700); }
+.goBtn:disabled {
   background: var(--n-300);
   color: var(--n-500);
   cursor: not-allowed;
+  box-shadow: none;
 }
 
-/* ---- Empty state — Bholu greeter + hero ------------------------------- */
-.empty {
+/* ---- Empty state — Bholu greeter + hero, in a white soft-card ---------- */
+.emptyCard {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--sp-5);
-  padding-top: var(--sp-8);
+  margin-top: var(--sp-4);
+  padding: var(--sp-8) var(--sp-5) var(--sp-6);
+  background: var(--surface);
+  border: var(--border-hair);
+  border-radius: var(--r-lg);
+  box-shadow: var(--e-1);
   text-align: center;
 }
 
@@ -120,7 +132,7 @@
   padding: var(--sp-4);
   border: var(--border-hair);
   border-radius: var(--r-md);
-  background: var(--surface);
+  background: var(--surface-2);
   color: var(--text);
   font-family: inherit;
   font-size: var(--fs-body);
@@ -143,39 +155,8 @@
   color: var(--text-muted);
 }
 
-/* ---- Scope rail -------------------------------------------------------- */
-.rail {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-3);
-}
-
-.railHeading {
-  margin: 0 0 var(--sp-2);
-  font-size: var(--fs-caption);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
-}
-
-.railRow {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--sp-2);
-  min-height: 44px;
-  font-size: var(--fs-body);
-  color: var(--text);
-}
-
-.railNote {
-  color: var(--text-muted);
-  font-size: var(--fs-caption);
-}
-
 /* ---- Filter pills (ported from mockup .filters/.pill) ------------------- */
-/* Real <button>s carrying ScopeRail's verified-only toggle + domain single-select.
+/* Real <button>s carrying the verified-only toggle + domain single-select.
    The row scrolls horizontally within itself (no page overflow at 375px). */
 .filters {
   display: flex;
@@ -203,13 +184,15 @@
   cursor: pointer;
 }
 .pill svg { width: 15px; height: 15px; }
+/* Active state is a SOFT blue, not saturated — saturated blue is reserved for the
+   single primary action (the casefield's go button); an active filter pill must not
+   compete with it (folded-in /impeccable critique, reconciled in R3). */
 .pillOn {
-  background: var(--accent);
-  color: var(--accent-ink);
-  border-color: transparent;
-  box-shadow: 0 5px 14px rgba(47, 123, 240, .32);
+  background: var(--accent-weak);
+  color: var(--accent);
+  border-color: var(--accent);
 }
-.pillOn svg { color: var(--accent-ink); }
+.pillOn svg { color: var(--accent); }
 
 /* ---- Inline "Sources" section header (answered state) ------------------- */
 .sourcesHead {

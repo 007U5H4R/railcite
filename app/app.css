@@ -5,7 +5,7 @@
 .trust-footer {
   text-align: center;
   color: var(--text-muted);
-  font-size: var(--fs-caption);
+  font-size: 13px;              /* explicit AA floor — --fs-caption can dip under 12.5px at narrow widths */
   line-height: 1.5;
   margin: var(--sp-5) auto var(--sp-1);
   max-width: 60ch;

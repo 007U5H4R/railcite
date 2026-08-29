@@ -1,6 +1,5 @@
 'use client';
 import { useEffect, useMemo, useState } from 'react';
-import { type Scope } from './ScopeRail';
 import { CaseInput } from './CaseInput';
 import { EmptyState } from './EmptyState';
 import { AuthGate } from './AuthGate';
@@ -19,7 +18,12 @@ import styles from './console.module.css';
 
 type AnsweredResponse = Extract<QueryResponse, { status: 'answered' }>;
 
-// Domain filter options (single-select). null = all domains. Ported from ScopeRail's <select>.
+// Scope filter state (verified-only + domain single-select). Was ScopeRail's exported
+// type; ScopeRail itself was retired in R3 (superseded by the filter pills rendered
+// directly below), so the type now lives here, its sole consumer.
+export interface Scope { verifiedOnly: boolean; domain: string | null }
+
+// Domain filter options (single-select). null = all domains.
 const DOMAINS: { label: string; value: string | null }[] = [
   { label: 'All domains', value: null },
   { label: 'Goods', value: 'goods' },
