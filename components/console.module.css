@@ -220,3 +220,28 @@
   border-radius: 20px;
   padding: 2px 9px;
 }
+
+/* ---- "Ask another question" — closes an answer, resets to a fresh case ----
+   Secondary (the case field's go button is the single primary blue). --indigo-700
+   text clears AA (5.6:1) where bare --accent (4.03:1) would fail under a label. */
+.askAnother {
+  display: flex;
+  width: fit-content;
+  margin: var(--sp-5) auto var(--sp-2);
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 20px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--indigo-700);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--e-1);
+  cursor: pointer;
+  transition: background 160ms var(--ease-standard), border-color 160ms var(--ease-standard);
+}
+.askAnother svg { width: 17px; height: 17px; }
+.askAnother:hover { background: var(--accent-weak); border-color: var(--accent); }
