@@ -194,13 +194,12 @@
 }
 .pillOn svg { color: var(--accent); }
 
-/* ---- Answered layout: answer column + lineage aside (Phase 4b) ----------
-   Mobile-first: a single column — the lineage panel stacks below the drafted
-   note. The desktop two-column split (answer left, lineage right) is layered on
-   in the Shell's desktop 3-pane media query, once there's width to justify it. */
+/* ---- Answered layout (Phase 4b) ----------------------------------------
+   A single calm column: conclusion, sources, then the lineage timeline, then
+   the drafted note. (The desktop 3-pane was intentionally dropped — the stacked
+   single column tested cleaner.) */
 .answerGrid { display: block; }
 .answerMain { min-width: 0; }
-.answerAside { min-width: 0; }
 
 /* ---- Inline "Sources" section header (answered state) ------------------- */
 .sourcesHead {

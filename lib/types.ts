@@ -26,16 +26,24 @@ export interface ConclusionBlock { text: string; citations: number[] }  // ns in
 
 export interface QueryMeta { searched: number; matched: number; above_threshold: number }
 
+export type LineageKind = 'supersedes' | 'amends';
+export interface LineageRelation {
+  kind: LineageKind;
+  target_document_id: string;   // the OLDER document this one supersedes / amends
+  note: string | null;          // what the relationship changes (e.g. which paras)
+}
 export interface LineageNode {
   document_id: string;
   circular_no: string | null;
   issue_date: string | null;
   title: string;
   status: 'in_force' | 'superseded';
-  relation_to_prev: 'supersedes' | 'amends' | null;  // relation to the node below it
-  note: string | null;
+  // Outgoing relations to older documents. >1 = a branch (this doc relates to several); [] = a
+  // leaf (nothing older). Each relation names its target explicitly, so no relationship is ever
+  // dropped and the UI never implies a chain that isn't in the data.
+  relations: LineageRelation[];
 }
-export interface LineageView { nodes: LineageNode[] }   // ordered newest (in_force) first
+export interface LineageView { nodes: LineageNode[] }   // all docs in the cited component(s), newest-first
 
 export type QueryResponse =
   | { status: 'answered'; blocks: ConclusionBlock[]; note: ConclusionBlock[];

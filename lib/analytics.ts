@@ -19,6 +19,10 @@ export function initAnalytics(): void {
     track_pageview: false,   // SPA; we don't emit pageviews
     persistence: 'localStorage',
     ignore_dnt: false,       // honor the browser's Do-Not-Track signal
+    // mixpanel attaches $current_url/$referrer to every event by default; on /ask?case=<uuid>
+    // that would ship a case UUID. Blacklist them so NO URL/referrer ever leaves — keeping the
+    // "only a numeric count leaves" guarantee literally true.
+    property_blacklist: ['$current_url', '$referrer', '$initial_referrer'],
   });
   ready = true;
 }

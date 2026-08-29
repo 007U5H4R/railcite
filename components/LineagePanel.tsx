@@ -4,14 +4,19 @@ import { StatusBadge } from './StatusBadge';
 import styles from './LineagePanel.module.css';
 
 // Supersession / amendment lineage for the documents an answer cites (Phase 4b). Renders the
-// curated chain from getLineage() as a vertical timeline, newest / still-in-force at the top.
-// Legal standing is carried by the shared StatusBadge (icon + color + text — never color alone)
-// plus a struck title for superseded docs. The relation between a node and the one below it
-// ("amends" / "supersedes") sits on the connector. Deterministic, curated data — this panel can
-// only show relationships the corpus actually records.
+// curated graph from getLineage() as a vertical list, newest / still-in-force at the top. Each
+// node shows its legal standing via the shared StatusBadge (icon + color + text, never color
+// alone) — with a struck title when superseded — and each of its relations names the SPECIFIC
+// document it supersedes or amends, plus what changed. Branching (a doc with several relations)
+// and multiple disjoint chains both render without dropping anything, and no chain is implied
+// that isn't in the data. Curated data only — this can only show relationships the corpus records.
 export function LineagePanel({ lineage }: { lineage: LineageView }) {
   if (!lineage.nodes.length) return null;
   const lastIdx = lineage.nodes.length - 1;
+  const titleOf = (id: string) => {
+    const n = lineage.nodes.find(x => x.document_id === id);
+    return n ? (n.circular_no ?? n.title) : 'a related document';
+  };
 
   return (
     <aside className={styles.lineage} aria-label="Document lineage">
@@ -37,17 +42,17 @@ export function LineagePanel({ lineage }: { lineage: LineageView }) {
             <div className={styles.body}>
               <div className={styles.docTitle}>{n.circular_no ?? n.title}</div>
               <div className={styles.metaRow}>
-                <StatusBadge kind={n.status === 'in_force' ? 'in_force' : 'superseded'} />
+                <StatusBadge kind={n.status} />
                 {n.issue_date && <span className={`${styles.date} mono`}>{n.issue_date}</span>}
               </div>
-              {n.relation_to_prev && i < lastIdx && (
-                <div className={styles.relation}>
+              {n.relations.map((rel, j) => (
+                <div key={j} className={styles.relation}>
                   <p className={styles.relationLabel}>
-                    <span aria-hidden="true">↓ </span>{n.relation_to_prev} the document below
+                    <span aria-hidden="true">↓ </span>{rel.kind} <b>{titleOf(rel.target_document_id)}</b>
                   </p>
-                  {n.note && <p className={styles.relationNote}>{n.note}</p>}
+                  {rel.note && <p className={styles.relationNote}>{rel.note}</p>}
                 </div>
-              )}
+              ))}
             </div>
           </li>
         ))}

@@ -66,9 +66,12 @@
 .docTitle { font-weight: 600; font-size: 13.5px; color: var(--n-800); overflow-wrap: anywhere; }
 .metaRow { display: flex; align-items: center; flex-wrap: wrap; gap: var(--sp-2); margin-top: 6px; }
 .date { font-size: 12px; color: var(--text-muted); }
-.relation { margin: 7px 0 0; }
-.relationLabel { margin: 0; font-size: 12px; font-weight: 500; color: var(--text-muted); }
-.relationNote { margin: 3px 0 0; font-size: 12px; line-height: 1.5; color: var(--n-500); overflow-wrap: anywhere; }
+.relation { margin: 8px 0 0; }
+.relationLabel { margin: 0; font-size: 12px; font-weight: 500; color: var(--text-muted); overflow-wrap: anywhere; }
+.relationLabel b { color: var(--n-800); font-weight: 600; }   /* the specific related document */
+/* Body ink, not a footnote: this line is the substance (which paras changed), so it shouldn't
+   be the faintest thing in the panel. */
+.relationNote { margin: 3px 0 0; font-size: 12px; line-height: 1.55; color: var(--n-700); overflow-wrap: anywhere; }
 
 /* Superseded: muted dot + struck title. Color only REINFORCES — the StatusBadge
    already states "Superseded" in text, so this is never color-alone. */

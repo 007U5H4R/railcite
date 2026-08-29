@@ -27,23 +27,31 @@ async function persistCase(req: QueryRequest, data: QueryResponse, token: string
 export function useCaseQuery() {
   const [s, setS] = useState<CaseQueryState>({ state: 'idle' });
   const last = useRef<QueryRequest | null>(null);
+  // Monotonic generation. Each submit captures the current value; reset/reopen/a newer submit
+  // bump it, so an in-flight request that finds the generation changed drops its result rather
+  // than overwriting fresh state (e.g. the drawer's "New case" clicked mid-load).
+  const gen = useRef(0);
 
   const submit = useCallback(async (req: QueryRequest) => {
+    const myGen = ++gen.current;
     last.current = req;
     setS({ state: 'loading', searched: null });
     analytics.caseSubmitted();               // funnel entry — fires on the user's submit, before auth/network
     try {
       fetch('/api/stats').then(r => r.json())
-        .then(st => setS(cur => cur.state === 'loading' ? { state: 'loading', searched: st.chunks } : cur))
+        .then(st => setS(cur => (gen.current === myGen && cur.state === 'loading') ? { state: 'loading', searched: st.chunks } : cur))
         .catch(() => {});
       const token = await getAccessToken();
+      if (gen.current !== myGen) return;                                       // superseded while authing
       if (!token) { setS({ state: 'auth_required' }); return; }
       const res = await fetch('/api/query', { method: 'POST',
         headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
         body: JSON.stringify(req) });
+      if (gen.current !== myGen) return;                                       // superseded while querying
       if (res.status === 401) { setS({ state: 'auth_required' }); return; }
       if (!res.ok) { setS({ state: 'error', message: `Request failed (${res.status})` }); return; }
       const data: QueryResponse = await res.json();
+      if (gen.current !== myGen) return;                                       // superseded — don't show/count a stale answer
       if (data.status === 'answered') {
         analytics.conclusionGenerated(data.sources.length);   // property is a COUNT, never the citation text
         try { localStorage.setItem('railcite:last', JSON.stringify({ req, data, at: Date.now() })); } catch {}
@@ -53,17 +61,18 @@ export function useCaseQuery() {
       setS({ state: 'done', data, caseId: null });
       // Non-blocking: the answer is already on screen; attach the case id once (if) it saves.
       void persistCase(req, data, token).then(id => {
-        if (!id) return;
+        if (!id || gen.current !== myGen) return;
         setS(cur => cur.state === 'done' && cur.data === data ? { ...cur, caseId: id } : cur);
       });
-    } catch { setS({ state: 'error', message: 'Network error — check your connection.' }); }
+    } catch { if (gen.current === myGen) setS({ state: 'error', message: 'Network error — check your connection.' }); }
   }, []);
 
   const retry = useCallback(() => { if (last.current) void submit(last.current); }, [submit]);
-  const reset = useCallback(() => setS({ state: 'idle' }), []);
+  const reset = useCallback(() => { gen.current++; setS({ state: 'idle' }); }, []);
   // R4: rehydrate a past case (from history/saved) without re-querying — see CaseConsole's
-  // `?case=<id>` handling.
+  // `?case=<id>` handling. Bumps the generation so any in-flight submit can't clobber it.
   const reopen = useCallback((caseId: string, data: QueryResponse) => {
+    gen.current++;
     last.current = null;
     setS({ state: 'done', data, caseId });
   }, []);

@@ -3,16 +3,15 @@ import { useEffect, useMemo, useState } from 'react';
 import type { ConclusionBlock, SourceView } from '@/lib/types';
 import { CitationChip } from './CitationChip';
 import { analytics } from '@/lib/analytics';
+import { STRUCTURAL } from '@/lib/validate';
 import styles from './DraftedNote.module.css';
 
-// synthesize.ts's SYSTEM_PROMPT asks the model to open the note with "Sub:"/"Ref:" lines and
-// close with "Submitted for consideration." — lib/validate.ts lets those structural blocks
-// through even with zero citations (`STRUCTURAL = /^(sub:|ref:|submitted)/i`). This mirrors
-// that same regex (duplicated, not imported — validate.ts exports nothing and this task may
-// not touch lib/) so the numbered body below only ever gets the substantive, cited points;
-// the "Ref:" line is NOT taken from the model's own prose (which is unverified free text) —
-// it's rebuilt here from real SourceView data, so it can never cite something ungrounded.
-const STRUCTURAL_RE = /^(sub:|ref:|submitted)/i;
+// synthesize.ts's SYSTEM_PROMPT opens the note with "Sub:"/"Ref:" lines and closes with
+// "Submitted for consideration." — lib/validate.ts lets those structural blocks through with
+// zero citations, and now EXPORTS the STRUCTURAL regex we reuse here (single source of truth,
+// so the two can't drift) to keep the numbered body below to the substantive, cited points.
+// The "Ref:" line is NOT taken from the model's own prose (unverified free text) — it's rebuilt
+// from real SourceView data, so it can never cite something ungrounded.
 
 function stripSubLabel(text: string): string {
   return text.trim().replace(/^sub:\s*/i, '').trim();
@@ -42,7 +41,7 @@ function parseNote(note: ConclusionBlock[], sources: SourceView[]): ParsedNote {
   // Defense in depth (mirrors ConclusionCard): drop structural lines and any block that
   // slipped through validation without a real citation — extractive-only, every point here
   // must trace to a source.
-  const contentBlocks = note.filter(b => !STRUCTURAL_RE.test(b.text.trim()) && b.citations.length > 0);
+  const contentBlocks = note.filter(b => !STRUCTURAL.test(b.text.trim()) && b.citations.length > 0);
   const citedNs = [...new Set(contentBlocks.flatMap(b => b.citations))]
     .filter(n => byN.has(n)).sort((a, b) => a - b);
   const citedSources = citedNs.map(n => byN.get(n)!);
