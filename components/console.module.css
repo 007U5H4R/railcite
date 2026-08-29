@@ -173,3 +173,59 @@
   color: var(--text-muted);
   font-size: var(--fs-caption);
 }
+
+/* ---- Filter pills (ported from mockup .filters/.pill) ------------------- */
+/* Real <button>s carrying ScopeRail's verified-only toggle + domain single-select.
+   The row scrolls horizontally within itself (no page overflow at 375px). */
+.filters {
+  display: flex;
+  gap: 9px;
+  overflow-x: auto;
+  padding: 2px 2px 6px;
+  margin: 8px 0 6px;
+  scrollbar-width: none;
+}
+.filters::-webkit-scrollbar { display: none; }
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 22px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  box-shadow: var(--e-1);
+  cursor: pointer;
+}
+.pill svg { width: 15px; height: 15px; }
+.pillOn {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: transparent;
+  box-shadow: 0 5px 14px rgba(47, 123, 240, .32);
+}
+.pillOn svg { color: var(--accent-ink); }
+
+/* ---- Inline "Sources" section header (answered state) ------------------- */
+.sourcesHead {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 18px 2px 12px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+.sourcesCount {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-weak);
+  border-radius: 20px;
+  padding: 2px 9px;
+}

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Poppins, Quicksand, IBM_Plex_Mono } from 'next/font/google';
 import './globals.css'; import './app.css';
+import { Shell } from '@/components/Shell';
 
 const sans = Poppins({ subsets:['latin'], weight:['400','500','600','700'], variable:'--font-sans' });
 const display = Quicksand({ subsets:['latin'], weight:['500','600','700'], variable:'--font-display' });
@@ -14,7 +15,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${sans.variable} ${display.variable} ${mono.variable}`}>{children}</body>
+      <body className={`${sans.variable} ${display.variable} ${mono.variable}`}>
+        <Shell>{children}</Shell>
+      </body>
     </html>
   );
 }
