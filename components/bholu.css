@@ -1,23 +1,56 @@
-/* Bholu mascot — the supplied guard-elephant image (public/bholu.png). Decorative, narrow use
-   (empty-state greeter + offline banner). Gentle, reduced-motion-respecting entrance; the offline
-   variant is dimmed + warmed so the cool-green lantern reads as a degraded/amber state. */
+/* Bholu mascot — the supplied guard-elephant (public/bholu.png) + the looping "lantern signal"
+   video (public/bholu-signal.mp4). Decorative, narrow use (empty-state greeter + offline banner). */
+
 .bholu {
   max-width: 100%;
   height: auto;
   user-select: none;
   -webkit-user-drag: none;
 }
+
+/* Greeter: the looping lantern-signal video, with a still-PNG fallback for reduced-motion.
+   Both render at the container's width; the video's white background blends into the white card. */
 .bholu-greet {
-  animation: bholu-rise 620ms cubic-bezier(0, 0, 0.2, 1) both;
+  display: inline-block;
+  line-height: 0;
+  max-width: 100%;
+  animation: bholu-fade 500ms ease-out both;   /* gentle opacity entrance (no positional motion) */
 }
-@keyframes bholu-rise {
-  from { opacity: 0; transform: translateY(10px) scale(0.97); }
-  to   { opacity: 1; transform: none; }
+.bholu-video,
+.bholu-fallback {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  -webkit-user-drag: none;
 }
+.bholu-fallback { display: none; }             /* the video is the default */
+
+/* Feather the video's rectangular edges so its near-white background dissolves into the
+   white card (no visible border). The clip is cropped to leave a ~5.4% pure-background
+   margin, so a 5% edge fade dissolves the rectangle without touching the mascot. */
+.bholu-video {
+  -webkit-mask-image:
+    linear-gradient(to right,  transparent 0, #000 5%, #000 95%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 5%, #000 95%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right,  transparent 0, #000 5%, #000 95%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 5%, #000 95%, transparent 100%);
+  mask-composite: intersect;
+}
+
+@keyframes bholu-fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* Reduced-motion: no video, no entrance — just the still mascot. */
+@media (prefers-reduced-motion: reduce) {
+  .bholu-greet { animation: none; }
+  .bholu-video { display: none; }
+  .bholu-fallback { display: block; }
+}
+
+/* Offline variant: dimmed + warmed so the cool-green lantern reads as a degraded/amber state. */
 .bholu-offline {
   filter: grayscale(0.3) sepia(0.35) saturate(1.25) brightness(0.95);
   opacity: 0.9;
-}
-@media (prefers-reduced-motion: reduce) {
-  .bholu-greet { animation: none; }
 }
