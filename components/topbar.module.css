@@ -1,0 +1,59 @@
+/* Header (ported from docs/redesign-mockup.html header.top / .brand / .icbtn).
+   Sticky, translucent glass veil over the pastel ground. The wordmark uses the
+   two-tone dotless-i tittle technique: a dotless-i stem + a colour-controlled ::after dot
+   (blue on Rail's i, --text on Cite's i). Icon button bumped to 44px for touch a11y. */
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 2px 12px;
+  background: linear-gradient(rgba(247, 248, 252, .82), rgba(247, 248, 252, .3) 70%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.iconBtn {
+  width: 44px; height: 44px;
+  border-radius: 13px;
+  border: 0;
+  background: var(--surface);
+  color: var(--text-muted);
+  box-shadow: var(--e-1);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.iconBtn svg { width: 19px; height: 19px; }
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -.02em;
+  color: var(--text);
+}
+.wm { white-space: nowrap; line-height: 1; }   /* one flex item → the gap can't split RailCite */
+.c2 { color: var(--accent); }
+.diBlue, .diDark { position: relative; display: inline-block; }
+.diBlue::after, .diDark::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: .13em;
+  width: .15em; height: .15em;
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+.diBlue::after { background: var(--accent); }   /* i in "Rail" → blue dot */
+.diDark::after { background: var(--text); }      /* i in "Cite" → black dot */
+.mark {
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+  filter: drop-shadow(0 2px 4px rgba(47, 123, 240, .24));
+}
+.glyph { width: 38px; height: 38px; display: block; }
+.spacer { flex: 1; }

@@ -1,0 +1,53 @@
+/* Lifted-knob bottom nav (ported from docs/redesign-mockup.html .nav/.bar/.tab/.knob).
+   Active tab = a blue knob lifted above the bar, cradled by a white ring; blue bottom
+   edge on the bar via the first box-shadow. On-token; ≥44px targets via the global rule. */
+.nav {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 40;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  padding: 0 0 max(14px, env(safe-area-inset-bottom));
+}
+.bar {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  width: min(430px, calc(100% - 28px));
+  margin: 0 14px;
+  background: var(--surface);
+  border-radius: 26px;
+  box-shadow: 0 5px 0 0 var(--accent-2), var(--e-2);
+  pointer-events: auto;
+}
+.tab {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 13px 0 11px;
+  color: var(--text-muted);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .01em;
+  text-decoration: none;
+}
+.tab svg { width: 23px; height: 23px; }
+.lb { line-height: 1; }
+.active { color: var(--accent); }
+.knob {
+  width: 52px; height: 52px;
+  border-radius: 17px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(150deg, var(--accent), var(--accent-2));
+  box-shadow: 0 0 0 6px var(--surface), 0 12px 22px rgba(47, 123, 240, .5);
+  transform: translateY(-20px);
+  margin-bottom: -13px;
+}
+.knob svg { width: 25px; height: 25px; }

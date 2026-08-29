@@ -2,20 +2,33 @@
    Five-state completion (Task 20) — refuse, error, loading, offline.
    Tokens per Design.md §2/§4 (see app/globals.css). NEVER hardcode colors.
 
-   §0 discipline: the REFUSE surface is DELIBERATELY NEUTRAL — it uses only
-   `--refuse-*` and neutral role tokens. It must contain NO red (`--err-*`)
-   anywhere. The error card is the app's ONLY red surface.
+   §0 discipline: the REFUSE surface is DELIBERATELY NEUTRAL — like every other
+   content card it sits on `--surface` (white); the `--refuse-*` neutral-slate
+   tokens are confined to its icon circle and sub-copy. It must contain NO red
+   (`--err-*`) anywhere. The error card is the app's ONLY red/tinted surface.
    ========================================================================== */
 
 /* ---- REFUSE: neutral gravity, zero red, no mascot ------------------------- */
 .refuse {
   margin-top: var(--sp-5);
   padding: var(--sp-6);
-  background: var(--refuse-bg);
-  border: 1px solid var(--refuse-brd);
-  border-radius: var(--r-md);
+  background: var(--surface);
+  border: var(--border-hair);
+  border-radius: var(--r-lg);
+  box-shadow: var(--e-1);
   text-align: center;
 }
+.refuseIcon {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto var(--sp-3);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--refuse-fg);
+  background: var(--refuse-bg);
+}
+.refuseIcon svg { width: 23px; height: 23px; }
 .refuseH {
   margin: 0;
   font-size: var(--fs-h2);
@@ -47,6 +60,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r-sm);
+  box-shadow: var(--e-1);
   color: var(--text);
   font-size: var(--fs-body);
   font-weight: 500;
@@ -55,7 +69,7 @@
 }
 .quietBtn:hover { background: var(--accent-weak); border-color: var(--accent); }
 
-/* ---- ERROR: the app's ONLY red surface ------------------------------------ */
+/* ---- ERROR: the app's ONLY red/tinted surface ------------------------------ */
 .error {
   display: flex;
   flex-wrap: wrap;
@@ -66,7 +80,8 @@
   padding: var(--sp-4) var(--sp-5);
   background: var(--err-bg);
   border: 1px solid var(--err-fg);
-  border-radius: var(--r-md);
+  border-radius: var(--r-lg);
+  box-shadow: var(--e-1);
   color: var(--err-fg);
 }
 .errorMsg { margin: 0; flex: 1 1 12ch; font-weight: 500; color: var(--err-fg); }
@@ -85,13 +100,18 @@
 }
 .errorBtn:hover { filter: brightness(1.08); }
 
-/* ---- LOADING: three shimmer bars, no spinner ------------------------------ */
+/* ---- LOADING: three shimmer bars in a white soft-card, no spinner --------- */
 .skeleton {
   display: flex;
   flex-direction: column;
   gap: var(--sp-3);
   margin-top: var(--sp-5);
   max-width: 68ch;
+  background: var(--surface);
+  border: var(--border-hair);
+  border-radius: var(--r-lg);
+  box-shadow: var(--e-1);
+  padding: var(--sp-6);
 }
 .bar {
   height: 16px;
@@ -127,6 +147,7 @@
   background: var(--warn-bg);
   color: var(--warn-fg);
   border-bottom: 1px solid var(--warn-line);
+  box-shadow: var(--e-1);
   font-size: var(--fs-body);
   font-weight: 500;
 }

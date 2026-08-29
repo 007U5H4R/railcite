@@ -2,6 +2,7 @@
 import { useEffect, useRef } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import type { SourceView } from '@/lib/types';
+import { safeHref } from '@/lib/safe-href';
 import { StatusBadge } from './StatusBadge';
 import styles from './evidence.module.css';
 
@@ -14,6 +15,7 @@ export function SourceReader({ source, onClose }: { source: SourceView; onClose:
   const closeRef = useRef<HTMLButtonElement>(null);
   const reduced = useReducedMotion();
   const d = source.document;
+  const originalHref = safeHref(d.source_url);
 
   useEffect(() => {
     closeRef.current?.focus();
@@ -50,9 +52,13 @@ export function SourceReader({ source, onClose }: { source: SourceView; onClose:
         {source.page_ref && <p className={`${styles.pageRef} mono`}>{source.page_ref}</p>}
         <p className={`${styles.readerBody} reading`}>{source.snippet}</p>
         {d.source_url && (
-          <a href={d.source_url} target="_blank" rel="noreferrer" className={styles.openOriginal}>
-            Open original PDF ↗
-          </a>
+          originalHref ? (
+            <a href={originalHref} target="_blank" rel="noreferrer" className={styles.openOriginal}>
+              Open original PDF ↗
+            </a>
+          ) : (
+            <span className={styles.openOriginal}>Open original PDF ↗</span>
+          )
         )}
       </motion.div>
     </div>

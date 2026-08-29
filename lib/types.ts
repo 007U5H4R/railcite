@@ -48,6 +48,20 @@ export interface QueryRequest {
   domain?: string | null;
 }
 
+// R4 — persisted case (`cases` table; migrations/002_cases.sql). Snake_case throughout to
+// mirror the DB row 1:1; client code maps to camelCase where its own conventions want it
+// (see hooks/useRecentCases.ts's RecentCase).
+export interface CaseSummary {
+  id: string;
+  question: string;
+  status: 'answered' | 'refused';
+  verified_only: boolean;
+  domain: string | null;
+  is_saved: boolean;
+  created_at: string;         // ISO
+}
+export interface CaseDetail extends CaseSummary { result: QueryResponse | null }
+
 // Ingestion-side
 export interface ChunkInput { chunk_text: string; page_ref: string; token_count: number }
 export type SynthesisResult =
