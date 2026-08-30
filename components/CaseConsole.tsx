@@ -16,6 +16,7 @@ import { RefuseState } from './RefuseState';
 import { OfflineBanner, useOnline } from './OfflineBanner';
 import { useCaseQuery } from '@/hooks/useCaseQuery';
 import { signInWithGoogle, getAccessToken } from '@/lib/supabase-browser';
+import { t, searching, type Language } from '@/lib/i18n';
 import type { CaseDetail, QueryResponse, SourceView } from '@/lib/types';
 import styles from './console.module.css';
 
@@ -41,7 +42,12 @@ const DOMAINS: { label: string; value: string | null }[] = [
 export function CaseConsole() {
   const [text, setText] = useState('');
   const [scope, setScope] = useState<Scope>({ verifiedOnly: false, domain: null });
-  const { s, submit, retry, reset, reopen } = useCaseQuery();
+  const { s, submit, retry, reset, reopen, translate, translating, translateError } = useCaseQuery();
+  // The response and the note translate INDEPENDENTLY — each segment has its own EN|हिं toggle.
+  // Both share one cached translate() call (it produces the whole Translation payload), so
+  // flipping the second segment is instant once the first has fetched it.
+  const [answerLang, setAnswerLang] = useState<Language>('en');
+  const [noteLang, setNoteLang] = useState<Language>('en');
   const router = useRouter();
   const [openSource, setOpenSource] = useState<SourceView | null>(null);      // card click -> reader
   const [activeChunkId, setActiveChunkId] = useState<string | null>(null);    // chip click -> highlight
@@ -93,6 +99,7 @@ export function CaseConsole() {
   const askAnother = useCallback(() => {
     setText('');
     reset();
+    setAnswerLang('en'); setNoteLang('en');   // each new case starts in English
     requestAnimationFrame(() => {
       document.querySelector('textarea')?.focus();
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -106,6 +113,16 @@ export function CaseConsole() {
     askAnother();
     router.replace('/ask');   // consume the signal so a refresh doesn't re-fire it
   }, [newSignal, askAnother, router]);
+
+  // When EITHER segment is set to Hindi on an answered result and we haven't translated it yet,
+  // kick off the lazy translation (one call yields both the response and note Hindi). The hook
+  // guards against duplicate/cached calls, so this effect can safely re-run as state changes.
+  useEffect(() => {
+    if ((answerLang === 'hi' || noteLang === 'hi') && s.state === 'done'
+        && s.data.status === 'answered' && !s.data.translations?.hi) {
+      void translate('hi');
+    }
+  }, [answerLang, noteLang, s, translate]);
 
   const doSubmit = () => void submit({ case_text: text, verified_only: scope.verifiedOnly, domain: scope.domain });
   const onSignIn = () => { try { localStorage.setItem('railcite:draft', text); } catch {}; void signInWithGoogle(); };
@@ -168,8 +185,7 @@ export function CaseConsole() {
       </div>
 
       {s.state === 'idle' && !cachedLast && <EmptyState onPick={t => { setText(t); }} />}
-      {s.state === 'loading' && (
-        <TransparencyLine text={s.searched ? `Searching ${s.searched.toLocaleString('en-IN')} passages…` : 'Searching…'} />)}
+      {s.state === 'loading' && <TransparencyLine text={searching(s.searched, 'en')} />}
       {s.state === 'auth_required' && <AuthGate onSignIn={onSignIn} />}
       {s.state === 'loading' && <LoadingSkeleton />}
       {s.state === 'error' && <ErrorState message={s.message} onRetry={retry} />}
@@ -183,7 +199,13 @@ export function CaseConsole() {
       {s.state === 'done' && s.data.status === 'answered' && (
         <div className={styles.answerGrid}>
           <div className={styles.answerMain}>
+            {(answerLang === 'hi' || noteLang === 'hi') && translating && (
+              <TransparencyLine text={t('translating', 'hi')} />)}
+            {(answerLang === 'hi' || noteLang === 'hi') && translateError && (
+              <p role="status" className={styles.translateError}>{t('translateFailed', 'hi')}</p>)}
             <ConclusionCard blocks={s.data.blocks} sources={s.data.sources}
+              lang={answerLang} onLangChange={setAnswerLang}
+              hindiBlocks={answerLang === 'hi' ? s.data.translations?.hi?.blocks : undefined}
               onCite={src => setActiveChunkId(src.chunk_id)}
               isSaved={caseId != null && savedIds.has(caseId)}
               saveDisabled={caseId == null || savePending}
@@ -197,6 +219,8 @@ export function CaseConsole() {
             {s.data.lineage && <LineagePanel lineage={s.data.lineage} />}
             {s.data.note?.length > 0 && (
               <DraftedNote note={s.data.note} sources={s.data.sources}
+                lang={noteLang} onLangChange={setNoteLang}
+                hi={noteLang === 'hi' ? s.data.translations?.hi : undefined}
                 onCite={src => setActiveChunkId(src.chunk_id)} />
             )}
             <button type="button" className={styles.askAnother} onClick={askAnother}>
@@ -208,7 +232,10 @@ export function CaseConsole() {
           </div>
         </div>)}
       {cachedLast && s.state !== 'done' && (
-        <ConclusionCard blocks={cachedLast.blocks} sources={cachedLast.sources} onCite={() => {}} />)}
+        <ConclusionCard blocks={cachedLast.blocks} sources={cachedLast.sources}
+          lang={answerLang} onLangChange={setAnswerLang}
+          hindiBlocks={answerLang === 'hi' ? cachedLast.translations?.hi?.blocks : undefined}
+          onCite={() => {}} />)}
 
       {openSource && <SourceReader source={openSource} onClose={() => setOpenSource(null)} />}
     </>

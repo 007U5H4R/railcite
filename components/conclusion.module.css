@@ -19,13 +19,35 @@
   color: var(--n-800);
 }
 
-/* ---- Lead row: the "Cited from N passages…" line + the save toggle --------- */
+/* ---- Hindi-translation caveat: shown only in Hindi mode, above the answer.
+   Uses the amber VERIFY palette (same posture as an OCR "verify against original"
+   badge) — this is a translation of the validated English, read the source to be sure.
+   ≥13px, AA on --warn-bg, never color-alone (it's a full sentence). ------------ */
+.caveat {
+  display: block;
+  margin: 0 0 var(--sp-4);
+  padding: var(--sp-2) var(--sp-3);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--warn-fg);
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-line);
+  border-radius: var(--r-sm, 12px);
+}
+
+/* ---- Lead row: the "Cited from N passages…" line + the language toggle + save --- */
 .leadRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--sp-3);
   margin: 0 0 var(--sp-4);
+}
+.leadActions {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-shrink: 0;
 }
 
 /* ---- Lead line: "Cited from N passages…" + a status dot -------------------- */

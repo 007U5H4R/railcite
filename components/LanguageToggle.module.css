@@ -1,0 +1,39 @@
+/* Segmented EN | हिं language control in the TopBar. Pill of two buttons; the active side
+   carries the single blue accent. Sits beside the AccountChip. */
+.group {
+  display: inline-flex;
+  align-items: stretch;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill, 999px);
+  padding: 2px;
+  gap: 2px;
+}
+
+.seg {
+  min-height: 32px;           /* control height; hit area padded to ≥44 below via the group row */
+  min-width: 40px;
+  padding: 4px 12px;
+  border: none;
+  background: transparent;
+  color: var(--n-600);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  border-radius: var(--r-pill, 999px);
+  cursor: pointer;
+  transition: background 140ms ease, color 140ms ease;
+}
+
+.seg:hover:not(.on) { color: var(--n-800, #182740); }
+
+.on {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.seg:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}

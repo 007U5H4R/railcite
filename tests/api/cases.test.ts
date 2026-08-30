@@ -117,3 +117,15 @@ it('PATCH toggles is_saved on success', async () => {
   expect(j).toEqual({ id: 'c1', is_saved: true });
   expect(chain.update).toHaveBeenCalledWith({ is_saved: true });
 });
+it('PATCH persists a result merge (Hindi translation folded into the saved answer)', async () => {
+  const chain = mockDb({ data: { id: 'c1', is_saved: false }, error: null });
+  const result = { status: 'answered', blocks: [], note: [], sources: [], lineage: null, meta: {},
+    translations: { hi: { blocks: ['हिंदी'], noteSub: null, noteContent: [] } } };
+  const res = await PATCH(patch({ id: '00000000-0000-0000-0000-000000000000', result }));
+  expect(res.status).toBe(200);
+  expect(chain.update).toHaveBeenCalledWith({ result });
+});
+it('PATCH 400 when neither is_saved nor result is provided', async () => {
+  const res = await PATCH(patch({ id: '00000000-0000-0000-0000-000000000000' }));
+  expect(res.status).toBe(400);
+});

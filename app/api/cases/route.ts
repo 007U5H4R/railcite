@@ -24,10 +24,17 @@ const SaveBody = z.object({
   result: z.record(z.string(), z.unknown()).nullable().optional(),
 }).strict();
 
+// PATCH updates the caller's own case: toggle the bookmark (is_saved) and/or fold a richer
+// `result` back in (e.g. a lazily-generated Hindi translation cached onto the saved answer).
+// At least one of the two must be present. `result` is trusted at the same level as POST's —
+// it's the caller's own row (RLS) and the answer shape was already validated when /api/query
+// produced it.
 const PatchBody = z.object({
   id: z.string().uuid(),
-  is_saved: z.boolean(),
-}).strict();
+  is_saved: z.boolean().optional(),
+  result: z.record(z.string(), z.unknown()).optional(),
+}).strict().refine(b => b.is_saved !== undefined || b.result !== undefined,
+  { message: 'nothing to update' });
 
 /** Verifies the caller and returns their uid + raw token, or null (→ 401). */
 async function authenticate(req: Request): Promise<{ uid: string; token: string } | null> {
@@ -95,12 +102,16 @@ export async function PATCH(req: Request): Promise<Response> {
     if (!auth) return json({ error: 'auth_required' }, 401);
     const parsed = PatchBody.safeParse(await req.json().catch(() => null));
     if (!parsed.success) return json({ error: 'invalid_body' }, 400);
-    const { id, is_saved } = parsed.data;
+    const { id, is_saved, result } = parsed.data;
+
+    const patch: Record<string, unknown> = {};
+    if (is_saved !== undefined) patch.is_saved = is_saved;
+    if (result !== undefined) patch.result = result;
 
     const sb = userClient(auth.token);
     // RLS (cases_update_own) scopes this to the caller's own row; if `id` belongs to
     // someone else (or doesn't exist) the update matches 0 rows → data is null → 404.
-    const { data, error } = await sb.from('cases').update({ is_saved }).eq('id', id)
+    const { data, error } = await sb.from('cases').update(patch).eq('id', id)
       .select('id, is_saved').maybeSingle();
     if (error) { console.error('case update failed:', error); return json({ error: 'update_failed' }, 500); }
     if (!data) return json({ error: 'not_found' }, 404);

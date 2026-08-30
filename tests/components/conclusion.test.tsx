@@ -25,3 +25,23 @@ it('OCR source chip label carries the verify warning', () => {
   render(<ConclusionCard blocks={[{ text: 'x.', citations: [1] }]} sources={[ocr]} onCite={() => {}} />);
   expect(screen.getByRole('button', { name: /OCR — verify against original/ })).toBeInTheDocument();
 });
+it('renders its own inline language toggle when onLangChange is provided, and reports changes', () => {
+  const onLangChange = vi.fn();
+  render(<ConclusionCard blocks={[{ text: 'x.', citations: [1] }]} sources={[S]} onCite={() => {}}
+    lang="en" onLangChange={onLangChange} />);
+  expect(screen.getByRole('group', { name: /response language/i })).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: /show in hindi/i }));
+  expect(onLangChange).toHaveBeenCalledWith('hi');
+});
+it('in Hindi mode shows the Hindi block text (aligned to raw block index), a Hindi lead line, and the verify-against-English caveat', () => {
+  render(<ConclusionCard
+    blocks={[{ text: 'UNCITED', citations: [] }, { text: 'Free time is 9 hours.', citations: [1] }]}
+    sources={[S]} onCite={() => {}}
+    lang="hi" hindiBlocks={['(unused)', 'मुक्त समय 9 घंटे है।']} />);
+  expect(screen.getByText('मुक्त समय 9 घंटे है।')).toBeInTheDocument();     // Hindi of the cited block (index 1)
+  expect(screen.queryByText(/Free time is 9 hours/)).not.toBeInTheDocument(); // English prose gone
+  expect(screen.getByText(/अंश उद्धृत/)).toBeInTheDocument();               // Hindi lead line
+  expect(screen.getByText(/अंग्रेज़ी/)).toBeInTheDocument();                 // "verify against English" caveat
+  // citation chip still resolves to the real English source (never translated)
+  expect(screen.getByRole('button', { name: /Source 1: TCR\/1078\/2019, verified text/ })).toBeInTheDocument();
+});

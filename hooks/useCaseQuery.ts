@@ -1,6 +1,7 @@
 'use client';
 import { useCallback, useRef, useState } from 'react';
-import type { QueryRequest, QueryResponse } from '@/lib/types';
+import type { QueryRequest, QueryResponse, Translation } from '@/lib/types';
+import type { Language } from '@/lib/i18n';
 import { getAccessToken } from '@/lib/supabase-browser';
 import { analytics } from '@/lib/analytics';
 
@@ -26,6 +27,8 @@ async function persistCase(req: QueryRequest, data: QueryResponse, token: string
 
 export function useCaseQuery() {
   const [s, setS] = useState<CaseQueryState>({ state: 'idle' });
+  const [translating, setTranslating] = useState(false);
+  const [translateError, setTranslateError] = useState(false);
   const last = useRef<QueryRequest | null>(null);
   // Monotonic generation. Each submit captures the current value; reset/reopen/a newer submit
   // bump it, so an in-flight request that finds the generation changed drops its result rather
@@ -74,7 +77,49 @@ export function useCaseQuery() {
   const reopen = useCallback((caseId: string, data: QueryResponse) => {
     gen.current++;
     last.current = null;
+    setTranslating(false); setTranslateError(false);
     setS({ state: 'done', data, caseId });
   }, []);
-  return { s, submit, retry, reset, reopen };
+
+  // Lazily translate the current answered result into `lang` (Hindi for now). Idempotent —
+  // a cached translation short-circuits with no network call. The English answer is never
+  // re-fetched or re-validated; only its prose is translated (see app/api/translate). On
+  // success the translation is merged into `data` (so the toggle is instant thereafter) and,
+  // when the case is persisted, folded back into the saved row via PATCH /api/cases.
+  const translate = useCallback(async (lang: Exclude<Language, 'en'>) => {
+    const cur = s;
+    if (cur.state !== 'done' || cur.data.status !== 'answered') return;
+    if (cur.data.translations?.[lang]) return;   // already cached — instant, no cost
+    const myGen = gen.current;
+    setTranslateError(false); setTranslating(true);
+    try {
+      const token = await getAccessToken();
+      if (!token) { setTranslateError(true); return; }
+      const res = await fetch('/api/translate', { method: 'POST',
+        headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
+        body: JSON.stringify({ blocks: cur.data.blocks, note: cur.data.note, target: lang }) });
+      if (gen.current !== myGen) return;                       // answer was replaced mid-translate
+      if (!res.ok) { setTranslateError(true); return; }
+      const payload: Translation = await res.json();
+      let merged: QueryResponse | null = null;
+      setS(prev => {
+        if (prev.state !== 'done' || prev.data.status !== 'answered') return prev;
+        merged = { ...prev.data, translations: { ...prev.data.translations, [lang]: payload } };
+        try { localStorage.setItem('railcite:last', JSON.stringify({ req: last.current, data: merged, at: Date.now() })); } catch {}
+        return { ...prev, data: merged };
+      });
+      // Non-blocking: fold the translation into the saved case so reopening is instant/offline.
+      if (cur.caseId && merged) {
+        void fetch('/api/cases', { method: 'PATCH',
+          headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
+          body: JSON.stringify({ id: cur.caseId, result: merged }) }).catch(() => {});
+      }
+    } catch {
+      if (gen.current === myGen) setTranslateError(true);
+    } finally {
+      if (gen.current === myGen) setTranslating(false);
+    }
+  }, [s]);
+
+  return { s, submit, retry, reset, reopen, translate, translating, translateError };
 }

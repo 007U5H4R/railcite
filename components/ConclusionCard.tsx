@@ -2,39 +2,47 @@
 import { motion, useReducedMotion } from 'motion/react';
 import type { ConclusionBlock, SourceView } from '@/lib/types';
 import { CitationChip } from './CitationChip';
+import { LanguageToggle } from './LanguageToggle';
+import { citedFrom, t, type Language } from '@/lib/i18n';
 import styles from './conclusion.module.css';
 
 // "Cited from N passages in the X manual" lead line — a decorative status dot pairs with
 // this text (never color alone). Falls back to domain-agnostic phrasing when sources span
-// more than one domain.
-function leadText(sources: SourceView[]): string {
-  const n = sources.length;
-  const noun = n === 1 ? 'passage' : 'passages';
+// more than one domain. Localized via lib/i18n's citedFrom.
+function leadText(sources: SourceView[], lang: Language): string {
   const domains = new Set(sources.map(s => s.document.domain).filter((d): d is string => Boolean(d)));
-  if (domains.size === 1) {
-    const [domain] = domains;
-    return `Cited from ${n} ${noun} in the ${domain.charAt(0).toUpperCase()}${domain.slice(1)} manual`;
-  }
-  return `Cited from ${n} ${noun}`;
+  const domain = domains.size === 1 ? [...domains][0] : null;
+  return citedFrom(sources.length, domain, lang);
 }
 
+// `lang`/`hindiBlocks` drive the Hindi toggle: hindiBlocks is index-aligned to the RAW `blocks`
+// array (same order/length), so a block rendered from raw index i shows hindiBlocks[i] when
+// Hindi is on. Citations always come from the English block, so the chips never change.
 export function ConclusionCard({ blocks, sources, onCite, isSaved = false, saveDisabled = false,
-  onToggleSave = null }: {
+  onToggleSave = null, lang = 'en', hindiBlocks, onLangChange = null }: {
   blocks: ConclusionBlock[]; sources: SourceView[]; onCite: (s: SourceView) => void;
   // R4: bookmark toggle for the current case. onToggleSave is null when there's no live
   // case to save against (e.g. the offline cached-answer fallback in CaseConsole) — the
   // button just doesn't render then, rather than rendering disabled-forever.
   isSaved?: boolean; saveDisabled?: boolean; onToggleSave?: (() => void) | null;
+  // This segment's own EN|हिं toggle (independent of the note's). Rendered only when a handler
+  // is supplied; `hindiBlocks` (index-aligned to `blocks`) carries the Hindi text.
+  lang?: Language; hindiBlocks?: string[]; onLangChange?: ((l: Language) => void) | null;
 }) {
   const still = useReducedMotion();
   const byN = new Map(sources.map(s => [s.n, s]));
+  const showHi = lang === 'hi' && !!hindiBlocks;
   return (
     <section aria-label="Cited conclusion" aria-live="polite" className={styles.card}>
+      {showHi && <p className={styles.caveat} role="note">{t('caveat', 'hi')}</p>}
       <div className={styles.leadRow}>
         <p className={styles.lead}>
           <span className={styles.leadDot} aria-hidden="true" />
-          {leadText(sources)}
+          {leadText(sources, lang)}
         </p>
+        <div className={styles.leadActions}>
+        {onLangChange && (
+          <LanguageToggle value={lang} onChange={onLangChange} label="Response language" />)}
         {onToggleSave && (
           <button type="button" className={`${styles.saveBtn} ${isSaved ? styles.saveBtnOn : ''}`}
             aria-pressed={isSaved} aria-label={isSaved ? 'Saved' : 'Save case'}
@@ -45,12 +53,15 @@ export function ConclusionCard({ blocks, sources, onCite, isSaved = false, saveD
             </svg>
           </button>
         )}
+        </div>
       </div>
-      {blocks.filter(b => b.citations.length > 0).map((b, i) => (   // defense in depth vs P0
-        <motion.p key={i} className={`reading ${styles.block}`}
+      {blocks.map((b, rawIdx) => ({ b, rawIdx }))
+        .filter(({ b }) => b.citations.length > 0)   // defense in depth vs P0
+        .map(({ b, rawIdx }, i) => (
+        <motion.p key={rawIdx} className={`reading ${styles.block}`}
           initial={still ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.24, delay: i * 0.04, ease: [0, 0, 0.2, 1] }}>
-          {b.text}{' '}
+          {showHi ? (hindiBlocks![rawIdx] ?? b.text) : b.text}{' '}
           {b.citations.map(n => byN.get(n)).filter(Boolean).map(s => (
             <CitationChip key={s!.chunk_id + s!.n} source={s!} onOpen={onCite} />))}
         </motion.p>

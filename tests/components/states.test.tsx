@@ -11,6 +11,12 @@ it('refuse: verbatim copy, no red tokens, announces politely', () => {
   expect(region.className).toMatch(/refuse/);
   expect(region.className).not.toMatch(/err/);
 });
+it('refuse: Hindi mode localizes the copy and keeps the searched count as a Latin numeral', () => {
+  render(<RefuseState meta={{ searched: 900, matched: 5, above_threshold: 0 }} onBroaden={null} onRephrase={() => {}} lang="hi" />);
+  expect(screen.getByText('इस मामले के लिए कोई शासी परिपत्र नहीं मिला।')).toBeInTheDocument();
+  expect(screen.getByText(/900/)).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'मामला पुनः लिखें' })).toBeInTheDocument();
+});
 it('refuse: broaden button only when scope was restricted', () => {
   const onBroaden = vi.fn();
   const { rerender } = render(<RefuseState meta={{ searched: 1, matched: 0, above_threshold: 0 }} onBroaden={onBroaden} onRephrase={() => {}} />);

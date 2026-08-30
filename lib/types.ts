@@ -45,9 +45,19 @@ export interface LineageNode {
 }
 export interface LineageView { nodes: LineageNode[] }   // all docs in the cited component(s), newest-first
 
+// Hindi (or other non-English) translation layer for an answered result. TEXT ONLY — no
+// citations. `blocks[i]` is the Hindi of the i-th conclusion block; `noteSub` is the Hindi note
+// subject value (no label); `noteContent[i]` is the Hindi of the i-th cited note point
+// (index-aligned to lib/note.ts parseNote(...).contentBlocks). Citations always come from the
+// English blocks, so translation can never touch them.
+export interface Translation { blocks: string[]; noteSub: string | null; noteContent: string[] }
+
 export type QueryResponse =
   | { status: 'answered'; blocks: ConclusionBlock[]; note: ConclusionBlock[];
-      sources: SourceView[]; lineage: LineageView | null; meta: QueryMeta }
+      sources: SourceView[]; lineage: LineageView | null; meta: QueryMeta;
+      // Populated lazily when the user first flips a given answer to that language; cached +
+      // persisted so re-toggling and reopened cases are instant. Absent = English only so far.
+      translations?: { hi?: Translation } }
   | { status: 'refused'; meta: QueryMeta };
 
 export interface QueryRequest {
