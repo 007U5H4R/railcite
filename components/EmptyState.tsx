@@ -1,9 +1,14 @@
 import { BholuMascot } from './BholuMascot';
 import styles from './console.module.css';
+// Starter prompts shown on the empty Ask screen. Deliberately chosen to land on the verified
+// corpus verticals (demurrage/wharfage/waiver, weighment/punitive, CRT hub-and-spoke) so a
+// first-time tap returns a real cited answer, never a refuse.
 export const EXAMPLE_CASES = [
-  'Consignee requests waiver of demurrage for wagons detained 18 hours beyond free time due to crane breakdown at the siding.',
-  'Wharfage applicability on containerized cargo lying in the terminal after free time; consignee cites heavy rains.',
-  'Two-point loading detention — does free time count from placement at the first point or the second?',
+  'Consignee requests waiver of demurrage for wagons detained 18 hours beyond free time due to a crane breakdown at the siding — is it admissible and who can sanction it?',
+  'What is the wharfage applicability on containerised cargo lying in the terminal beyond free time when the consignee cites heavy rains?',
+  'Which authority can sanction a demurrage or wharfage waiver, and up to what monetary limit?',
+  'When is weighment of a wagon-load dispensed with, and how is a punitive charge for overloading assessed?',
+  'What is the current haulage rate for bulk cement moved by container rakes (CRT), and which corrigendum governs it?',
 ];
 export function EmptyState({ onPick }: { onPick: (t: string) => void }) {
   return (
