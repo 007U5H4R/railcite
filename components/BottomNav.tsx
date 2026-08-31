@@ -23,11 +23,18 @@ const IconYou = (
     <circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" />
   </svg>
 );
+const IconFeedback = (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+    <path d="M8 9h8M8 13h5" />
+  </svg>
+);
 
 const TABS = [
   { href: '/', label: 'Home', icon: IconHome },
   { href: '/ask', label: 'Ask', icon: IconAsk },
   { href: '/saved', label: 'Saved', icon: IconSaved },
+  { href: '/feedback', label: 'Feedback', icon: IconFeedback },
   { href: '/you', label: 'You', icon: IconYou },
 ] as const;
 

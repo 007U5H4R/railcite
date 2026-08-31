@@ -117,6 +117,22 @@
   text-wrap: pretty;
 }
 
+.examplesBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  width: 100%;
+  max-width: 42rem;
+}
+.examplesLabel {
+  margin: 0;
+  text-align: left;
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
 .examples {
   display: flex;
   flex-direction: column;

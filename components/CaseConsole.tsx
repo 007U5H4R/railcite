@@ -7,6 +7,7 @@ import { AuthGate } from './AuthGate';
 import { TransparencyLine } from './TransparencyLine';
 import { ConclusionCard } from './ConclusionCard';
 import { SourcesPanel } from './SourcesPanel';
+import { SourceLegend } from './SourceLegend';
 import { DraftedNote } from './DraftedNote';
 import { LineagePanel } from './LineagePanel';
 import { SourceReader } from './SourceReader';
@@ -16,7 +17,7 @@ import { RefuseState } from './RefuseState';
 import { OfflineBanner, useOnline } from './OfflineBanner';
 import { useCaseQuery } from '@/hooks/useCaseQuery';
 import { signInWithGoogle, getAccessToken } from '@/lib/supabase-browser';
-import { t, searching, type Language } from '@/lib/i18n';
+import { searching, type Language } from '@/lib/i18n';
 import { useLanguagePref } from '@/hooks/useLanguagePref';
 import type { CaseDetail, QueryResponse, SourceView } from '@/lib/types';
 import styles from './console.module.css';
@@ -28,12 +29,9 @@ type AnsweredResponse = Extract<QueryResponse, { status: 'answered' }>;
 // directly below), so the type now lives here, its sole consumer.
 export interface Scope { verifiedOnly: boolean; domain: string | null }
 
-// Domain filter options (single-select). null = all domains.
-const DOMAINS: { label: string; value: string | null }[] = [
-  { label: 'All domains', value: null },
-  { label: 'Goods', value: 'goods' },
-  { label: 'Coaching', value: 'coaching' },
-];
+// The corpus is Traffic Commercial in full (Goods + Coaching + all-domain circulars), so the
+// scope collapses to a single label: every query searches the whole commercial corpus
+// (domain === null). Kept as one static pill rather than a multi-option filter.
 
 // Ask screen recomposed into the mockup's single column: case field, filter pills, then the
 // cited conclusion with its sources inline below, then the five states. Query state, the
@@ -167,22 +165,8 @@ export function CaseConsole() {
       <OfflineBanner />
       <CaseInput value={text} onChange={setText} onSubmit={doSubmit} disabled={s.state === 'loading'} />
 
-      <div className={styles.filters} role="group" aria-label="Scope filters">
-        <button type="button" aria-pressed={scope.verifiedOnly}
-          className={`${styles.pill} ${scope.verifiedOnly ? styles.pillOn : ''}`}
-          onClick={() => setScope({ ...scope, verifiedOnly: !scope.verifiedOnly })}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M5 13l4 4L19 7" />
-          </svg>
-          Verified only
-        </button>
-        {DOMAINS.map(d => (
-          <button key={d.label} type="button" aria-pressed={scope.domain === d.value}
-            className={`${styles.pill} ${scope.domain === d.value ? styles.pillOn : ''}`}
-            onClick={() => setScope({ ...scope, domain: d.value })}>
-            {d.label}
-          </button>
-        ))}
+      <div className={styles.filters} role="group" aria-label="Scope">
+        <span className={`${styles.pill} ${styles.pillOn}`}>Commercial Domain</span>
       </div>
 
       {s.state === 'idle' && !cachedLast && <EmptyState onPick={t => { setText(t); }} />}
@@ -211,6 +195,7 @@ export function CaseConsole() {
               onToggleSave={caseId == null ? null : toggleSave} />
             <div className={styles.sourcesHead}>
               Sources <span className={styles.sourcesCount}>{s.data.sources.length}</span>
+              <SourceLegend sources={s.data.sources} />
             </div>
             <SourcesPanel sources={s.data.sources} activeChunkId={activeChunkId} onOpen={setOpenSource} />
             {/* Lineage sits between the evidence and the note it feeds: sources -> how they

@@ -10,7 +10,6 @@ const TILE: Record<DocType, { big: string; small: string }> = {
   correction_slip: { big: 'CS', small: 'Slip' },
   tariff: { big: 'T', small: 'Tariff' },
 };
-const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 // Law of Common Region: each source is one bordered region grouping its own metadata.
 // Numbered [n] to match the inline citation chips in ConclusionCard (sources arrive in
@@ -28,9 +27,11 @@ export function SourceCard({ source, active, onOpen }: {
 
   return (
     <article className={`${styles.card} ${active ? styles.active : ''}`}>
+      {/* Just the doc-type code (C/CS/M/T), explained by the legend in the Sources header. No
+          domain caption: the corpus is Traffic Commercial throughout, and the per-doc Goods/
+          Coaching tag is unreliable (a Goods-tagged circular can in fact be a Coaching one). */}
       <span className={styles.tile} aria-hidden="true">
         <b className="mono">{tile.big}</b>
-        <span>{d.domain ? cap(d.domain) : tile.small}</span>
       </span>
       <span className={styles.meta}>
         <span className={styles.metaHead}>

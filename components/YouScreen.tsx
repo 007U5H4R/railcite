@@ -13,6 +13,7 @@ const CHECK = (
 );
 
 const ABOUT_POINTS = [
+  'Updated till 31 August 2026 — the knowledge cutoff. RailCite answers from Traffic Commercial circulars and manuals issued up to that date; anything published later is not yet in the corpus.',
   'Extractive only — every answer is built strictly from retrieved circular and manual passages, never from general knowledge.',
   'Every claim is cited — each sentence in a conclusion links to the real passage it came from.',
   'Refuses when no rule is found — if no governing passage exists, RailCite says so instead of guessing.',

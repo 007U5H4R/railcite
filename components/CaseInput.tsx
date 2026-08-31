@@ -8,11 +8,17 @@ export function CaseInput({ value, onChange, onSubmit, disabled }: {
       <div className={styles.caseCol}>
         <span className={styles.caseLabel} aria-hidden="true">Case</span>
         <textarea aria-label="Describe your case" className={styles.textarea} rows={1}
-          title="⌘/Ctrl + Enter to submit"
+          title="Enter to submit · Shift + Enter for a new line"
           placeholder="Describe the case — e.g. wagons detained beyond free time, consignee requests demurrage waiver…"
           value={value} disabled={disabled}
           onChange={e => onChange(e.target.value)}
-          onKeyDown={e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey) && ok) { e.preventDefault(); onSubmit(); } }} />
+          onKeyDown={e => {
+            // Enter submits; Shift+Enter inserts a newline. Guard IME composition so an
+            // Enter that commits a candidate (Hindi/other input methods) never submits.
+            if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing && ok) {
+              e.preventDefault(); onSubmit();
+            }
+          }} />
       </div>
       <button type="button" className={styles.goBtn} aria-label="Find the rule" disabled={!ok || disabled} onClick={onSubmit}>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
