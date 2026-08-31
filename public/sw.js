@@ -11,8 +11,11 @@
  *  - The cached HTML was written once at install and never refreshed, so after any redeploy it
  *    referenced chunks that no longer exist. '/' is now re-cached on every successful navigation.
  */
-const SHELL = 'railcite-shell-v2';
-const ASSETS = 'railcite-assets-v2';
+// Bump these version suffixes on any deploy that must invalidate returning users' caches: the
+// changed bytes make the browser install this SW anew, and `activate` (below) deletes every cache
+// not in KEEP — so the old v2 shell/assets are purged and rebuilt fresh.
+const SHELL = 'railcite-shell-v3';
+const ASSETS = 'railcite-assets-v3';
 const KEEP = [SHELL, ASSETS];
 
 self.addEventListener('install', (event) => {

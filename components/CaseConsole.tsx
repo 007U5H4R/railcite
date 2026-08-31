@@ -104,6 +104,18 @@ export function CaseConsole() {
     });
   }, [reset]);
 
+  // Picking a suggested question drops it into the case field AND brings the field into view:
+  // the chips sit well below the fold, so without this the user fills the prompt but never sees
+  // it. Focus (cursor at the end) so they can immediately edit before submitting; preventScroll
+  // avoids a jarring instant jump before the smooth scroll to the top runs.
+  const pickExample = useCallback((t: string) => {
+    setText(t);
+    requestAnimationFrame(() => {
+      document.querySelector('textarea')?.focus({ preventScroll: true });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }, []);
+
   // The drawer's "New case" links to /ask?new=1 — a one-shot signal that resets even when
   // already on /ask, where identical-route navigation would otherwise keep this state intact.
   useEffect(() => {
@@ -169,7 +181,7 @@ export function CaseConsole() {
         <span className={`${styles.pill} ${styles.pillOn}`}>Commercial Domain</span>
       </div>
 
-      {s.state === 'idle' && !cachedLast && <EmptyState onPick={t => { setText(t); }} />}
+      {s.state === 'idle' && !cachedLast && <EmptyState onPick={pickExample} />}
       {s.state === 'loading' && <TransparencyLine text={searching(s.searched, uiLang)} />}
       {s.state === 'auth_required' && <AuthGate onSignIn={onSignIn} />}
       {s.state === 'loading' && <LoadingSkeleton />}
