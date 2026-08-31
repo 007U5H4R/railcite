@@ -11,6 +11,11 @@ export async function getAccessToken(): Promise<string | null> {
   return data.session?.access_token ?? null;
 }
 export async function signInWithGoogle(): Promise<void> {
+  // Mark that a sign-in was deliberately initiated. OAuth is a full-page redirect, so the fresh
+  // session only materializes on the load *after* Google returns — indistinguishable from a plain
+  // session restore. AnalyticsInit consumes this flag to fire `signed_in` exactly once per real
+  // sign-in and never on a returning visit.
+  try { localStorage.setItem('railcite:signin_intent', '1'); } catch { /* storage may be blocked */ }
   await browserClient().auth.signInWithOAuth({ provider: 'google',
     options: { redirectTo: window.location.origin } });
 }

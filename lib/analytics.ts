@@ -35,9 +35,12 @@ function track(event: string, props?: Record<string, number | string | boolean>)
   try { mixpanel.track(event, props); } catch { /* analytics must never break the app */ }
 }
 
-// The six events from Design.md Appendix B / Solution-PRD §8. citation_count is the only
-// property, and it is a count — never the citation text.
+// The funnel events. citation_count is the only property anywhere, and it is a count — never the
+// citation text. page_landed (one per page load) and signed_in (one per fresh OAuth sign-in) power
+// the visitor → sign-in funnel and let Active Users count every visitor, not only case-submitters.
 export const analytics = {
+  pageLanded: () => track('page_landed'),
+  signedIn: () => track('signed_in'),
   caseSubmitted: () => track('case_submitted'),
   conclusionGenerated: (citationCount: number) => track('conclusion_generated', { citation_count: citationCount }),
   citationClickedThrough: () => track('citation_clicked_through'),
