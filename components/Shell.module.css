@@ -26,4 +26,13 @@
 }
 /* Breathing room below the sticky frosted top bar so the case field (and any route's first
    card) doesn't butt up against it. */
-.main { flex: 1; margin-top: var(--sp-3); }
+.main {
+  flex: 1;
+  margin-top: var(--sp-3);
+  /* Clearance for the FIXED bottom nav. Without it the floating bar sits on top of the last
+     content instead of the page reserving room: the final starter-question card was clipped
+     behind it at desktop width, and at short viewports it covered the refuse card's actions —
+     exactly the controls a user needs after a non-answer. The bar is ~64px tall plus its 14px
+     (or safe-area) offset; the extra breathing room keeps the last card clear of it. */
+  padding-bottom: calc(88px + max(14px, env(safe-area-inset-bottom)));
+}

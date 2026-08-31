@@ -85,6 +85,46 @@ it('Copy note writes the provenance-complete text to the clipboard and confirms 
   expect(status).toHaveAttribute('aria-live', 'polite');
 });
 
+const HI: import('@/lib/types').Translation = {
+  blocks: [], noteSub: 'निर्धारित समय के बाद रोके गए वैगनों पर विलंब-शुल्क का उद्ग्रहण।',
+  noteContent: [
+    'पैरा 2511(क) के अनुसार, मुक्त समय की गणना प्रचलित नियमों के अनुसार की जाती है।',
+    'जहाँ पायलट-टू-पायलट प्रणाली प्रचलित है, वहाँ विलंब-शुल्क अनुमोदित अनुसूची का अनुसरण करता है।',
+  ],
+};
+
+it('renders the Hindi content, localizes the Sub:/Ref: labels, and keeps the Ref line verbatim', () => {
+  render(<DraftedNote note={NOTE} sources={[S1, S2]} onCite={() => {}} lang="hi" hi={HI} />);
+  expect(screen.getByText(HI.noteSub!)).toBeInTheDocument();
+  expect(screen.getByText(HI.noteContent[0])).toBeInTheDocument();
+  expect(screen.getByText('विषय:')).toBeInTheDocument();
+  expect(screen.getByText('संदर्भ:')).toBeInTheDocument();
+  // the source-derived Ref line (circular/para/page) is NEVER translated
+  expect(screen.getByText('IRCM Vol. II — Para 2511 (p. 178–179) · TCR/1078/2019 (p. 177–178)')).toBeInTheDocument();
+  // English prose must not linger when Hindi is shown
+  expect(screen.queryByText(POINT_1)).not.toBeInTheDocument();
+});
+
+it('renders its own inline note-language toggle when onLangChange is provided, independent of the response', () => {
+  const onLangChange = vi.fn();
+  render(<DraftedNote note={NOTE} sources={[S1, S2]} onCite={() => {}} lang="en" onLangChange={onLangChange} />);
+  expect(screen.getByRole('group', { name: /note language/i })).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: /show in hindi/i }));
+  expect(onLangChange).toHaveBeenCalledWith('hi');
+});
+
+it('Copy in Hindi keeps [n] marks, the Ref line and the Sources footer verbatim (provenance survives)', async () => {
+  render(<DraftedNote note={NOTE} sources={[S1, S2]} onCite={() => {}} lang="hi" hi={HI} />);
+  fireEvent.click(screen.getByRole('button', { name: 'टिप्पणी कॉपी करें' }));
+  const written = (navigator.clipboard.writeText as ReturnType<typeof vi.fn>).mock.calls[0][0] as string;
+  expect(written).toContain(HI.noteContent[0]);
+  expect(written).toContain('1. ');
+  expect(written).toContain('[1]');                                 // citation marks intact
+  expect(written).toContain('विषय:');
+  expect(written).toContain('IRCM Vol. II — Para 2511 (p. 178–179)'); // source identity verbatim
+  expect(written).toContain('[2] TCR/1078/2019 (p. 177–178)');       // Sources footer verbatim
+});
+
 it('Export downloads the same provenance-complete text as railcite-justification-note.txt and revokes the object URL', async () => {
   let blobText = '';
   (URL.createObjectURL as ReturnType<typeof vi.fn>).mockImplementation((b: Blob) => {

@@ -27,7 +27,9 @@ export function buildUserPrompt(caseText: string, sources: PromptSource[]): stri
 
 const Block = z.object({ text: z.string().min(1), citations: z.array(z.number().int()) });
 const ToolInput = z.discriminatedUnion('status', [
-  z.object({ status: z.literal('answered'), blocks: z.array(Block).min(1), note: z.array(Block) }),
+  // `note` is optional in the tool's input_schema (only `status` is required), so the model may
+  // omit it on an answered result; keep Zod in lockstep and let synthesize() default it to [].
+  z.object({ status: z.literal('answered'), blocks: z.array(Block).min(1), note: z.array(Block).optional() }),
   z.object({ status: z.literal('refused') }),
 ]);
 
@@ -49,19 +51,52 @@ const TOOL = {
   },
 };
 
-export async function synthesize(caseText: string, sources: PromptSource[]): Promise<SynthesisResult> {
-  const client = new Anthropic({ apiKey: requireEnv('ANTHROPIC_API_KEY') });
+// Rich multi-source answers (the corpus grew to ~10k passages → up to 8 cited sources plus a
+// formal note) overran the old 2000-token ceiling and were TRUNCATED mid-tool-call, dropping
+// `status` so the discriminated union failed and /api/query 500'd. 4096 gives comfortable
+// headroom; the model only emits what it needs, so normal answers cost no more.
+const MAX_TOKENS = 4096;
+
+async function recordConclusionOnce(client: Anthropic, caseText: string, sources: PromptSource[]) {
   const msg = await client.messages.create({
     // NOTE: claude-sonnet-5 (and the 4.7/4.8/5 family) removed sampling params —
     // sending `temperature` returns 400 invalid_request_error. Do not re-add it.
-    model: 'claude-sonnet-5', max_tokens: 2000,
+    model: 'claude-sonnet-5', max_tokens: MAX_TOKENS,
     system: SYSTEM_PROMPT,
     tools: [TOOL], tool_choice: { type: 'tool', name: 'record_conclusion' },
     messages: [{ role: 'user', content: buildUserPrompt(caseText, sources) }],
   });
+  // Truncation is THE recurring failure as the corpus grows (it already forced 2000→4096), and a
+  // cut that lands after `blocks` but before `note` still parses — silently shipping an answer
+  // with no justification note. Detect it explicitly so it retries and is visible in logs.
+  if (msg.stop_reason === 'max_tokens') throw new Error('synthesis truncated at max_tokens');
   const tu = msg.content.find(b => b.type === 'tool_use' && b.name === 'record_conclusion');
   if (!tu || tu.type !== 'tool_use') throw new Error('no record_conclusion tool call in response');
-  const parsed = ToolInput.parse(tu.input);
+  const parsed = ToolInput.parse(tu.input);   // throws (ZodError) on a truncated/malformed tool call
+  if (parsed.status === 'answered' && !parsed.note) {
+    // Not fatal (the answer itself is valid and cited), but the SYSTEM_PROMPT mandates a note on
+    // every answered result — so this is a real signal, not a normal outcome. Never silent.
+    console.warn('synthesize: answered result had no note (drafted note will be empty)');
+  }
+  return parsed;
+}
+
+export async function synthesize(caseText: string, sources: PromptSource[]): Promise<SynthesisResult> {
+  const client = new Anthropic({ apiKey: requireEnv('ANTHROPIC_API_KEY') });
+  // Fail-safe: a truncated/malformed tool call is typically transient (observed live — the same
+  // query failed then succeeded on manual retry). Retry ONCE before surfacing the error, so a
+  // single bad generation doesn't fail the user's query. Bounded to 2 attempts — never a loop —
+  // and we still only ever accept a well-formed tool result, so this never fabricates.
+  let parsed;
+  try {
+    parsed = await recordConclusionOnce(client, caseText, sources);
+  } catch (first) {
+    // Log the FIRST error before retrying: swallowing it makes a truncation pattern
+    // indistinguishable from a rate-limit or auth failure in production logs — which is exactly
+    // how the previous max_tokens ceiling had to be diagnosed from scratch.
+    console.warn('synthesize attempt 1 failed, retrying once:', first);
+    parsed = await recordConclusionOnce(client, caseText, sources);
+  }
   return parsed.status === 'refused'
     ? { status: 'refused' }
     : { status: 'answered', blocks: parsed.blocks, note: parsed.note ?? [] };

@@ -117,3 +117,25 @@ it('PATCH toggles is_saved on success', async () => {
   expect(j).toEqual({ id: 'c1', is_saved: true });
   expect(chain.update).toHaveBeenCalledWith({ is_saved: true });
 });
+it('PATCH folds a translation in WITHOUT touching the stored answer (it is immutable)', async () => {
+  // Regression: PATCH used to accept a whole `result` blob and write it wholesale, so any writer
+  // (including a racy client) could replace a saved case's validated answer. Now only the
+  // translations key may be added, and it is merged server-side onto the existing result.
+  const stored = { status: 'answered', blocks: [{ text: 'English', citations: [1] }],
+    note: [], sources: [{ n: 1 }], lineage: null, meta: { searched: 5 } };
+  const chain = mockDb({ data: { id: 'c1', is_saved: false, result: stored }, error: null });
+  const hi = { blocks: ['हिंदी'], noteSub: null, noteContent: [] };
+  const res = await PATCH(patch({ id: '00000000-0000-0000-0000-000000000000', translations: { hi } }));
+  expect(res.status).toBe(200);
+  expect(chain.update).toHaveBeenCalledWith({ result: { ...stored, translations: { hi } } });
+});
+it('PATCH rejects a whole-result overwrite (the saved answer can never be replaced)', async () => {
+  mockDb({ data: { id: 'c1', is_saved: false, result: {} }, error: null });
+  const res = await PATCH(patch({ id: '00000000-0000-0000-0000-000000000000',
+    result: { status: 'answered', blocks: [] } }));
+  expect(res.status).toBe(400);   // `result` is not an accepted key — .strict() rejects it
+});
+it('PATCH 400 when neither is_saved nor translations is provided', async () => {
+  const res = await PATCH(patch({ id: '00000000-0000-0000-0000-000000000000' }));
+  expect(res.status).toBe(400);
+});

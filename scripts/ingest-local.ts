@@ -26,9 +26,13 @@ async function main() {
     const chunks = chunkPages(pages);
     if (!chunks.length) { console.warn(`SKIP (no text after ${is_ocr ? 'OCR' : 'extract'}): ${m.file}`); continue; }
 
+    // Optional provenance/lineage fields — present on crawled entries, absent on the originals.
+    const x = m as { source_url?: string; circular_no?: string; issue_date?: string };
     const { data: doc, error: e1 } = await sb.from('documents').insert({
       title: m.title, doc_type: m.doc_type, domain: m.domain, commodity: m.commodity,
       file_path: m.file, file_hash: hash, is_ocr,
+      source_url: x.source_url ?? null, circular_no: x.circular_no ?? null,
+      issue_date: x.issue_date ?? null,
     }).select().single();
     if (e1) throw e1;
 

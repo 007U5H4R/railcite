@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { LineagePanel } from '@/components/LineagePanel';
 import type { LineageView } from '@/lib/types';
 
@@ -56,4 +56,32 @@ it('branching: a node with two relations renders both', () => {
 it('renders nothing for an empty chain', () => {
   const { container } = render(<LineagePanel lineage={{ nodes: [] }} />);
   expect(container).toBeEmptyDOMElement();
+});
+
+it('leads with the cited chain and collapses the rest behind a disclosure', () => {
+  // Regression: a flat list of every related document rendered 20+ identically-weighted rows, so
+  // the supersession that justified the answer was indistinguishable from uncited siblings — and
+  // it pushed the drafted note far down the page.
+  const many: LineageView = { nodes: [
+    ...AMEND.nodes,
+    { document_id: 'x1', circular_no: 'RC-1', issue_date: null, title: 'Unrelated corrigendum 1', status: 'in_force', relations: [] },
+    { document_id: 'x2', circular_no: 'RC-2', issue_date: null, title: 'Unrelated corrigendum 2', status: 'in_force', relations: [] },
+  ] };
+  render(<LineagePanel lineage={many} citedDocumentIds={['slip']} />);
+  // The cited doc and what it amends are shown and marked…
+  expect(screen.getAllByText(/Correction Slip/).length).toBeGreaterThan(0);
+  expect(screen.getAllByText(/IRCM Vol\. II \(Goods\)/).length).toBeGreaterThan(0);
+  expect(screen.getByText(/Cited in this answer/)).toBeInTheDocument();
+  // …the uncited siblings are not, until asked for.
+  expect(screen.queryByText('RC-1')).not.toBeInTheDocument();
+  const more = screen.getByRole('button', { name: /show 2 more related documents/i });
+  fireEvent.click(more);
+  expect(screen.getByText('RC-1')).toBeInTheDocument();
+});
+
+it('shows every node when the answer cites none of them (no false emphasis)', () => {
+  render(<LineagePanel lineage={AMEND} />);
+  expect(screen.getAllByText(/Correction Slip/).length).toBeGreaterThan(0);
+  expect(screen.getAllByText(/IRCM Vol\. II \(Goods\)/).length).toBeGreaterThan(0);
+  expect(screen.queryByText(/Cited in this answer/)).not.toBeInTheDocument();
 });
