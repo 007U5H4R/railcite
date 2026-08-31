@@ -44,10 +44,17 @@ export function DraftedNote({ note, sources, onCite, lang = 'en', hi, onLangChan
   if (!parsed.contentBlocks.length) return null;
 
   const showHi = lang === 'hi' && !!hi;
+  // EFFECTIVE language — labels must follow the PROSE, not the toggle. With हिं selected but the
+  // translation still loading (or failed), driving labels off `lang` alone produced a macaronic
+  // note: विषय:/संदर्भ:/स्रोत: and the Hindi close line wrapped around English points — which
+  // Copy/Export then wrote verbatim into a document a CCI may paste into an official submission.
+  const effLang: Language = showHi ? 'hi' : 'en';
   const noteHi = showHi ? { sub: hi!.noteSub, content: hi!.noteContent } : undefined;
-  const subText = showHi ? hi!.noteSub : parsed.sub;
-  const pointText = (i: number, b: ConclusionBlock) => (showHi ? (hi!.noteContent[i] ?? b.text) : b.text);
-  const plainText = () => buildNoteText(note, sources, lang, noteHi);
+  // `|| parsed.sub` (not `??`): the translation array can legally carry '' for an item, and an
+  // empty string must fall back to the English text, not render as blank prose.
+  const subText = showHi ? (hi!.noteSub || parsed.sub) : parsed.sub;
+  const pointText = (i: number, b: ConclusionBlock) => (showHi ? (hi!.noteContent[i] || b.text) : b.text);
+  const plainText = () => buildNoteText(note, sources, effLang, noteHi);
 
   const handleCopy = async () => {
     try {
@@ -82,8 +89,8 @@ export function DraftedNote({ note, sources, onCite, lang = 'en', hi, onLangChan
           </svg>
         </span>
         <span className={styles.headText}>
-          {t('draftedNoteTitle', lang)}
-          <small className={styles.subtext}>{t('reviewBeforeSubmitting', lang)}</small>
+          {t('draftedNoteTitle', effLang)}
+          <small className={styles.subtext}>{t('reviewBeforeSubmitting', effLang)}</small>
         </span>
         <span className={styles.chevron} aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -98,8 +105,8 @@ export function DraftedNote({ note, sources, onCite, lang = 'en', hi, onLangChan
               <LanguageToggle value={lang} onChange={onLangChange} label="Note language" />
             </div>)}
           {showHi && <p className={styles.caveat} role="note">{t('caveat', 'hi')}</p>}
-          {subText && <p className={`${styles.kv} mono`}><b>{t('subLabel', lang)}</b> {subText}</p>}
-          {parsed.refLine && <p className={`${styles.kv} mono`}><b>{t('refLabel', lang)}</b> {parsed.refLine}</p>}
+          {subText && <p className={`${styles.kv} mono`}><b>{t('subLabel', effLang)}</b> {subText}</p>}
+          {parsed.refLine && <p className={`${styles.kv} mono`}><b>{t('refLabel', effLang)}</b> {parsed.refLine}</p>}
           <ol className={styles.points}>
             {parsed.contentBlocks.map((b, i) => (
               <li key={i} className={styles.point}>
@@ -109,21 +116,21 @@ export function DraftedNote({ note, sources, onCite, lang = 'en', hi, onLangChan
               </li>
             ))}
           </ol>
-          <p className={styles.close}>{t('reviewClose', lang)}</p>
+          <p className={styles.close}>{t('reviewClose', effLang)}</p>
           <div className={styles.actions}>
             <button type="button" className={styles.btnSolid} onClick={handleCopy}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <rect x="9" y="9" width="12" height="12" rx="2" /><path d="M5 15V5a2 2 0 0 1 2-2h10" />
               </svg>
-              {t('copyNote', lang)}
+              {t('copyNote', effLang)}
             </button>
             <button type="button" className={styles.btn} onClick={handleExport}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M12 3v12M8 11l4 4 4-4M5 21h14" />
               </svg>
-              {t('export', lang)}
+              {t('export', effLang)}
             </button>
-            <span aria-live="polite" className={styles.liveHint}>{copied ? t('copied', lang) : ''}</span>
+            <span aria-live="polite" className={styles.liveHint}>{copied ? t('copied', effLang) : ''}</span>
           </div>
         </div>
       </div>

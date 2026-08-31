@@ -11,12 +11,25 @@ export const maxDuration = 60;
 // the trust core (cite-or-refuse, P0 fabrication check) is never re-entered. Citations are not
 // part of the request or response: the client keeps the English citation numbers and only swaps
 // display text, so a translation can never fabricate or move a citation.
-const BlockSchema = z.object({ text: z.string(), citations: z.array(z.number().int()) });
-const Body = z.object({
-  blocks: z.array(BlockSchema),
-  note: z.array(BlockSchema),
-  target: z.literal('hi'),   // only Hindi for now; widen when more languages are added
+// Caps sized generously above a real answer (8 sources → ~15 blocks, ~12 note points), because
+// this route spends a paid model call on caller-supplied text: uncapped, any signed-in user could
+// loop megabytes of arbitrary prose through it as a free general-purpose translator. /api/query
+// caps case_text at 4000 for the same reason; this is the matching bound.
+const MAX_ITEMS = 64;
+const MAX_CHARS = 8000;          // per string
+const MAX_TOTAL_CHARS = 60_000;  // whole request
+const BlockSchema = z.object({
+  text: z.string().max(MAX_CHARS),
+  citations: z.array(z.number().int()).max(64),
 });
+const Body = z.object({
+  blocks: z.array(BlockSchema).max(MAX_ITEMS),
+  note: z.array(BlockSchema).max(MAX_ITEMS),
+  target: z.literal('hi'),   // only Hindi for now; widen when more languages are added
+}).refine(
+  b => [...b.blocks, ...b.note].reduce((n, x) => n + x.text.length, 0) <= MAX_TOTAL_CHARS,
+  { message: 'payload too large' },
+);
 
 export async function POST(req: Request): Promise<Response> {
   const json = (b: unknown, status = 200) => Response.json(b, { status });

@@ -54,4 +54,16 @@ export const analytics = {
     if (!ready) return;
     try { mixpanel.reset(); } catch { /* analytics must never break the app */ }
   },
+  // Reset when the SDK still holds a signed-in identity but nobody is signed in. The in-memory
+  // sign-out transition alone was not enough: mixpanel persists distinct_id in localStorage, so a
+  // session that ended between page loads (token expiry, sign-out in another tab, browser
+  // restart) left the departed user's UUID attached — on a shared office machine the next
+  // person's events attributed to them, and their sign-in would merge the two identities.
+  resetIfStaleIdentity: () => {
+    if (!ready) return;
+    try {
+      const id = mixpanel.get_distinct_id?.();
+      if (typeof id === 'string' && !id.startsWith('$device:')) mixpanel.reset();
+    } catch { /* analytics must never break the app */ }
+  },
 };

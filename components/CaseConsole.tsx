@@ -124,7 +124,16 @@ export function CaseConsole() {
     }
   }, [answerLang, noteLang, s, translate]);
 
-  const doSubmit = () => void submit({ case_text: text, verified_only: scope.verifiedOnly, domain: scope.domain });
+  // Every new case starts in English (same rule as "Ask another" — the textarea stays visible, so
+  // submitting directly is just as common). Without this the toggles stay on हिं and the next
+  // answer silently auto-fires a paid translation the user never asked for.
+  const doSubmit = () => {
+    setAnswerLang('en'); setNoteLang('en');
+    void submit({ case_text: text, verified_only: scope.verifiedOnly, domain: scope.domain });
+  };
+  // The active language for whole-screen surfaces (loading line, refuse card): Hindi only once
+  // the user has actually put a segment into Hindi.
+  const uiLang: Language = (answerLang === 'hi' || noteLang === 'hi') ? 'hi' : 'en';
   const onSignIn = () => { try { localStorage.setItem('railcite:draft', text); } catch {}; void signInWithGoogle(); };
 
   const caseId = s.state === 'done' ? s.caseId : null;
@@ -185,12 +194,12 @@ export function CaseConsole() {
       </div>
 
       {s.state === 'idle' && !cachedLast && <EmptyState onPick={t => { setText(t); }} />}
-      {s.state === 'loading' && <TransparencyLine text={searching(s.searched, 'en')} />}
+      {s.state === 'loading' && <TransparencyLine text={searching(s.searched, uiLang)} />}
       {s.state === 'auth_required' && <AuthGate onSignIn={onSignIn} />}
       {s.state === 'loading' && <LoadingSkeleton />}
       {s.state === 'error' && <ErrorState message={s.message} onRetry={retry} />}
       {s.state === 'done' && s.data.status === 'refused' && (
-        <RefuseState meta={s.data.meta}
+        <RefuseState meta={s.data.meta} lang={uiLang}
           onBroaden={scope.verifiedOnly ? () => {
             setScope({ ...scope, verifiedOnly: false });
             void submit({ case_text: text, verified_only: false, domain: scope.domain });
@@ -202,7 +211,13 @@ export function CaseConsole() {
             {(answerLang === 'hi' || noteLang === 'hi') && translating && (
               <TransparencyLine text={t('translating', 'hi')} />)}
             {(answerLang === 'hi' || noteLang === 'hi') && translateError && (
-              <p role="status" className={styles.translateError}>{t('translateFailed', 'hi')}</p>)}
+              <p role="status" className={styles.translateError}>
+                {t('translateFailed', 'hi')}
+                {/* A real "try again" control — a transient failure must never leave a dead
+                    message whose only recovery is the undiscoverable हिं→EN→हिं toggle cycle. */}
+                <button type="button" className={styles.translateRetry}
+                  onClick={() => void translate('hi')}>{t('tryAgain', 'hi')}</button>
+              </p>)}
             <ConclusionCard blocks={s.data.blocks} sources={s.data.sources}
               lang={answerLang} onLangChange={setAnswerLang}
               hindiBlocks={answerLang === 'hi' ? s.data.translations?.hi?.blocks : undefined}

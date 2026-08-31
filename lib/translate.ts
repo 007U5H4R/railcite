@@ -39,12 +39,21 @@ export async function translate(texts: string[]): Promise<string[]> {
   const numbered = texts.map((t, i) => `[[${i + 1}]] ${t}`).join('\n\n');
   const msg = await client.messages.create({
     // claude-sonnet-5 family removed sampling params — sending temperature 400s. Do not add it.
-    model: 'claude-sonnet-5', max_tokens: 3000,
+    // 8192, not 3000: the same content's ENGLISH synthesis already needs 4096 (see synthesize.ts —
+    // raised after live truncation), and Devanagari tokenizes ~1.5–2× heavier, so a rich 8-source
+    // answer + note truncated DETERMINISTICALLY at 3000 — the tool JSON was cut mid-array and the
+    // toggle failed forever on exactly the biggest answers. Unused headroom costs nothing.
+    model: 'claude-sonnet-5', max_tokens: 8192,
     system: TRANSLATE_SYSTEM_PROMPT,
     tools: [TOOL], tool_choice: { type: 'tool', name: 'record_translation' },
     messages: [{ role: 'user', content:
       `Translate each of the following ${texts.length} items to Hindi. Return exactly ${texts.length} items in order.\n\n${numbered}` }],
   });
+  // Fail LOUD on truncation rather than surfacing it as an opaque parse/count error — this is the
+  // one failure mode that recurs as the corpus (and answer length) grows.
+  if (msg.stop_reason === 'max_tokens') {
+    throw new Error(`translation truncated at max_tokens (${texts.length} items) — raise the ceiling`);
+  }
   const tu = msg.content.find(b => b.type === 'tool_use' && b.name === 'record_translation');
   if (!tu || tu.type !== 'tool_use') throw new Error('no record_translation tool call in response');
   const { items } = ToolInput.parse(tu.input);

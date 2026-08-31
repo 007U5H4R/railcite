@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { LABELS, t, citedFrom, searchedPassages, LANGUAGES, type Language } from '@/lib/i18n';
+import { LABELS, t, citedFrom, searchedPassages, searching, LANGUAGES, type Language } from '@/lib/i18n';
 
 describe('i18n static label map', () => {
   it('returns the Hindi note labels', () => {
@@ -47,4 +47,12 @@ describe('searchedPassages refuse meta', () => {
   it('Hindi keeps the Latin numeral', () => {
     expect(searchedPassages(458, 'hi')).toContain('458');
   });
+});
+
+it('searching(0) shows the neutral line, never "Searching 0 passages…"', () => {
+  // Regression: /api/stats manufactures {chunks: 0} on failure; advertising an empty corpus
+  // mid-query reads as broken. Only a real count is shown.
+  expect(searching(0, 'en')).toBe('Searching…');
+  expect(searching(0, 'hi')).toBe(searching(null, 'hi'));
+  expect(searching(15631, 'en')).toContain('15,631');
 });

@@ -32,13 +32,17 @@ export function ConclusionCard({ blocks, sources, onCite, isSaved = false, saveD
   const still = useReducedMotion();
   const byN = new Map(sources.map(s => [s.n, s]));
   const showHi = lang === 'hi' && !!hindiBlocks;
+  // Effective language — the lead line must follow the PROSE, not the toggle, or a pending/failed
+  // translation renders a Hindi lead over an English body (and the offline cached card, which can
+  // never translate, showed exactly that permanently).
+  const effLang: Language = showHi ? 'hi' : 'en';
   return (
     <section aria-label="Cited conclusion" aria-live="polite" className={styles.card}>
       {showHi && <p className={styles.caveat} role="note">{t('caveat', 'hi')}</p>}
       <div className={styles.leadRow}>
         <p className={styles.lead}>
           <span className={styles.leadDot} aria-hidden="true" />
-          {leadText(sources, lang)}
+          {leadText(sources, effLang)}
         </p>
         <div className={styles.leadActions}>
         {onLangChange && (
@@ -61,7 +65,9 @@ export function ConclusionCard({ blocks, sources, onCite, isSaved = false, saveD
         <motion.p key={rawIdx} className={`reading ${styles.block}`}
           initial={still ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.24, delay: i * 0.04, ease: [0, 0, 0.2, 1] }}>
-          {showHi ? (hindiBlocks![rawIdx] ?? b.text) : b.text}{' '}
+          {/* `||` not `??`: an empty Hindi item (the schema permits '', and uncited slots are
+              ''-padded) must fall back to English, not render a blank cited paragraph. */}
+          {showHi ? (hindiBlocks![rawIdx] || b.text) : b.text}{' '}
           {b.citations.map(n => byN.get(n)).filter(Boolean).map(s => (
             <CitationChip key={s!.chunk_id + s!.n} source={s!} onOpen={onCite} />))}
         </motion.p>

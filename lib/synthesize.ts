@@ -66,9 +66,19 @@ async function recordConclusionOnce(client: Anthropic, caseText: string, sources
     tools: [TOOL], tool_choice: { type: 'tool', name: 'record_conclusion' },
     messages: [{ role: 'user', content: buildUserPrompt(caseText, sources) }],
   });
+  // Truncation is THE recurring failure as the corpus grows (it already forced 2000→4096), and a
+  // cut that lands after `blocks` but before `note` still parses — silently shipping an answer
+  // with no justification note. Detect it explicitly so it retries and is visible in logs.
+  if (msg.stop_reason === 'max_tokens') throw new Error('synthesis truncated at max_tokens');
   const tu = msg.content.find(b => b.type === 'tool_use' && b.name === 'record_conclusion');
   if (!tu || tu.type !== 'tool_use') throw new Error('no record_conclusion tool call in response');
-  return ToolInput.parse(tu.input);   // throws (ZodError) on a truncated/malformed tool call
+  const parsed = ToolInput.parse(tu.input);   // throws (ZodError) on a truncated/malformed tool call
+  if (parsed.status === 'answered' && !parsed.note) {
+    // Not fatal (the answer itself is valid and cited), but the SYSTEM_PROMPT mandates a note on
+    // every answered result — so this is a real signal, not a normal outcome. Never silent.
+    console.warn('synthesize: answered result had no note (drafted note will be empty)');
+  }
+  return parsed;
 }
 
 export async function synthesize(caseText: string, sources: PromptSource[]): Promise<SynthesisResult> {
@@ -80,7 +90,11 @@ export async function synthesize(caseText: string, sources: PromptSource[]): Pro
   let parsed;
   try {
     parsed = await recordConclusionOnce(client, caseText, sources);
-  } catch {
+  } catch (first) {
+    // Log the FIRST error before retrying: swallowing it makes a truncation pattern
+    // indistinguishable from a rate-limit or auth failure in production logs — which is exactly
+    // how the previous max_tokens ceiling had to be diagnosed from scratch.
+    console.warn('synthesize attempt 1 failed, retrying once:', first);
     parsed = await recordConclusionOnce(client, caseText, sources);
   }
   return parsed.status === 'refused'

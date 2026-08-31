@@ -37,3 +37,11 @@ it('malformed tool input throws (never silently returns English)', async () => {
   create.mockResolvedValue(toolUse({ items: 'nope' }));
   await expect(translate(['x'])).rejects.toThrow();
 });
+
+it('throws a clear error when the model truncates at max_tokens', async () => {
+  // Regression: max_tokens was 3000 — below the Hindi rendering of a rich answer (the same
+  // content's English synthesis needs 4096) — so the biggest answers failed deterministically
+  // with an opaque parse/count error. Truncation must now be loud and self-describing.
+  create.mockResolvedValue({ stop_reason: 'max_tokens', content: [] });
+  await expect(translate(['a'])).rejects.toThrow(/truncated at max_tokens/);
+});

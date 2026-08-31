@@ -11,7 +11,13 @@ const mono = IBM_Plex_Mono({ subsets:['latin'], weight:['400','500','600'], vari
 
 // Absolute-URL base for OG/Twitter images (crawlers need absolute HTTPS). Set NEXT_PUBLIC_SITE_URL
 // to the production domain in the deploy env; falls back to localhost for dev.
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+// The fallback must NEVER reach production: an explicit metadataBase also suppresses both Next's
+// missing-metadataBase warning and its automatic Vercel-URL fallback, so a forgotten env var would
+// silently ship og:url/og:image pointing at http://localhost:3000 — every unfurl broken, no signal.
+// VERCEL_URL is injected by Vercel on every deploy, so it is a safe production backstop.
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
 const DESC = 'Search real Indian Railways circulars and manuals. Every answer cites its source — or RailCite says no governing rule was found.';
 
 export const metadata: Metadata = {

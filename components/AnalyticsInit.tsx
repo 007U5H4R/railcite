@@ -10,7 +10,12 @@ import { useSession } from '@/hooks/useSession';
 export function AnalyticsInit() {
   const { user, loading } = useSession();
   const prevId = useRef<string | null>(null);
-  useEffect(() => { initAnalytics(); initClarity(); }, []);
+  // Independently guarded: analytics must never throw into the app, and one vendor failing
+  // (blocked storage, a script-stripping extension) must not stop the other from initializing.
+  useEffect(() => {
+    try { initAnalytics(); } catch (e) { console.warn('analytics init failed:', e); }
+    try { initClarity(); } catch (e) { console.warn('clarity init failed:', e); }
+  }, []);
   // Link analytics to the signed-in user (opaque Supabase UUID) for user-level retention. Reset
   // ONLY on an actual sign-out transition — never on anonymous first load, which would churn the
   // anonymous distinct_id and break funnel continuity. On sign-in, also exclude the builder's own
@@ -19,6 +24,9 @@ export function AnalyticsInit() {
     if (loading) return;
     if (user) { analytics.identify(user.id); applyClarityExclusion(user.email); prevId.current = user.id; }
     else if (prevId.current) { analytics.resetIdentity(); prevId.current = null; }
+    // Settled anonymous with no in-memory history: the session may have ended between page loads
+    // (expiry, another tab, restart), leaving a persisted identity the ref can't know about.
+    else analytics.resetIfStaleIdentity();
   }, [user, loading]);
   return null;
 }

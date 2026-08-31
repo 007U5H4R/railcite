@@ -24,16 +24,27 @@ const SaveBody = z.object({
   result: z.record(z.string(), z.unknown()).nullable().optional(),
 }).strict();
 
-// PATCH updates the caller's own case: toggle the bookmark (is_saved) and/or fold a richer
-// `result` back in (e.g. a lazily-generated Hindi translation cached onto the saved answer).
-// At least one of the two must be present. `result` is trusted at the same level as POST's —
-// it's the caller's own row (RLS) and the answer shape was already validated when /api/query
-// produced it.
+// PATCH updates the caller's own case: toggle the bookmark (is_saved) and/or fold a lazily
+// generated translation into the saved answer. At least one must be present.
+//
+// The stored answer is IMMUTABLE after POST. PATCH deliberately does NOT accept a whole `result`
+// blob: that let any writer (including a racy client) replace a saved case's validated answer
+// with arbitrary JSON — corrupting the historic record of what RailCite actually answered, and
+// crashing the reopen path on a malformed shape. Instead the caller sends only `translations`,
+// and the server merges just that key into the existing result (below), so blocks/sources/note/
+// meta can never change post-hoc and two devices adding different languages can't clobber each
+// other's work.
+const TranslationSchema = z.object({
+  blocks: z.array(z.string().max(20_000)).max(200),
+  noteSub: z.string().max(20_000).nullable(),
+  noteContent: z.array(z.string().max(20_000)).max(200),
+}).strict();
+
 const PatchBody = z.object({
   id: z.string().uuid(),
   is_saved: z.boolean().optional(),
-  result: z.record(z.string(), z.unknown()).optional(),
-}).strict().refine(b => b.is_saved !== undefined || b.result !== undefined,
+  translations: z.record(z.string().max(8), TranslationSchema).optional(),
+}).strict().refine(b => b.is_saved !== undefined || b.translations !== undefined,
   { message: 'nothing to update' });
 
 /** Verifies the caller and returns their uid + raw token, or null (→ 401). */
@@ -102,13 +113,28 @@ export async function PATCH(req: Request): Promise<Response> {
     if (!auth) return json({ error: 'auth_required' }, 401);
     const parsed = PatchBody.safeParse(await req.json().catch(() => null));
     if (!parsed.success) return json({ error: 'invalid_body' }, 400);
-    const { id, is_saved, result } = parsed.data;
+    const { id, is_saved, translations } = parsed.data;
 
     const patch: Record<string, unknown> = {};
     if (is_saved !== undefined) patch.is_saved = is_saved;
-    if (result !== undefined) patch.result = result;
 
     const sb = userClient(auth.token);
+    if (translations !== undefined) {
+      // Merge ONLY the translations key into the stored answer, server-side (RLS scopes the read
+      // to the caller's own row). Everything else in `result` is left byte-identical, so the
+      // validated answer stays immutable and a caller can never overwrite it.
+      const { data: row, error: readErr } = await sb.from('cases').select('result').eq('id', id).maybeSingle();
+      if (readErr) { console.error('case read failed:', readErr); return json({ error: 'update_failed' }, 500); }
+      if (!row) return json({ error: 'not_found' }, 404);
+      const prev = (row.result ?? null) as Record<string, unknown> | null;
+      if (prev && typeof prev === 'object' && !Array.isArray(prev)) {
+        const prevT = (prev.translations ?? {}) as Record<string, unknown>;
+        patch.result = { ...prev, translations: { ...prevT, ...translations } };
+      }
+      // No stored result to merge into (older/partial row) → skip silently; a translation is a
+      // cache, never the record itself.
+    }
+    if (Object.keys(patch).length === 0) return json({ id, is_saved: null });
     // RLS (cases_update_own) scopes this to the caller's own row; if `id` belongs to
     // someone else (or doesn't exist) the update matches 0 rows → data is null → 404.
     const { data, error } = await sb.from('cases').update(patch).eq('id', id)

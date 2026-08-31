@@ -27,7 +27,12 @@ export function initClarity(): void {
     c[a] = c[a] || function (...args: unknown[]) { ((c[a] as { q?: unknown[] }).q = (c[a] as { q?: unknown[] }).q || []).push(args); };
     const t = l.createElement(r) as HTMLScriptElement; t.async = true;
     t.src = 'https://www.clarity.ms/tag/' + i;
-    const y = l.getElementsByTagName(r)[0]; y.parentNode!.insertBefore(t, y);
+    // Insert before the first <script> when there is one, else fall back to <head>/<body>:
+    // getElementsByTagName('script')[0] can be undefined (script-stripping extensions, embedded
+    // webviews) and dereferencing it would throw out of the root layout effect.
+    const y = l.getElementsByTagName(r)[0];
+    if (y?.parentNode) y.parentNode.insertBefore(t, y);
+    else (l.head || l.documentElement).appendChild(t);
   })(window as unknown as Record<string, unknown>, document, 'clarity', 'script', PROJECT_ID);
 }
 

@@ -11,7 +11,7 @@ export type LabelKey =
   | 'subLabel' | 'refLabel' | 'draftedNoteTitle' | 'reviewBeforeSubmitting' | 'reviewClose' | 'sources'
   | 'copyNote' | 'export' | 'copied' | 'caveat'
   | 'refuseTitle' | 'refuseSub' | 'removeVerifiedOnly' | 'rephrase'
-  | 'translating' | 'translateFailed'
+  | 'translating' | 'translateFailed' | 'tryAgain'
   | 'langEnglish' | 'langHindi' | 'switchToEnglish' | 'switchToHindi';
 
 export const LABELS: Record<Language, Record<LabelKey, string>> = {
@@ -32,6 +32,7 @@ export const LABELS: Record<Language, Record<LabelKey, string>> = {
     rephrase: 'Rephrase the case',
     translating: 'Translating to Hindi…',
     translateFailed: 'Couldn’t translate — showing English.',
+    tryAgain: 'Try again',
     langEnglish: 'English',
     langHindi: 'हिंदी',
     switchToEnglish: 'Show in English',
@@ -54,6 +55,7 @@ export const LABELS: Record<Language, Record<LabelKey, string>> = {
     rephrase: 'मामला पुनः लिखें',
     translating: 'हिंदी में अनुवाद हो रहा है…',
     translateFailed: 'अनुवाद नहीं हो सका — अंग्रेज़ी दिखाई जा रही है।',
+    tryAgain: 'पुनः प्रयास करें',
     langEnglish: 'English',
     langHindi: 'हिंदी',
     switchToEnglish: 'अंग्रेज़ी में दिखाएँ',
@@ -82,7 +84,9 @@ export function citedFrom(n: number, domain: string | null, lang: Language): str
 }
 
 export function searching(n: number | null, lang: Language): string {
-  if (n == null) return lang === 'hi' ? 'खोज हो रही है…' : 'Searching…';
+  // 0 is not a count worth advertising ("Searching 0 passages…" reads like an empty corpus, and
+  // /api/stats manufactures {chunks: 0} when it fails) — fall back to the neutral line.
+  if (n == null || n <= 0) return lang === 'hi' ? 'खोज हो रही है…' : 'Searching…';
   const num = n.toLocaleString('en-IN');
   return lang === 'hi' ? `${num} अंश खोजे जा रहे हैं…` : `Searching ${num} passages…`;
 }
