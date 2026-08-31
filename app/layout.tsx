@@ -3,6 +3,7 @@ import { Poppins, Quicksand, IBM_Plex_Mono } from 'next/font/google';
 import './globals.css'; import './app.css';
 import { Shell } from '@/components/Shell';
 import { AnalyticsInit } from '@/components/AnalyticsInit';
+import { PWARegister } from '@/components/PWARegister';
 
 const sans = Poppins({ subsets:['latin'], weight:['400','500','600','700'], variable:'--font-sans' });
 const display = Quicksand({ subsets:['latin'], weight:['500','600','700'], variable:'--font-display' });
@@ -29,6 +30,9 @@ export const metadata: Metadata = {
     title: 'RailCite — cited railway circular research',
     description: 'Every answer cites its source — or RailCite says no governing rule was found.',
   },
+  // PWA: manifest is auto-linked from app/manifest.ts; add the iOS home-screen icon + standalone hints.
+  icons: { apple: '/apple-icon.png' },
+  appleWebApp: { capable: true, title: 'RailCite', statusBarStyle: 'default' },
 };
 
 export const viewport: Viewport = {
@@ -40,6 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body className={`${sans.variable} ${display.variable} ${mono.variable}`}>
         <AnalyticsInit />
+        <PWARegister />
         <Shell>{children}</Shell>
       </body>
     </html>
