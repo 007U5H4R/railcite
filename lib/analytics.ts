@@ -1,7 +1,8 @@
-// Mixpanel instrumentation for RailCite. PRIVACY-FIRST: no case text, no question content,
-// and no user PII (no email, no name, no identify()) ever leaves the app — only the six
-// funnel events below, each carrying at most a single numeric count. distinct_id stays the
-// anonymous device id Mixpanel assigns; we never link it to the signed-in user. The Mixpanel
+// Mixpanel instrumentation for RailCite. PRIVACY-FIRST: no case text, no question content, and
+// no user PII (no email, no name) ever leaves the app — only the six funnel events below, each
+// carrying at most a single numeric count. The ONE user linkage is identify() with the OPAQUE
+// Supabase user UUID (never email/name) — a deliberate ship-time trade to get user-level retention
+// while keeping PII out; resetIdentity() returns to an anonymous id on sign-out. The Mixpanel
 // project lives in the EU region, so the SDK points at the EU ingestion host.
 'use client';
 import mixpanel from 'mixpanel-browser';
@@ -43,4 +44,14 @@ export const analytics = {
   draftNoteCopied: () => track('draft_note_copied'),
   draftNoteExported: () => track('draft_note_exported'),
   noRuleFoundShown: () => track('no_rule_found_shown'),
+  // User-level retention: link events to the signed-in user by their opaque Supabase UUID (never
+  // email/name). identify() on sign-in; resetIdentity() on sign-out returns to an anonymous id.
+  identify: (userId: string) => {
+    if (!ready) return;
+    try { mixpanel.identify(userId); } catch { /* analytics must never break the app */ }
+  },
+  resetIdentity: () => {
+    if (!ready) return;
+    try { mixpanel.reset(); } catch { /* analytics must never break the app */ }
+  },
 };

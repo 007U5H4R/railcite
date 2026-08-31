@@ -46,3 +46,5 @@ data/
 crawl/state.json
 crawl/manifest.jsonl
 crawl/__pycache__/
+ingest-crawl-errors.log
+railcite-tmp/
