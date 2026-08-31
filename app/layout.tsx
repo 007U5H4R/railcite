@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Poppins, Quicksand, IBM_Plex_Mono } from 'next/font/google';
 import './globals.css'; import './app.css';
 import { Shell } from '@/components/Shell';
@@ -8,9 +8,31 @@ const sans = Poppins({ subsets:['latin'], weight:['400','500','600','700'], vari
 const display = Quicksand({ subsets:['latin'], weight:['500','600','700'], variable:'--font-display' });
 const mono = IBM_Plex_Mono({ subsets:['latin'], weight:['400','500','600'], variable:'--font-mono' });
 
+// Absolute-URL base for OG/Twitter images (crawlers need absolute HTTPS). Set NEXT_PUBLIC_SITE_URL
+// to the production domain in the deploy env; falls back to localhost for dev.
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+const DESC = 'Search real Indian Railways circulars and manuals. Every answer cites its source — or RailCite says no governing rule was found.';
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  applicationName: 'RailCite',
   title: 'RailCite — cited railway circular research',
-  description: 'Search real Indian Railways circulars and manuals. Every answer cites its source — or RailCite says no governing rule was found.',
+  description: DESC,
+  // og:image + twitter:image are supplied automatically by app/opengraph-image.tsx and
+  // app/twitter-image.tsx (1200×630), resolved to absolute URLs via metadataBase above.
+  openGraph: {
+    type: 'website', siteName: 'RailCite', url: '/',
+    title: 'RailCite — cited railway circular research', description: DESC,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'RailCite — cited railway circular research',
+    description: 'Every answer cites its source — or RailCite says no governing rule was found.',
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#2f7bf0',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
