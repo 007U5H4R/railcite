@@ -35,7 +35,28 @@ const MAX_PDF_BYTES = 40 * 1048576;
 const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) RailCite-ingest';
 
 function withTimeout<T>(p: Promise<T>, ms: number, label: string): Promise<T> {
-  return Promise.race([p, sleep(ms).then(() => { throw new Error(`timeout after ${ms}ms (${label})`); }) as Promise<T>]);
+  // Clear the timer on settle: an uncleared 5-minute timer per document keeps the Node event loop
+  // alive long after "run done" prints.
+  let timer: NodeJS.Timeout;
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => reject(new Error(`timeout after ${ms}ms (${label})`)), ms);
+  });
+  return Promise.race([p, timeout]).finally(() => clearTimeout(timer)) as Promise<T>;
+}
+
+// One canonical form per PDF, used for BOTH the resume set and the stored source_url. The manifest
+// carries ~92 groups of variants of the same file (http/https twins, '%26' vs '&', ',' vs '%2C'),
+// and exact-string dedup let every variant through — 68 duplicate document groups (126 duplicate
+// chunks) reached the live DB, where identical passages compete in retrieval and duplicate
+// compendium rows make the lineage anchor ambiguous.
+export function canonicalUrl(raw: string): string {
+  try {
+    const u = new URL(raw.trim().replace(/^http:\/\//i, 'https://'));
+    u.hash = '';
+    u.hostname = u.hostname.toLowerCase().replace(/^www\./, '');
+    u.pathname = decodeURIComponent(u.pathname).replace(/\s+/g, ' ');
+    return u.toString();
+  } catch { return raw.trim(); }
 }
 
 async function dbSizeMB(): Promise<number> {
@@ -79,17 +100,26 @@ async function ingestOne(e: Entry, tmp: string, sb: ReturnType<typeof adminClien
   const hash = createHash('sha256').update(await readFile(tmp)).digest('hex');
   const { data: doc, error: e1 } = await sb.from('documents').insert({
     title: e.title || '(untitled)', doc_type: e.doc_type, domain: e.domain, commodity: null,
-    source_url: e.source_url, circular_no: e.circular_no, issue_date: e.issue_date, file_hash: hash, is_ocr,
+    source_url: canonicalUrl(e.source_url), circular_no: e.circular_no, issue_date: e.issue_date, file_hash: hash, is_ocr,
   }).select().single();
   if (e1) throw e1;
-  const embeddings = await embedTexts(chunks.map(c => c.chunk_text), 'document');
-  const rows = chunks.map((c, i) => ({ document_id: doc.id, chunk_text: c.chunk_text,
-    embedding: embeddings[i], page_ref: c.page_ref, token_count: c.token_count }));
-  for (let j = 0; j < rows.length; j += 200) {
-    const { error } = await sb.from('chunks').insert(rows.slice(j, j + 200));
-    if (error) throw error;
+  // Postgres has no transaction across these calls, so if embedding or a chunk batch fails the
+  // document row would survive WITHOUT chunks — and because resume keys on source_url, every
+  // future run skips it, leaving a permanently unsearchable document that retrieval can never
+  // cite (one such row was found live). Roll the row back so the next run retries it cleanly.
+  try {
+    const embeddings = await embedTexts(chunks.map(c => c.chunk_text), 'document');
+    const rows = chunks.map((c, i) => ({ document_id: doc.id, chunk_text: c.chunk_text,
+      embedding: embeddings[i], page_ref: c.page_ref, token_count: c.token_count }));
+    for (let j = 0; j < rows.length; j += 200) {
+      const { error } = await sb.from('chunks').insert(rows.slice(j, j + 200));
+      if (error) throw error;
+    }
+    return { status: is_ocr ? 'ocr' : 'ok', chunks: rows.length };
+  } catch (err) {
+    await sb.from('documents').delete().eq('id', doc.id);   // chunks cascade
+    throw err;
   }
-  return { status: is_ocr ? 'ocr' : 'ok', chunks: rows.length };
 }
 
 async function main() {
@@ -99,9 +129,9 @@ async function main() {
   // Resumable: pull every already-ingested source_url so re-runs continue where they left off.
   const done = new Set<string>();
   for (let from = 0; ; from += 1000) {
-    const { data, error } = await sb.from('documents').select('source_url').not('source_url', 'is', null).range(from, from + 999);
+    const { data, error } = await sb.from('documents').select('source_url').not('source_url', 'is', null).order('source_url', { ascending: true }).range(from, from + 999);
     if (error) throw error;
-    (data ?? []).forEach(d => d.source_url && done.add(d.source_url));
+    (data ?? []).forEach(d => d.source_url && done.add(canonicalUrl(d.source_url)));
     if (!data || data.length < 1000) break;
   }
   console.log(`crawl start: ${entries.length} in manifest · ${done.size} already ingested · throttle ${THROTTLE_MS}ms · DB limit ${DB_LIMIT_MB}MB`);
@@ -110,7 +140,8 @@ async function main() {
   const errors: string[] = [];
   for (let i = 0; i < entries.length; i++) {
     const e = entries[i];
-    if (done.has(e.source_url)) continue;
+    const canon = canonicalUrl(e.source_url);
+    if (done.has(canon)) continue;   // already ingested (any URL variant of the same PDF)
     if (processed >= MAX_DOCS) { console.log(`reached INGEST_MAX_DOCS=${MAX_DOCS}`); break; }
     processed++;
 
@@ -127,8 +158,8 @@ async function main() {
     const tmp = path.join(tmpdir(), `railcite-crawl-${i}.pdf`);
     try {
       const r = await withTimeout(ingestOne(e, tmp, sb), DOC_TIMEOUT_MS, e.title.slice(0, 40));
-      if (r.status === 'skip') { skip++; }
-      else { ok++; if (r.status === 'ocr') ocrN++; chunksAdded += r.chunks; done.add(e.source_url); }
+      if (r.status === 'skip') { skip++; done.add(canon); }
+      else { ok++; if (r.status === 'ocr') ocrN++; chunksAdded += r.chunks; done.add(canon); }
       if (processed % 10 === 0) console.log(`[${i + 1}] ${r.status.toUpperCase().padEnd(4)} ${e.issue_date ?? '        '} +${r.chunks}ch ${e.title.slice(0, 48)}`);
     } catch (ex) {
       err++; const msg = ex instanceof Error ? ex.message : String(ex);

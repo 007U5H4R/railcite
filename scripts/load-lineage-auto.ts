@@ -5,11 +5,17 @@
 // when its title matches exactly one subject; 0-match and >1-match corrigendums are LOGGED, not
 // guessed. 'amends' (not 'supersedes'): a corrigendum revises provisions, both stay in force.
 //
+// THE SINGLE LINEAGE AUTHORITY. A second seeder used to wire the same documents by FILE-NAME
+// PREFIX, which disagreed with the documents' own titles — e.g. four `SDG_Corrig_*` files whose
+// titles read ".../Demurrage-Wharfage-Waiver" were wired to the Sidings compendium, so the same
+// corrigendum ended up amending two different anchors and one of those edges was fabricated. The
+// title is the document's own claim about itself, so it wins; the prefix seeder was retired.
+//
 // Idempotent (lineage unique constraint). Re-runnable as the corpus grows.
 // Run: `npx tsx --env-file=.env.local scripts/load-lineage-auto.ts`
 import { adminClient } from '@/lib/db';
 
-interface Doc { id: string; title: string; doc_type: string | null; circular_no: string | null }
+interface Doc { id: string; title: string; doc_type: string | null; circular_no: string | null; issue_date: string | null }
 
 // anchor = matches the subject's compendium title (unique); corrig = matches a corrigendum's title;
 // not = excludes a look-alike subject. Order doesn't matter — a corrigendum must match exactly one.
@@ -21,14 +27,20 @@ const SUBJECTS: { label: string; anchor: RegExp; corrig: RegExp; not?: RegExp }[
   { label: 'System of charging freight — sidings', anchor: /siding/i, corrig: /\bsidings?\b/i },
   { label: 'E-payment', anchor: /E[\s_-]?payment/i, corrig: /e[\s-]?payment|electronic payment|online payment system/i },
   { label: 'Demand Registration (eRD)', anchor: /eRD/i, corrig: /demand registration|\be-?RD\b|premium indent/i },
-  { label: 'Electronic RR (eTRR)', anchor: /eTRR/i, corrig: /e-?TRR|electronic transmission of railway receipt/i },
+  // `eT-?RR`: the real compendium title is "Compendium_eT-RR_updated till 2025", so an /eTRR/i
+  // anchor matched nothing and every eTRR corrigendum was silently left unwired.
+  { label: 'Electronic RR (eTRR)', anchor: /eT-?RR/i, corrig: /e-?T-?RR|electronic transmission of railway receipt/i },
 ];
 
 async function main() {
   const sb = adminClient();
+  // .order('id') is REQUIRED, not cosmetic: PostgREST paging is LIMIT/OFFSET, and without an
+  // ORDER BY Postgres may start each page's scan at a different position, so rows can be skipped
+  // or repeated across pages — silently omitting lineage for whichever corrigendums fall through.
   const docs: Doc[] = [];
   for (let from = 0; ; from += 1000) {
-    const { data, error } = await sb.from('documents').select('id,title,doc_type,circular_no').range(from, from + 999);
+    const { data, error } = await sb.from('documents').select('id,title,doc_type,circular_no,issue_date')
+      .order('id', { ascending: true }).range(from, from + 999);
     if (error) throw error;
     docs.push(...(data as Doc[] ?? []));
     if (!data || data.length < 1000) break;
@@ -36,11 +48,23 @@ async function main() {
 
   // Anchor compendium per subject (the doc whose title says "…ompendium…"/"Consolidated" + subject).
   const isCompendium = (t: string) => /omp[eo]ndium|consolidated instructions/i.test(t);
+  // Anchor choice must be DETERMINISTIC: several subjects have more than one compendium row (the
+  // crawl ingested some under two URL variants, and older editions linger), and a bare find-first
+  // over an unordered list could pick a different one on each run — leaving stale edges behind,
+  // since upserts never delete. Prefer the canonical consolidated edition ("…updated till …"),
+  // then the most recent by issue_date, then id, so the same row wins every time.
   const anchors = new Map<string, Doc>();
   for (const s of SUBJECTS) {
-    const a = docs.find(d => isCompendium(d.title) && s.anchor.test(d.title));
-    if (a) anchors.set(s.label, a);
-    else console.warn(`⚠ no compendium anchor found for "${s.label}"`);
+    const candidates = docs.filter(d => isCompendium(d.title) && s.anchor.test(d.title));
+    if (!candidates.length) { console.warn(`⚠ no compendium anchor found for "${s.label}"`); continue; }
+    candidates.sort((a, b) =>
+      Number(/updated\s*till/i.test(b.title)) - Number(/updated\s*till/i.test(a.title)) ||
+      (b.issue_date ?? '').localeCompare(a.issue_date ?? '') ||
+      a.id.localeCompare(b.id));
+    if (candidates.length > 1) {
+      console.warn(`  note: ${candidates.length} compendium rows match "${s.label}" — anchoring on "${candidates[0].title.slice(0, 60)}"`);
+    }
+    anchors.set(s.label, candidates[0]);
   }
 
   const rows: { document_id: string; relation: 'amends'; related_document_id: string; note: string }[] = [];
@@ -48,11 +72,24 @@ async function main() {
   let ambiguous = 0, unmatched = 0, selfSkip = 0;
   const unmatchedSamples: string[] = [];
 
+  // A corrigendum's title usually carries a STRUCTURAL subject — "…to Rates Master Circular/<subject>/…".
+  // That first path segment is the document's own statement of what it amends, and it outranks any
+  // keyword found elsewhere in the title. Composite titles make this decisive: "Corrigendum No.93 to
+  // Rates Master Circular/PCC/CC+8/2020/0 Corri no.50 to RMC on Block Rakes … and Corri No.12 to
+  // RMC/weighment/2019" merely MENTIONS weighment while amending PCC — keyword matching wired it to
+  // the Weighment compendium, a fabricated relationship. When a structural subject is present but
+  // matches no configured subject (PCC, Dynamic Pricing, FIS… have no compendium), the document is
+  // left unwired rather than attached to whatever keyword happens to appear.
+  const STRUCTURAL_SUBJECT = /(?:Rates Master Circular|RMC)\s*\/\s*([A-Za-z][\w\-&+ ]*)/i;
+
   for (const d of docs) {
     const t = d.title || '';
     const isCorrig = /corrig|addendum/i.test(t) || d.doc_type === 'correction_slip';
     if (!isCorrig || isCompendium(t)) continue;                 // skip non-corrigs + the compendiums themselves
-    const hits = SUBJECTS.filter(s => s.corrig.test(t) && !(s.not && s.not.test(t)));
+    const structural = STRUCTURAL_SUBJECT.exec(t)?.[1]?.trim();
+    const hits = structural
+      ? SUBJECTS.filter(s => s.corrig.test(structural) && !(s.not && s.not.test(structural)))
+      : SUBJECTS.filter(s => s.corrig.test(t) && !(s.not && s.not.test(t)));
     if (hits.length === 0) { unmatched++; if (unmatchedSamples.length < 12) unmatchedSamples.push(t.slice(0, 70)); continue; }
     if (hits.length > 1) { ambiguous++; continue; }             // conservative: never guess
     const anchor = anchors.get(hits[0].label);
