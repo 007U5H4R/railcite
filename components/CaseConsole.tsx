@@ -215,7 +215,8 @@ export function CaseConsole() {
             <SourcesPanel sources={s.data.sources} activeChunkId={activeChunkId} onOpen={setOpenSource} />
             {/* Lineage sits between the evidence and the note it feeds: sources -> how they
                 supersede/amend each other -> the note drafted from them. */}
-            {s.data.lineage && <LineagePanel lineage={s.data.lineage} />}
+            {s.data.lineage && <LineagePanel lineage={s.data.lineage}
+              citedDocumentIds={s.data.sources.map(src => src.document.id)} />}
             {s.data.note?.length > 0 && (
               <DraftedNote note={s.data.note} sources={s.data.sources}
                 lang={lang} onLangChange={setLang}
@@ -236,7 +237,7 @@ export function CaseConsole() {
         <ConclusionCard blocks={cachedLast.blocks} sources={cachedLast.sources}
           lang={lang} onLangChange={setLang}
           hindiBlocks={lang === 'hi' ? cachedLast.translations?.hi?.blocks : undefined}
-          onCite={() => {}} />)}
+          onCite={src => setActiveChunkId(src.chunk_id)} />)}
 
       {openSource && <SourceReader source={openSource} onClose={() => setOpenSource(null)} />}
     </>

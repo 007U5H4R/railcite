@@ -169,3 +169,7 @@
     max-width: none;
   }
 }
+
+/* Answer rests on at least one OCR'd passage — amber matches the "verify against the original"
+   semantics the OCR badge already uses. */
+.leadDotOcr { background: var(--ocr-fg, #b6821c); }

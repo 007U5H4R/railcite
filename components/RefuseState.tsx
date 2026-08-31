@@ -19,7 +19,9 @@ export function RefuseState({ meta, onBroaden, onRephrase, lang = 'en' }: {
       </span>
       <h2 className={styles.refuseH}>{t('refuseTitle', lang)}</h2>
       <p className={styles.refuseSub}>{t('refuseSub', lang)}</p>
-      <p className={`${styles.refuseMeta} mono`}>{searchedPassages(meta.searched, lang)}</p>
+      {/* `mono` only for English: IBM Plex Mono has no Devanagari, so the Hindi line fell
+          through to a fallback face mid-line and reflowed on swap. */}
+      <p className={`${styles.refuseMeta}${lang === 'en' ? ' mono' : ''}`}>{searchedPassages(meta.searched, lang)}</p>
       <div className={styles.refuseActions}>
         {onBroaden && <button type="button" className={styles.quietBtn} onClick={onBroaden}>{t('removeVerifiedOnly', lang)}</button>}
         <button type="button" className={styles.quietBtn} onClick={onRephrase}>{t('rephrase', lang)}</button>

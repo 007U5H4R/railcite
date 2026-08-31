@@ -47,7 +47,9 @@ export function ConclusionCard({ blocks, sources, onCite, isSaved = false, saveD
       {showHi && <p className={styles.caveat} role="note">{t('caveat', 'hi')}</p>}
       <div className={styles.leadRow}>
         <p className={styles.lead}>
-          <span className={styles.leadDot} aria-hidden="true" />
+          {/* Keyed to the WEAKEST source: a green dot beside an answer resting on an OCR'd
+              passage overstated its footing. Decorative only — the badges carry the real signal. */}
+          <span className={`${styles.leadDot} ${sources.some(s => s.document.is_ocr) ? styles.leadDotOcr : ''}`} aria-hidden="true" />
           {leadText(sources, effLang)}
         </p>
         <div className={styles.leadActions}>
