@@ -2,6 +2,7 @@
 import { motion, useReducedMotion } from 'motion/react';
 import type { ConclusionBlock, SourceView } from '@/lib/types';
 import { CitationChip } from './CitationChip';
+import { stripInlineCitations } from '@/lib/note';
 import { LanguageToggle } from './LanguageToggle';
 import { citedFrom, t, type Language } from '@/lib/i18n';
 import styles from './conclusion.module.css';
@@ -19,7 +20,8 @@ function leadText(sources: SourceView[], lang: Language): string {
 // array (same order/length), so a block rendered from raw index i shows hindiBlocks[i] when
 // Hindi is on. Citations always come from the English block, so the chips never change.
 export function ConclusionCard({ blocks, sources, onCite, isSaved = false, saveDisabled = false,
-  onToggleSave = null, lang = 'en', hindiBlocks, onLangChange = null }: {
+  onToggleSave = null, lang = 'en', hindiBlocks, onLangChange = null,
+  langBusy = false, onLangRetry = null }: {
   blocks: ConclusionBlock[]; sources: SourceView[]; onCite: (s: SourceView) => void;
   // R4: bookmark toggle for the current case. onToggleSave is null when there's no live
   // case to save against (e.g. the offline cached-answer fallback in CaseConsole) — the
@@ -28,6 +30,8 @@ export function ConclusionCard({ blocks, sources, onCite, isSaved = false, saveD
   // This segment's own EN|हिं toggle (independent of the note's). Rendered only when a handler
   // is supplied; `hindiBlocks` (index-aligned to `blocks`) carries the Hindi text.
   lang?: Language; hindiBlocks?: string[]; onLangChange?: ((l: Language) => void) | null;
+  // Translation status, rendered AT the toggle (see LanguageToggle) rather than atop the column.
+  langBusy?: boolean; onLangRetry?: (() => void) | null;
 }) {
   const still = useReducedMotion();
   const byN = new Map(sources.map(s => [s.n, s]));
@@ -36,8 +40,10 @@ export function ConclusionCard({ blocks, sources, onCite, isSaved = false, saveD
   // translation renders a Hindi lead over an English body (and the offline cached card, which can
   // never translate, showed exactly that permanently).
   const effLang: Language = showHi ? 'hi' : 'en';
+  // No aria-live on the card: it is not a status region, and announcing it re-read the ENTIRE
+  // multi-paragraph answer on every language swap. Progress is announced at the toggle instead.
   return (
-    <section aria-label="Cited conclusion" aria-live="polite" className={styles.card}>
+    <section aria-label="Cited conclusion" className={styles.card}>
       {showHi && <p className={styles.caveat} role="note">{t('caveat', 'hi')}</p>}
       <div className={styles.leadRow}>
         <p className={styles.lead}>
@@ -46,7 +52,8 @@ export function ConclusionCard({ blocks, sources, onCite, isSaved = false, saveD
         </p>
         <div className={styles.leadActions}>
         {onLangChange && (
-          <LanguageToggle value={lang} onChange={onLangChange} label="Response language" />)}
+          <LanguageToggle value={lang} onChange={onLangChange} label={t('responseLanguage', lang)}
+            busy={langBusy} onRetry={onLangRetry} />)}
         {onToggleSave && (
           <button type="button" className={`${styles.saveBtn} ${isSaved ? styles.saveBtnOn : ''}`}
             aria-pressed={isSaved} aria-label={isSaved ? 'Saved' : 'Save case'}
@@ -67,7 +74,7 @@ export function ConclusionCard({ blocks, sources, onCite, isSaved = false, saveD
           transition={{ duration: 0.24, delay: i * 0.04, ease: [0, 0, 0.2, 1] }}>
           {/* `||` not `??`: an empty Hindi item (the schema permits '', and uncited slots are
               ''-padded) must fall back to English, not render a blank cited paragraph. */}
-          {showHi ? (hindiBlocks![rawIdx] || b.text) : b.text}{' '}
+          {stripInlineCitations(showHi ? (hindiBlocks![rawIdx] || b.text) : b.text)}{' '}
           {b.citations.map(n => byN.get(n)).filter(Boolean).map(s => (
             <CitationChip key={s!.chunk_id + s!.n} source={s!} onOpen={onCite} />))}
         </motion.p>

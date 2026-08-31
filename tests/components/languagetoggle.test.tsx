@@ -19,16 +19,20 @@ it('is a labelled group with two real buttons, English pressed by default', () =
   expect(hi).toHaveAttribute('aria-pressed', 'false');
 });
 
-it('clicking हिं switches the pressed state to Hindi', () => {
+it('clicking हिं switches the pressed state to Hindi, and the labels localize with it', () => {
   render(<Harness />);
-  fireEvent.click(screen.getByRole('button', { name: /hindi/i }));
-  expect(screen.getByRole('button', { name: /hindi/i })).toHaveAttribute('aria-pressed', 'true');
-  expect(screen.getByRole('button', { name: /english/i })).toHaveAttribute('aria-pressed', 'false');
+  fireEvent.click(screen.getByRole('button', { name: /show in hindi/i }));
+  // Once Hindi is active the control announces itself in Hindi — a Hindi-reading screen-reader
+  // user previously heard English-only announcements from a fully translated segment.
+  const hi = screen.getByRole('button', { name: 'हिंदी में दिखाएँ' });
+  const en = screen.getByRole('button', { name: 'अंग्रेज़ी में दिखाएँ' });
+  expect(hi).toHaveAttribute('aria-pressed', 'true');
+  expect(en).toHaveAttribute('aria-pressed', 'false');
 });
 
 it('calls onChange with the chosen language', () => {
   const onChange = vi.fn();
   render(<LanguageToggle value="en" onChange={onChange} label="Note language" />);
-  fireEvent.click(screen.getByRole('button', { name: /hindi/i }));
+  fireEvent.click(screen.getByRole('button', { name: /show in hindi/i }));
   expect(onChange).toHaveBeenCalledWith('hi');
 });

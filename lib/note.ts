@@ -15,6 +15,29 @@ export function stripSubLabel(text: string): string {
   return text.trim().replace(/^sub:\s*/i, '').trim();
 }
 
+// The model echoes its citations inline ("…Rs.300/- [5].") AND we render the authoritative
+// citations as chips from `b.citations` — so the reader saw "…Rs.300/- [5]. [5]" on screen and in
+// the copied note. The chips/marks are the trust anchor; the prose echo is a duplicate. Strip it
+// from the PROSE only — never from the Ref line, the Sources footer, or `citations` itself.
+export function stripInlineCitations(text: string): string {
+  return text
+    .replace(/\s*(?:\[\d+\]\s*)+(?=[.,;:।]|$)/g, '')   // trailing run, before terminal punctuation
+    .replace(/\s*(?:\[\d+\]\s*)+/g, ' ')                // any remaining mid-sentence run
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
+
+// The model often numbers its own note points ("1. Free time is…"), which the <ol> then numbers
+// again — rendering "1. 1. Free time is…" on screen and in the exported document.
+export function stripLeadingNumber(text: string): string {
+  return text.replace(/^\s*\(?\d{1,2}[.)]\s+/, '').trim();
+}
+
+/** Prose as it should be READ: no duplicated citation echo, no duplicated list number. */
+export function displayText(text: string): string {
+  return stripLeadingNumber(stripInlineCitations(text));
+}
+
 // One citation, formatted "circular/para/page" — shared by the on-screen Ref: line and the
 // Copy/Export footer so both stay identical. Never translated: these are source identities.
 export function formatCitation(s: SourceView): string {
@@ -55,9 +78,10 @@ export function buildNoteText(
   note: ConclusionBlock[], sources: SourceView[], lang: Language = 'en', hi?: NoteHindi,
 ): string {
   const { sub, contentBlocks, citedSources, refLine } = parseNote(note, sources);
-  const subText = lang === 'hi' && hi ? hi.sub : sub;
+  const subText = displayText(lang === 'hi' && hi ? (hi.sub || sub || '') : (sub ?? '')) || null;
+  // `||` not `??`: an empty Hindi item must fall back to the English text, not blank the point.
   const pointText = (i: number, b: ConclusionBlock) =>
-    lang === 'hi' && hi ? (hi.content[i] ?? b.text) : b.text;
+    displayText(lang === 'hi' && hi ? (hi.content[i] || b.text) : b.text);
 
   const lines: string[] = [];
   if (subText) lines.push(`${t('subLabel', lang)} ${subText}`);

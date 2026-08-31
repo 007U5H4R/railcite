@@ -201,39 +201,6 @@
 .answerGrid { display: block; }
 .answerMain { min-width: 0; }
 
-/* Non-blocking notice when a Hindi translation couldn't be produced — we keep showing the
-   English answer rather than a broken/empty Hindi one. Neutral, never red. */
-.translateError {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--sp-2);
-  margin: var(--sp-3) 0 0;
-  padding: var(--sp-2) var(--sp-3);
-  font-size: 13px;
-  color: var(--refuse-fg);
-  background: var(--refuse-bg);
-  border: 1px solid var(--refuse-brd);
-  border-radius: var(--r-sm, 12px);
-}
-
-/* The error state's "try again" — a real control, not a dead message. 44px target per the
-   accessibility floor; underlined so it reads as actionable inside a sentence-like line. */
-.translateRetry {
-  min-height: 44px;
-  padding: 0 var(--sp-2);
-  margin-inline-start: auto;
-  border: none;
-  background: none;
-  font: inherit;
-  font-weight: 600;
-  color: var(--indigo-700, #1c62d6);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  cursor: pointer;
-}
-.translateRetry:hover { text-decoration-thickness: 2px; }
-
 /* ---- Inline "Sources" section header (answered state) ------------------- */
 .sourcesHead {
   display: flex;

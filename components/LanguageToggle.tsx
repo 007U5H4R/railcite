@@ -1,25 +1,46 @@
 'use client';
-import type { Language } from '@/lib/i18n';
+import { t, type Language } from '@/lib/i18n';
 import styles from './LanguageToggle.module.css';
 
-// Compact, controlled segmented EN | हिं control. Used inline on each output segment (the cited
-// response and the drafted note), each with its own value/onChange so the two translate
-// independently. Two real <button>s with aria-pressed so it is keyboard-operable and announced
-// correctly. `label` names the group for assistive tech (e.g. "Response language") and stays
-// English regardless of the current value so the options are announced consistently.
-export function LanguageToggle({ value, onChange, label = 'Language' }: {
+// Compact segmented EN | हिं control, rendered beside each output segment (the cited response and
+// the drafted note). Both instances drive ONE remembered preference, so flipping either switches
+// the whole answered view and the choice survives the next case.
+//
+// Status lives HERE, at the control that caused it: translation takes seconds, and the pending /
+// failed state used to render only at the top of the answer column — so flipping the note's toggle
+// near the bottom of a long answer produced ~20 seconds of nothing at all. `busy` marks the group
+// aria-busy and shows a quiet progress dot; `onRetry` (set only when the translation failed) puts
+// the retry within reach of the same finger.
+export function LanguageToggle({ value, onChange, label, busy = false, onRetry = null }: {
   value: Language; onChange: (l: Language) => void; label?: string;
+  busy?: boolean; onRetry?: (() => void) | null;
 }) {
+  // Announce the control in the language currently shown, matching the rest of the segment.
+  const groupLabel = label ?? (value === 'hi' ? 'भाषा' : 'Language');
   return (
-    <div className={styles.group} role="group" aria-label={label}>
-      <button type="button" className={`${styles.seg} ${value === 'en' ? styles.on : ''}`}
-        aria-pressed={value === 'en'} aria-label="Show in English" onClick={() => onChange('en')}>
-        EN
-      </button>
-      <button type="button" className={`${styles.seg} ${value === 'hi' ? styles.on : ''}`}
-        aria-pressed={value === 'hi'} aria-label="Show in Hindi" onClick={() => onChange('hi')}>
-        हिं
-      </button>
+    <div className={styles.wrap}>
+      <div className={styles.group} role="group" aria-label={groupLabel} aria-busy={busy || undefined}>
+        <button type="button" className={`${styles.seg} ${value === 'en' ? styles.on : ''}`}
+          aria-pressed={value === 'en'} aria-label={t('switchToEnglish', value)} onClick={() => onChange('en')}>
+          EN
+        </button>
+        <button type="button" className={`${styles.seg} ${value === 'hi' ? styles.on : ''}`}
+          aria-pressed={value === 'hi'} aria-label={t('switchToHindi', value)} onClick={() => onChange('hi')}>
+          हिं
+        </button>
+      </div>
+      {busy && (
+        <span className={styles.status} role="status">
+          <span className={styles.dot} aria-hidden="true" />
+          {t('translating', 'hi')}
+        </span>
+      )}
+      {!busy && onRetry && (
+        <span className={styles.status} role="status">
+          {t('translateFailed', value)}
+          <button type="button" className={styles.retry} onClick={onRetry}>{t('tryAgain', value)}</button>
+        </span>
+      )}
     </div>
   );
 }

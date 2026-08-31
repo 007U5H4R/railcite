@@ -4,7 +4,7 @@ import type { ConclusionBlock, SourceView, Translation } from '@/lib/types';
 import { CitationChip } from './CitationChip';
 import { LanguageToggle } from './LanguageToggle';
 import { analytics } from '@/lib/analytics';
-import { parseNote, buildNoteText } from '@/lib/note';
+import { parseNote, buildNoteText, displayText } from '@/lib/note';
 import { t, type Language } from '@/lib/i18n';
 import styles from './DraftedNote.module.css';
 
@@ -23,11 +23,13 @@ export { buildNoteText };
 // localized — but the Ref line, inline [n] marks and the Sources footer stay verbatim, so the
 // citation provenance survives on screen and through Copy/Export. Citations still come from the
 // English `note`, never from the translation.
-export function DraftedNote({ note, sources, onCite, lang = 'en', hi, onLangChange = null }: {
+export function DraftedNote({ note, sources, onCite, lang = 'en', hi, onLangChange = null,
+  langBusy = false, onLangRetry = null }: {
   note: ConclusionBlock[]; sources: SourceView[]; onCite: (s: SourceView) => void;
   // This segment's OWN EN|हिं toggle (independent of the response's). Rendered when a handler is
   // supplied; `hi` carries the Hindi note payload.
   lang?: Language; hi?: Translation; onLangChange?: ((l: Language) => void) | null;
+  langBusy?: boolean; onLangRetry?: (() => void) | null;
 }) {
   const [copied, setCopied] = useState(false);
   const byN = useMemo(() => new Map(sources.map(s => [s.n, s])), [sources]);
@@ -52,8 +54,8 @@ export function DraftedNote({ note, sources, onCite, lang = 'en', hi, onLangChan
   const noteHi = showHi ? { sub: hi!.noteSub, content: hi!.noteContent } : undefined;
   // `|| parsed.sub` (not `??`): the translation array can legally carry '' for an item, and an
   // empty string must fall back to the English text, not render as blank prose.
-  const subText = showHi ? (hi!.noteSub || parsed.sub) : parsed.sub;
-  const pointText = (i: number, b: ConclusionBlock) => (showHi ? (hi!.noteContent[i] || b.text) : b.text);
+  const subText = displayText(showHi ? (hi!.noteSub || parsed.sub || '') : (parsed.sub ?? '')) || null;
+  const pointText = (i: number, b: ConclusionBlock) => displayText(showHi ? (hi!.noteContent[i] || b.text) : b.text);
   const plainText = () => buildNoteText(note, sources, effLang, noteHi);
 
   const handleCopy = async () => {
@@ -102,7 +104,8 @@ export function DraftedNote({ note, sources, onCite, lang = 'en', hi, onLangChan
         <div className={styles.docInner}>
           {onLangChange && (
             <div className={styles.langRow}>
-              <LanguageToggle value={lang} onChange={onLangChange} label="Note language" />
+              <LanguageToggle value={lang} onChange={onLangChange} label={t('noteLanguage', lang)}
+                busy={langBusy} onRetry={onLangRetry} />
             </div>)}
           {showHi && <p className={styles.caveat} role="note">{t('caveat', 'hi')}</p>}
           {subText && <p className={`${styles.kv} mono`}><b>{t('subLabel', effLang)}</b> {subText}</p>}

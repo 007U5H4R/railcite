@@ -12,7 +12,8 @@ export type LabelKey =
   | 'copyNote' | 'export' | 'copied' | 'caveat'
   | 'refuseTitle' | 'refuseSub' | 'removeVerifiedOnly' | 'rephrase'
   | 'translating' | 'translateFailed' | 'tryAgain'
-  | 'langEnglish' | 'langHindi' | 'switchToEnglish' | 'switchToHindi';
+  | 'langEnglish' | 'langHindi' | 'switchToEnglish' | 'switchToHindi'
+  | 'responseLanguage' | 'noteLanguage';
 
 export const LABELS: Record<Language, Record<LabelKey, string>> = {
   en: {
@@ -37,6 +38,8 @@ export const LABELS: Record<Language, Record<LabelKey, string>> = {
     langHindi: 'हिंदी',
     switchToEnglish: 'Show in English',
     switchToHindi: 'Show in Hindi',
+    responseLanguage: 'Response language',
+    noteLanguage: 'Note language',
   },
   hi: {
     subLabel: 'विषय:',
@@ -60,6 +63,8 @@ export const LABELS: Record<Language, Record<LabelKey, string>> = {
     langHindi: 'हिंदी',
     switchToEnglish: 'अंग्रेज़ी में दिखाएँ',
     switchToHindi: 'हिंदी में दिखाएँ',
+    responseLanguage: 'उत्तर की भाषा',
+    noteLanguage: 'टिप्पणी की भाषा',
   },
 };
 
