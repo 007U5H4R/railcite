@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useSession } from '@/hooks/useSession';
 import { SignInPrompt } from './SignInPrompt';
 import { LoadingSkeleton } from './LoadingSkeleton';
@@ -30,8 +31,15 @@ const ABOUT_POINTS = [
 // on every route, including this one).
 export function YouScreen() {
   const { user, loading, signOut } = useSession();
+  const router = useRouter();
   const [signingOut, setSigningOut] = useState(false);
   const [signOutError, setSignOutError] = useState<string | null>(null);
+
+  // Replay the first-run tour: flag it for OnboardingTour and route to /ask, where its anchors live.
+  const replayTour = () => {
+    try { sessionStorage.setItem('railcite:replayTour', '1'); } catch { /* storage may be blocked */ }
+    router.push('/ask');
+  };
 
   if (loading) {
     return (
@@ -72,6 +80,9 @@ export function YouScreen() {
         <p className={styles.profileName}>{user.name ?? 'Signed in'}</p>
         {user.email && <p className={styles.profileEmail}>{user.email}</p>}
         <div className={styles.signOutRow}>
+          <button type="button" className={statesStyles.quietBtn} onClick={replayTour}>
+            Replay tour
+          </button>
           <button type="button" className={statesStyles.quietBtn} onClick={() => void handleSignOut()} disabled={signingOut}>
             {signingOut ? 'Signing out…' : 'Sign out'}
           </button>

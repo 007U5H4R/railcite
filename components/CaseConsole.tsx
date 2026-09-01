@@ -177,7 +177,7 @@ export function CaseConsole() {
       <OfflineBanner />
       <CaseInput value={text} onChange={setText} onSubmit={doSubmit} disabled={s.state === 'loading'} />
 
-      <div className={styles.filters} role="group" aria-label="Scope">
+      <div className={styles.filters} role="group" aria-label="Scope" data-tour="scope">
         <span className={`${styles.pill} ${styles.pillOn}`}>Commercial Domain</span>
       </div>
 

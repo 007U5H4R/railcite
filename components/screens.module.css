@@ -107,7 +107,7 @@
 }
 .profileName { margin: var(--sp-3) 0 0; font-size: var(--fs-h3); font-weight: 700; color: var(--text); }
 .profileEmail { margin: 2px 0 0; color: var(--text-muted); font-size: var(--fs-body); }
-.signOutRow { margin-top: var(--sp-4); }
+.signOutRow { margin-top: var(--sp-4); display: flex; flex-wrap: wrap; gap: var(--sp-2); justify-content: center; }
 .inlineError { margin: var(--sp-2) 0 0; color: var(--err-fg); font-size: var(--fs-caption); }
 
 /* ---- You: About RailCite card --------------------------------------------- */

@@ -5,6 +5,7 @@ import { TopBar } from './TopBar';
 import { TrustFooter } from './TrustFooter';
 import { BottomNav } from './BottomNav';
 import { HistoryDrawer } from './HistoryDrawer';
+import { OnboardingTour } from './OnboardingTour';
 
 // App shell: a mobile-first single column (max-width ~900px) on a fixed pastel-glass
 // backdrop, with a sticky TopBar, in-flow TrustFooter, a fixed lifted-knob BottomNav, and
@@ -53,6 +54,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
 
       <BottomNav inert={drawerOpen} />
       <HistoryDrawer open={drawerOpen} onClose={closeDrawer} triggerRef={toggleRef} />
+      <OnboardingTour />
     </>
   );
 }

@@ -1,0 +1,144 @@
+/* First-run tour: a spotlight (box-shadow dims everything but the target) + a glassmorphism card.
+   z-index sits above the bottom nav (40) and history drawer (100). */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+}
+/* Transparent click-catcher so the page underneath is inert while the tour runs (the spotlight
+   itself is pointer-events:none, so this is what actually blocks interaction). */
+.scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+}
+.spot {
+  position: fixed;
+  border-radius: 14px;
+  box-shadow: 0 0 0 9999px rgba(18, 20, 40, 0.55), inset 0 0 0 2px rgba(255, 255, 255, 0.95);
+  pointer-events: none;
+  transition: top 0.32s cubic-bezier(0.22, 1, 0.36, 1), left 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    width 0.32s cubic-bezier(0.22, 1, 0.36, 1), height 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card {
+  position: fixed;
+  width: 340px;
+  max-width: calc(100vw - 32px);
+  padding: 18px 18px 15px;
+  border-radius: 20px;
+  /* Glassmorphism */
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 16px 48px rgba(28, 30, 66, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  color: #1a2233;
+  pointer-events: auto;
+  transition: top 0.32s cubic-bezier(0.22, 1, 0.36, 1), left 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: tourIn 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* Bottom-sheet fallback (narrow screens, or a target too tall to sit a card beside): centered
+   just above the bottom nav so it's always fully visible. */
+.sheet {
+  top: auto !important;
+  left: 50% !important;
+  right: auto;
+  bottom: calc(96px + env(safe-area-inset-bottom));
+  width: min(420px, calc(100vw - 32px));
+  max-width: none;
+  transform: translateX(-50%);
+}
+@keyframes tourIn { from { opacity: 0; transform: translateY(6px) scale(0.98); } }
+.sheet.card { animation: sheetIn 0.28s cubic-bezier(0.22, 1, 0.36, 1); }
+@keyframes sheetIn { from { opacity: 0; transform: translateY(16px); } }
+
+.skip {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  padding: 3px 8px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: #5b6472;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.skip:hover { background: rgba(120, 130, 150, 0.14); color: #1a2233; }
+
+.kicker {
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #2f7bf0;
+}
+.title { margin: 0 0 6px; font-size: 17px; font-weight: 700; line-height: 1.25; }
+.body { margin: 0; font-size: 13.5px; line-height: 1.5; color: #34404f; text-wrap: pretty; }
+
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+}
+.dots { display: flex; gap: 6px; }
+.dot, .dotOn {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(90, 100, 120, 0.32);
+  transition: width 0.24s ease, background 0.24s ease;
+}
+.dotOn { width: 18px; background: #2f7bf0; }
+
+.actions { display: flex; align-items: center; gap: 8px; }
+.back {
+  padding: 8px 12px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #34404f;
+  background: transparent;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.back:hover { background: rgba(120, 130, 150, 0.14); }
+.next {
+  padding: 8px 18px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  background: #2f7bf0;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(47, 123, 240, 0.4);
+}
+.next:hover { background: #2668d6; }
+
+/* Reduced motion: drop the sliding/entrance animations. */
+@media (prefers-reduced-motion: reduce) {
+  .spot, .card { transition: none; animation: none; }
+}
+
+/* Dark-scheme glass (the app ships light, but honour an OS/dark preference for the card). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .card {
+    background: rgba(28, 32, 48, 0.72);
+    border-color: rgba(255, 255, 255, 0.16);
+    color: #eef1f6;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+  :root:not([data-theme="light"]) .title { color: #eef1f6; }
+  :root:not([data-theme="light"]) .body { color: #c7cede; }
+  :root:not([data-theme="light"]) .skip { color: #aab3c4; }
+  :root:not([data-theme="light"]) .back { color: #c7cede; }
+}

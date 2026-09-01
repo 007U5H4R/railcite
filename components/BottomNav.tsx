@@ -42,7 +42,7 @@ export function BottomNav({ inert }: { inert?: boolean }) {
   const pathname = usePathname();
   return (
     <nav className={styles.nav} aria-label="Primary" inert={inert}>
-      <div className={styles.bar}>
+      <div className={styles.bar} data-tour="nav">
         {TABS.map(t => {
           const active = pathname === t.href;
           return (

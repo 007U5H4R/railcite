@@ -4,7 +4,7 @@ export function CaseInput({ value, onChange, onSubmit, disabled }: {
   value: string; onChange: (v: string) => void; onSubmit: () => void; disabled?: boolean }) {
   const ok = value.trim().length >= 10;
   return (
-    <div className={styles.casefield}>
+    <div className={styles.casefield} data-tour="case-input">
       <div className={styles.caseCol}>
         <span className={styles.caseLabel} aria-hidden="true">Case</span>
         <textarea aria-label="Describe your case" className={styles.textarea} rows={1}
