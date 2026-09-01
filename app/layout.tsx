@@ -4,6 +4,8 @@ import './globals.css'; import './app.css';
 import { Shell } from '@/components/Shell';
 import { AnalyticsInit } from '@/components/AnalyticsInit';
 import { PWARegister } from '@/components/PWARegister';
+// Vercel Web Analytics goes through our own wrapper, never the bare <Analytics /> — the wrapper's
+// beforeSend redacts case UUIDs out of the reported URL (see components/VercelAnalytics.tsx).
 import { VercelAnalytics } from '@/components/VercelAnalytics';
 
 const sans = Poppins({ subsets:['latin'], weight:['400','500','600','700'], variable:'--font-sans' });
