@@ -4,6 +4,7 @@ import { getUserFromRequest } from '@/lib/auth';
 import { embedTexts } from '@/lib/embeddings';
 import { matchChunks, corpusStats } from '@/lib/retrieval';
 import { synthesize } from '@/lib/synthesize';
+import { findCachedAnswer, storeCachedAnswer } from '@/lib/answerCache';
 import { validateSynthesis } from '@/lib/validate';
 import { getLineage } from '@/lib/lineage';
 import { optionalEnv } from '@/lib/env';
@@ -23,6 +24,13 @@ export async function POST(req: Request): Promise<Response> {
 
     const threshold = Number(optionalEnv('RELEVANCE_THRESHOLD', '0.45'));
     const [{ chunks: searched }, [qEmb]] = await Promise.all([corpusStats(), embedTexts([case_text], 'query')]);
+
+    // Answer cache: an identical / near-identical question is served from its stored answered
+    // response — no retrieval, no model call (migrations/004; lib/answerCache). The embedding
+    // above is computed regardless, so a cache hit costs only the (cheap) Voyage call.
+    const cached = await findCachedAnswer(case_text, qEmb);
+    if (cached) return json(cached);
+
     const hits = await matchChunks(qEmb, { k: 8, verifiedOnly: verified_only, domain });
     const above = hits.filter(h => h.similarity >= threshold);
     const meta = { searched, matched: hits.length, above_threshold: above.length };
@@ -40,8 +48,12 @@ export async function POST(req: Request): Promise<Response> {
     const citedDocIds = [...new Set(validated.blocks.flatMap(b => b.citations)
       .map(n => sources[n - 1].document.id))];
     const lineage = await getLineage(citedDocIds);
-    return json({ status: 'answered', blocks: validated.blocks, note: validated.note,
-      sources, lineage, meta } satisfies QueryResponse);
+    const response = { status: 'answered', blocks: validated.blocks, note: validated.note,
+      sources, lineage, meta } satisfies QueryResponse;
+    // Awaited (not fire-and-forget): serverless may kill work after the response is returned.
+    // ~one small insert — negligible next to the multi-second synthesis it will save next time.
+    await storeCachedAnswer(case_text, qEmb, response);
+    return json(response);
   } catch (e) {
     console.error('query failed:', e);
     // An error thrown BY the Anthropic API (exhausted credits, rate limit, overload, outage)
