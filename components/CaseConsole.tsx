@@ -16,6 +16,7 @@ import { ErrorState } from './ErrorState';
 import { RefuseState } from './RefuseState';
 import { OfflineBanner, useOnline } from './OfflineBanner';
 import { useCaseQuery } from '@/hooks/useCaseQuery';
+import { useSignOutReset } from '@/hooks/useSignOutReset';
 import { signInWithGoogle, getAccessToken } from '@/lib/supabase-browser';
 import { searching, type Language } from '@/lib/i18n';
 import { useLanguagePref } from '@/hooks/useLanguagePref';
@@ -57,6 +58,16 @@ export function CaseConsole() {
     try { const d = localStorage.getItem('railcite:draft');
       if (d) { setText(d); localStorage.removeItem('railcite:draft'); } } catch {}
   }, []);
+
+  // Sign-out wipes the departing user's case from the screen AND from local storage. RailCite
+  // runs on shared office machines — the next person at the desk must not see the previous
+  // officer's question, answer, offline copy, or draft. (AnalyticsInit resets the analytics
+  // identity on this same transition; this is the UI-side counterpart.)
+  useSignOutReset(useCallback(() => {
+    setText('');
+    reset();
+    try { localStorage.removeItem('railcite:last'); localStorage.removeItem('railcite:draft'); } catch {}
+  }, [reset]));
 
   // R4 reopen: /ask?case=<id> (from HistoryDrawer) rehydrates the full cited answer without
   // re-querying. useSearchParams (not a one-shot window.location read) so clicking a
