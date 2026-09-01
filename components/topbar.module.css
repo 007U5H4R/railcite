@@ -13,12 +13,14 @@
   align-items: center;
   gap: 12px;
   padding: 16px 16px 13px;
-  /* Translucent tint — opaque enough to obscure scrolled content on its own (in case the
-     compositor drops backdrop-filter), still glassy over the pastel ground. */
-  background: rgba(246, 248, 252, 0.82);
+  /* Frosted-glass tint: a top-to-bottom white sheen (lighter at the lit top edge) over the
+     blurred ground, matching the onboarding cards' glassmorphism. Kept translucent enough to
+     read as real glass, opaque enough that scrolled content still can't bleed through if the
+     compositor ever drops backdrop-filter. */
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(247, 249, 253, 0.62));
   /* High blur frosts the scrolled content; saturate+brightness give the glass its refraction. */
-  backdrop-filter: blur(24px) saturate(200%) brightness(1.03);
-  -webkit-backdrop-filter: blur(24px) saturate(200%) brightness(1.03);
+  backdrop-filter: blur(26px) saturate(190%) brightness(1.04);
+  -webkit-backdrop-filter: blur(26px) saturate(190%) brightness(1.04);
   /* Rounded bottom corners to match the soft-card system (--r-lg = 22px). */
   border-radius: 0 0 var(--r-lg) var(--r-lg);
   /* Depth: a soft cast shadow lifting the bar off the content + a lit top edge. */
