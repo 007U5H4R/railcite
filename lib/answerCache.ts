@@ -32,8 +32,9 @@ export async function findCachedAnswer(question: string, embedding: number[]): P
       hit = (data as Array<{ id: string; result: unknown }> | null)?.[0] ?? null;
     }
     if (!hit) return null;
-    // Usage bookkeeping — fire-and-forget, a failure here must not cost the hit.
-    void sb.rpc('bump_answer_cache_hit', { cache_id: hit.id }).then(() => {}, () => {});
+    // Usage bookkeeping — awaited (serverless kills post-response work, so a fired-and-forgotten
+    // bump never lands); a failure still must not cost the hit, hence its own catch.
+    await sb.rpc('bump_answer_cache_hit', { cache_id: hit.id }).then(() => {}, () => {});
     return hit.result as QueryResponse;
   } catch (e) {
     console.warn('answer cache lookup failed (non-blocking):', e);

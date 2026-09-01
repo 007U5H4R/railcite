@@ -10,6 +10,11 @@ import { embedTexts } from '@/lib/embeddings';
 
 async function main() {
   const sb = adminClient();
+  // Staleness contract (migrations/004): cached answers reflect the corpus at generation time,
+  // so ANY ingest invalidates the whole answer cache — a cached answer contradicting a newly
+  // ingested corrigendum would be a trust hazard. Cheap to rebuild organically.
+  await sb.from('answer_cache').delete().gte('created_at', '1970-01-01');
+  console.log('answer_cache cleared (corpus changing)');
   const dataDir = path.resolve(process.env.DATA_DIR ?? '../Data');
   for (const m of manifest) {
     const fp = path.join(dataDir, m.file);

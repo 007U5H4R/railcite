@@ -124,6 +124,10 @@ async function ingestOne(e: Entry, tmp: string, sb: ReturnType<typeof adminClien
 
 async function main() {
   const sb = adminClient();
+  // Staleness contract (migrations/004): any ingest run invalidates the answer cache — cached
+  // answers must never outlive the corpus snapshot they were generated from.
+  await sb.from('answer_cache').delete().gte('created_at', '1970-01-01');
+  console.log('answer_cache cleared (corpus changing)');
   const entries = manifest as Entry[];
 
   // Resumable: pull every already-ingested source_url so re-runs continue where they left off.
