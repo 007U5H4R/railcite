@@ -4,6 +4,7 @@ import './globals.css'; import './app.css';
 import { Shell } from '@/components/Shell';
 import { AnalyticsInit } from '@/components/AnalyticsInit';
 import { PWARegister } from '@/components/PWARegister';
+import { VercelAnalytics } from '@/components/VercelAnalytics';
 
 const sans = Poppins({ subsets:['latin'], weight:['400','500','600','700'], variable:'--font-sans' });
 const display = Quicksand({ subsets:['latin'], weight:['500','600','700'], variable:'--font-display' });
@@ -51,6 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${sans.variable} ${display.variable} ${mono.variable}`}>
         <AnalyticsInit />
         <PWARegister />
+        <VercelAnalytics />
         <Shell>{children}</Shell>
       </body>
     </html>
