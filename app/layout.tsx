@@ -4,9 +4,9 @@ import './globals.css'; import './app.css';
 import { Shell } from '@/components/Shell';
 import { AnalyticsInit } from '@/components/AnalyticsInit';
 import { PWARegister } from '@/components/PWARegister';
-// Vercel Web Analytics goes through our own wrapper, never the bare <Analytics /> — the wrapper's
-// beforeSend redacts case UUIDs out of the reported URL (see components/VercelAnalytics.tsx).
-import { VercelAnalytics } from '@/components/VercelAnalytics';
+// Vercel Web Analytics + Speed Insights go through our own wrapper, never the bare components —
+// its beforeSend redacts case UUIDs out of the reported URL (see components/VercelTelemetry.tsx).
+import { VercelTelemetry } from '@/components/VercelTelemetry';
 
 const sans = Poppins({ subsets:['latin'], weight:['400','500','600','700'], variable:'--font-sans' });
 const display = Quicksand({ subsets:['latin'], weight:['500','600','700'], variable:'--font-display' });
@@ -54,7 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${sans.variable} ${display.variable} ${mono.variable}`}>
         <AnalyticsInit />
         <PWARegister />
-        <VercelAnalytics />
+        <VercelTelemetry />
         <Shell>{children}</Shell>
       </body>
     </html>

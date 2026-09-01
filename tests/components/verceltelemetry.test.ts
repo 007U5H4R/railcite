@@ -1,7 +1,8 @@
-import { redactUrl } from '@/components/VercelAnalytics';
+import { redactUrl } from '@/components/VercelTelemetry';
 
-// Vercel Web Analytics reports the page URL. RailCite's reopen route carries a case UUID, and
-// lib/analytics.ts promises no URL/identifier ever leaves the app — these pin that promise.
+// Vercel Web Analytics AND Speed Insights both report the page URL. RailCite's reopen route
+// carries a case UUID, and lib/analytics.ts promises no URL/identifier ever leaves the app —
+// these pin that promise for both.
 
 it('redacts the case UUID from a reopen URL, keeping the route shape', () => {
   const out = redactUrl('https://railcite.vercel.app/ask?case=6f1c2b7e-6a1d-4a55-9c33-9f2f2c1a77bd');
