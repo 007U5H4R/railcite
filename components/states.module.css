@@ -84,7 +84,9 @@
   box-shadow: var(--e-1);
   color: var(--err-fg);
 }
-.errorMsg { margin: 0; flex: 1 1 12ch; font-weight: 500; color: var(--err-fg); }
+.errorText { flex: 1 1 16ch; display: flex; flex-direction: column; gap: 3px; }
+.errorMsg { margin: 0; font-weight: 700; color: var(--err-fg); }
+.errorDetail { margin: 0; font-size: var(--fs-caption); line-height: 1.45; color: var(--err-fg); }
 .errorBtn {
   flex: 0 0 auto;
   min-height: 44px;

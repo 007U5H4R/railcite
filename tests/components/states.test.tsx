@@ -31,3 +31,12 @@ it('error: real try-again control', () => {
   fireEvent.click(screen.getByRole('button', { name: /try again/i }));
   expect(onRetry).toHaveBeenCalled();
 });
+it('error: human headline + detail, never a raw status code (upstream-outage UX)', () => {
+  render(<ErrorState message="Answers are temporarily unavailable"
+    detail="RailCite couldn’t reach its answering service just now. Your question is safe — please try again in a few minutes."
+    onRetry={() => {}} />);
+  expect(screen.getByRole('alert')).toBeInTheDocument();
+  expect(screen.getByText('Answers are temporarily unavailable')).toBeInTheDocument();
+  expect(screen.getByText(/your question is safe/i)).toBeInTheDocument();
+  expect(screen.queryByText(/\(5\d\d\)/)).not.toBeInTheDocument();   // no "(500)"-style codes
+});

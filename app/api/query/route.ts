@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import Anthropic from '@anthropic-ai/sdk';
 import { getUserFromRequest } from '@/lib/auth';
 import { embedTexts } from '@/lib/embeddings';
 import { matchChunks, corpusStats } from '@/lib/retrieval';
@@ -43,6 +44,11 @@ export async function POST(req: Request): Promise<Response> {
       sources, lineage, meta } satisfies QueryResponse);
   } catch (e) {
     console.error('query failed:', e);
+    // An error thrown BY the Anthropic API (exhausted credits, rate limit, overload, outage)
+    // means the ANSWERING SERVICE is unavailable — not that RailCite broke. Surface it as 503
+    // with its own code so the client can show an honest "temporarily unavailable" state
+    // instead of a raw server error; the details stay in the server log only.
+    if (e instanceof Anthropic.APIError) return json({ error: 'generation_unavailable' }, 503);
     return json({ error: 'query_failed' }, 500);
   }
 }

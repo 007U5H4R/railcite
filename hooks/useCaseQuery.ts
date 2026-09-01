@@ -8,7 +8,7 @@ import { analytics } from '@/lib/analytics';
 export type CaseQueryState =
   | { state: 'idle' } | { state: 'loading'; searched: number | null }
   | { state: 'done'; data: QueryResponse; caseId: string | null } | { state: 'auth_required' }
-  | { state: 'error'; message: string };
+  | { state: 'error'; message: string; detail?: string };
 
 // R4: fire-and-forget save of a resolved (answered OR refused) case to /api/cases.
 // Failure-tolerant by design — persistence must never break or block the answer UI, so
@@ -68,7 +68,22 @@ export function useCaseQuery() {
         body: JSON.stringify(req) });
       if (gen.current !== myGen) return;                                       // superseded while querying
       if (res.status === 401) { setS({ state: 'auth_required' }); return; }
-      if (!res.ok) { setS({ state: 'error', message: `Request failed (${res.status})` }); return; }
+      if (!res.ok) {
+        // Human copy, never raw status codes — a first-time user should see an honest, calm
+        // explanation, not "Request failed (500)". The server marks an upstream answering-service
+        // outage (Anthropic credits/rate-limit/overload) as 503 generation_unavailable.
+        let code: string | null = null;
+        try { code = (await res.json())?.error ?? null; } catch { /* body may not be JSON */ }
+        if (gen.current !== myGen) return;
+        if (res.status === 503 || code === 'generation_unavailable') {
+          setS({ state: 'error', message: 'Answers are temporarily unavailable',
+            detail: 'RailCite couldn’t reach its answering service just now. Your question is safe — please try again in a few minutes.' });
+        } else {
+          setS({ state: 'error', message: 'Something went wrong on our side',
+            detail: 'That’s on us, not you. Please try again — and if it keeps happening, tell us from the Feedback tab.' });
+        }
+        return;
+      }
       const data: QueryResponse = await res.json();
       if (gen.current !== myGen) return;                                       // superseded — don't show/count a stale answer
       if (data.status === 'answered') {
@@ -88,7 +103,8 @@ export function useCaseQuery() {
         // still the same query.
         setS(cur => cur.state === 'done' ? { ...cur, caseId: id } : cur);
       });
-    } catch { if (gen.current === myGen) setS({ state: 'error', message: 'Network error — check your connection.' }); }
+    } catch { if (gen.current === myGen) setS({ state: 'error', message: 'Can’t reach RailCite',
+      detail: 'Check your internet connection and try again.' }); }
   }, [clearTranslation]);
 
   const retry = useCallback(() => { if (last.current) void submit(last.current); }, [submit]);

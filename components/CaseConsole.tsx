@@ -185,7 +185,7 @@ export function CaseConsole() {
       {s.state === 'loading' && <TransparencyLine text={searching(s.searched, uiLang)} />}
       {s.state === 'auth_required' && <AuthGate onSignIn={onSignIn} />}
       {s.state === 'loading' && <LoadingSkeleton />}
-      {s.state === 'error' && <ErrorState message={s.message} onRetry={retry} />}
+      {s.state === 'error' && <ErrorState message={s.message} detail={s.detail} onRetry={retry} />}
       {s.state === 'done' && s.data.status === 'refused' && (
         <RefuseState meta={s.data.meta} lang={uiLang}
           onBroaden={scope.verifiedOnly ? () => {
