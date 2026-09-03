@@ -172,17 +172,18 @@
 }
 
 /* ---- Filter pills (ported from mockup .filters/.pill) ------------------- */
-/* Real <button>s carrying the verified-only toggle + domain single-select.
-   The row scrolls horizontally within itself (no page overflow at 375px). */
+/* Real <button>s carrying the domain single-select.
+   Wraps rather than scrolls: the three domain options are the feature, and a pill parked
+   off-screen behind a horizontal swipe is a pill nobody discovers ("Coaching" was clipped
+   at 375px while the row still scrolled). Wrapping keeps every option visible with no page
+   overflow. */
 .filters {
   display: flex;
+  flex-wrap: wrap;
   gap: 9px;
-  overflow-x: auto;
   padding: 2px 2px 6px;
   margin: 8px 0 6px;
-  scrollbar-width: none;
 }
-.filters::-webkit-scrollbar { display: none; }
 .pill {
   display: inline-flex;
   align-items: center;
@@ -200,6 +201,10 @@
   cursor: pointer;
 }
 .pill svg { width: 15px; height: 15px; }
+/* The pills became real controls when the domain filter shipped (they were inert
+   labels before), so they need the states any button owes a keyboard or touch user. */
+.pill:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.pill:disabled { opacity: .55; cursor: not-allowed; }
 /* Active state is a SOFT blue, not saturated — saturated blue is reserved for the
    single primary action (the casefield's go button); an active filter pill must not
    compete with it (folded-in /impeccable critique, reconciled in R3). */

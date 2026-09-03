@@ -6,7 +6,10 @@ export interface DocMeta {
   doc_type: DocType;
   circular_no: string | null;
   issue_date: string | null;        // ISO yyyy-mm-dd
-  is_ocr: boolean;
+  is_ocr: boolean;                  // HOW the text was obtained (embedded layer vs. OCR)
+  // WHETHER the obtained text is legible. Independent of is_ocr: a broken font encoding
+  // yields mojibake through the embedded layer, which must not be badged "Verified text".
+  text_quality: 'ok' | 'low';
   source_url: string | null;
   domain: string | null;            // 'goods' | 'coaching' | null
   commodity: string | null;
