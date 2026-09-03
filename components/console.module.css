@@ -215,6 +215,15 @@
 }
 .pillOn svg { color: var(--accent); }
 
+/* Auto-detected scope hint — shown under the pills once an Auto-scoped answer lands. */
+.autoScope {
+  margin: calc(-1 * var(--sp-1)) 0 var(--sp-1);
+  font-size: var(--fs-caption);
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.autoScope b { color: var(--accent); font-weight: 600; }
+
 /* ---- Answered layout (Phase 4b) ----------------------------------------
    A single calm column: conclusion, sources, then the lineage timeline, then
    the drafted note. (The desktop 3-pane was intentionally dropped — the stacked

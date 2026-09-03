@@ -4,8 +4,10 @@ vi.mock('@/lib/embeddings', () => ({ embedTexts: vi.fn(async () => [Array(1024).
 vi.mock('@/lib/retrieval', () => ({ matchChunks: vi.fn(), corpusStats: vi.fn(async () => ({ documents: 6, chunks: 900 })) }));
 vi.mock('@/lib/synthesize', () => ({ synthesize: vi.fn() }));
 vi.mock('@/lib/lineage', () => ({ getLineage: vi.fn(async () => null) }));
+vi.mock('@/lib/classifyQueryDomain', () => ({ classifyQueryDomain: vi.fn(async () => null) }));
 
 import { POST } from '@/app/api/query/route';
+import { classifyQueryDomain } from '@/lib/classifyQueryDomain';
 import { matchChunks } from '@/lib/retrieval';
 import { synthesize } from '@/lib/synthesize';
 import { getUserFromRequest } from '@/lib/auth';
@@ -44,7 +46,28 @@ it('answers end-to-end and numbers sources 1..k', async () => {
   expect(j.status).toBe('answered');
   expect(j.sources.map((s: any) => s.n)).toEqual([1, 2]);
   expect(j.blocks[0].citations).toEqual([1]);          // 99 stripped by validator
-  expect(j.meta).toEqual({ searched: 900, matched: 2, above_threshold: 2 });
+  expect(j.meta).toEqual({ searched: 900, matched: 2, above_threshold: 2,
+    resolved_domain: null, auto_detected: false });
+});
+it('auto scope: classifies the query and applies the detected domain to retrieval', async () => {
+  vi.mocked(classifyQueryDomain).mockResolvedValueOnce('coaching');
+  vi.mocked(matchChunks).mockResolvedValue([HIT(0.8, 1)]);
+  vi.mocked(synthesize).mockResolvedValue({ status: 'answered',
+    blocks: [{ text: 'ans [1]', citations: [1] }], note: [] });
+  const j = await (await POST(req({ case_text: 'Vikalp scheme for waitlisted passengers', domain: 'auto' }))).json();
+  expect(classifyQueryDomain).toHaveBeenCalledOnce();
+  // the RESOLVED domain (not the 'auto' sentinel) is the filter handed to match_chunks
+  expect(vi.mocked(matchChunks).mock.calls[0][1]).toMatchObject({ domain: 'coaching' });
+  expect(j.meta).toMatchObject({ resolved_domain: 'coaching', auto_detected: true });
+});
+it('auto scope fails open: an unclear query (classifier null) searches all domains', async () => {
+  vi.mocked(classifyQueryDomain).mockResolvedValueOnce(null);
+  vi.mocked(matchChunks).mockResolvedValue([HIT(0.8, 1)]);
+  vi.mocked(synthesize).mockResolvedValue({ status: 'answered',
+    blocks: [{ text: 'ans [1]', citations: [1] }], note: [] });
+  const j = await (await POST(req({ case_text: 'some ambiguous railway question', domain: 'auto' }))).json();
+  expect(vi.mocked(matchChunks).mock.calls[0][1]).toMatchObject({ domain: null });
+  expect(j.meta).toMatchObject({ resolved_domain: null, auto_detected: true });
 });
 it('refuses when validator strips everything', async () => {
   vi.mocked(matchChunks).mockResolvedValue([HIT(0.8)]);

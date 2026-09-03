@@ -27,7 +27,12 @@ export interface SourceView {
 
 export interface ConclusionBlock { text: string; citations: number[] }  // ns into sources
 
-export interface QueryMeta { searched: number; matched: number; above_threshold: number }
+export interface QueryMeta { searched: number; matched: number; above_threshold: number;
+  // The domain scope actually applied to retrieval. When the request asked for 'auto', this is
+  // what the query classifier resolved to ('goods' | 'coaching' | null=all); `auto_detected` is
+  // true in that case so the UI can show "Auto-detected: Coaching". For an explicit pill these
+  // echo the user's choice with auto_detected=false.
+  resolved_domain?: string | null; auto_detected?: boolean }
 
 export type LineageKind = 'supersedes' | 'amends';
 export interface LineageRelation {

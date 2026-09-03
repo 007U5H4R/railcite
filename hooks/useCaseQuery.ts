@@ -15,10 +15,14 @@ export type CaseQueryState =
 // every failure is caught and swallowed (logged only). Resolves the new case id, or null.
 async function persistCase(req: QueryRequest, data: QueryResponse, token: string): Promise<string | null> {
   try {
+    // Persist the RESOLVED scope, never the literal 'auto' sentinel: the row records which body
+    // of rules actually governed the answer (goods/coaching/null), so reopening restores the real
+    // filter and the saved list reads honestly. Falls back to the request's explicit pill.
+    const resolvedDomain = data.meta.resolved_domain ?? (req.domain === 'auto' ? null : req.domain ?? null);
     const res = await fetch('/api/cases', { method: 'POST',
       headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
       body: JSON.stringify({ question: req.case_text, verified_only: req.verified_only ?? false,
-        domain: req.domain ?? null, status: data.status, result: data }) });
+        domain: resolvedDomain, status: data.status, result: data }) });
     if (!res || !res.ok) return null;
     const j = await res.json();
     return typeof j?.id === 'string' ? j.id : null;
