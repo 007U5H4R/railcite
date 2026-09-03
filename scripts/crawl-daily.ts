@@ -22,6 +22,7 @@ import {
   SECTIONS, sectionUrl, extractPdfLinks, extractChildSections, selectSweepChildren,
   computeDelta, assertSectionProductive, assertDeltaSane, DriftError, type Discovered,
   isTrafficCommercial, basenameKey, TC_ROOT_ID, diffSectionTable, assertSectionTableCurrent,
+  EXCLUDED_SECTION_IDS,
 } from '@/lib/ingest/discover';
 
 const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) RailCite-ingest';
@@ -101,7 +102,7 @@ async function main() {
     if (now.getUTCDate() === 1 || process.argv.includes('--check-structure')) {
       const tcHtml = await fetchPage(sectionUrl(TC_ROOT_ID));
       const liveIds = extractChildSections(tcHtml, TC_ROOT_ID).map(c => c.id);
-      assertSectionTableCurrent(diffSectionTable(liveIds, SECTIONS));
+      assertSectionTableCurrent(diffSectionTable(liveIds, SECTIONS, EXCLUDED_SECTION_IDS));
       console.log('section structure unchanged');
     }
 

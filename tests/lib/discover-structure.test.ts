@@ -16,6 +16,13 @@ describe('diffSectionTable', () => {
   it('reports a configured section that has vanished from the site', () => {
     expect(diffSectionTable(ids.slice(1), SECTIONS).removed).toEqual([ids[0]]);
   });
+
+  it('does not flag a deliberately-excluded live child as drift (e.g. a TestPage/backup)', () => {
+    const ids = SECTIONS.map(s => s.id);
+    const excluded = new Set(['0,1,304,366,555,1615']);
+    const diff = diffSectionTable([...ids, '0,1,304,366,555,1615'], SECTIONS, excluded);
+    expect(diff.added).toEqual([]);
+  });
 });
 
 describe('assertSectionTableCurrent', () => {

@@ -42,11 +42,27 @@ export const SECTIONS: Section[] = [
   { id: `${TC_ROOT_ID},1430`, label: 'Rates Master Circulars',              domain: 'goods',    verified: false },
   { id: `${TC_ROOT_ID},788`,  label: 'Freight Rates',                       domain: 'goods',    verified: false },
   { id: `${TC_ROOT_ID},860`,  label: 'Classification of Commodities',       domain: 'goods',    verified: false },
+  { id: `${TC_ROOT_ID},861`,  label: 'Notified PCC Routes',                 domain: 'goods',    verified: false },
+  { id: `${TC_ROOT_ID},1913`, label: 'Compendium Goods Traffic',            domain: 'goods',    verified: false },
   { id: `${TC_ROOT_ID},1796`, label: 'Claims Circulars',                    domain: null,       verified: false },
   { id: `${TC_ROOT_ID},2187`, label: 'Passenger Marketing Letters',         domain: 'coaching', verified: false },
   { id: `${TC_ROOT_ID},2274`, label: 'TC Master Circular - Halt Stations',  domain: null,       verified: false },
   { id: `${TC_ROOT_ID},3062`, label: 'Important Policy Measures',           domain: 'goods',    verified: false },
 ];
+
+/**
+ * Live Traffic Commercial children we deliberately DO NOT crawl. They exist on the site but are
+ * outside RailCite's rates-and-circulars corpus, so the monthly structural walk must treat them as
+ * expected, not as drift. Each is here for a reason, not by omission:
+ */
+export const EXCLUDED_SECTION_IDS = new Set<string>([
+  `${TC_ROOT_ID},1615`, // "TestPage" — a test page, not content
+  `${TC_ROOT_ID},2545`, // "bkup" — a backup folder
+  `${TC_ROOT_ID},3173`, // "Archive" — would only re-surface old documents
+  `${TC_ROOT_ID},3045`, // "Public Grievances" — grievances, not circulars
+  `${TC_ROOT_ID},1608`, // "RCT" (Railway Claims Tribunal) — tribunal orders, not rate circulars
+  `${TC_ROOT_ID},2548`, // "MOU and Gazette Notifications" — outside the circular corpus
+]);
 
 export function sectionUrl(id: string): string {
   return `${SECTION_BASE}?lang=0&id=${id}`;
@@ -186,12 +202,14 @@ export function assertDeltaSane(deltaCount: number, max: number): void {
  * page fetches and nothing else.
  */
 export function diffSectionTable(
-  liveChildIds: string[], configured: Section[],
+  liveChildIds: string[],
+  configured: Section[],
+  excluded: Set<string> = new Set(),
 ): { added: string[]; removed: string[] } {
   const live = new Set(liveChildIds);
   const known = new Set(configured.map(s => s.id));
   return {
-    added: [...live].filter(id => !known.has(id)),
+    added: [...live].filter(id => !known.has(id) && !excluded.has(id)),
     removed: [...known].filter(id => !live.has(id)),
   };
 }
