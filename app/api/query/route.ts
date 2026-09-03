@@ -25,13 +25,20 @@ export async function POST(req: Request): Promise<Response> {
     const threshold = Number(optionalEnv('RELEVANCE_THRESHOLD', '0.45'));
     const [{ chunks: searched }, [qEmb]] = await Promise.all([corpusStats(), embedTexts([case_text], 'query')]);
 
-    // Answer cache: an identical / near-identical question is served from its stored answered
-    // response — no retrieval, no model call (migrations/004; lib/answerCache). The embedding
-    // above is computed regardless, so a cache hit costs only the (cheap) Voyage call.
-    const cached = await findCachedAnswer(case_text, qEmb);
+    // Answer cache: an identical / near-identical question ASKED IN THE SAME SCOPE is served from
+    // its stored answered response — no retrieval, no model call (migrations/004 + 006;
+    // lib/answerCache). The embedding above is computed regardless, so a cache hit costs only the
+    // (cheap) Voyage call.
+    //
+    // The scope must be the SAME object the retrieval below is given. This lookup runs BEFORE
+    // matchChunks, so anything matchChunks filters on and the cache does not is a filter the user
+    // asked for and silently did not get — which is how coaching-scoped queries were served goods
+    // circulars. Any new retrieval filter added to matchChunks belongs in CacheScope too.
+    const scope = { domain, verifiedOnly: verified_only };
+    const cached = await findCachedAnswer(case_text, qEmb, scope);
     if (cached) return json(cached);
 
-    const hits = await matchChunks(qEmb, { k: 8, verifiedOnly: verified_only, domain });
+    const hits = await matchChunks(qEmb, { k: 8, verifiedOnly: scope.verifiedOnly, domain: scope.domain });
     const above = hits.filter(h => h.similarity >= threshold);
     const meta = { searched, matched: hits.length, above_threshold: above.length };
     if (!above.length) return json({ status: 'refused', meta } satisfies QueryResponse);
@@ -52,7 +59,7 @@ export async function POST(req: Request): Promise<Response> {
       sources, lineage, meta } satisfies QueryResponse;
     // Awaited (not fire-and-forget): serverless may kill work after the response is returned.
     // ~one small insert — negligible next to the multi-second synthesis it will save next time.
-    await storeCachedAnswer(case_text, qEmb, response);
+    await storeCachedAnswer(case_text, qEmb, response, scope);
     return json(response);
   } catch (e) {
     console.error('query failed:', e);
