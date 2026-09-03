@@ -3,6 +3,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import path from 'node:path';
 import manifest from '@/ingest/local-manifest.json';
 import { adminClient } from '@/lib/db';
+import { invalidateAnswerCache } from '@/lib/answerCache';
 import { extractPdfText, needsOcr } from '@/lib/ingest/extract';
 import { ocrPdf } from '@/lib/ingest/ocr';
 import { chunkPages } from '@/lib/ingest/chunk';
@@ -13,8 +14,7 @@ async function main() {
   // Staleness contract (migrations/004): cached answers reflect the corpus at generation time,
   // so ANY ingest invalidates the whole answer cache — a cached answer contradicting a newly
   // ingested corrigendum would be a trust hazard. Cheap to rebuild organically.
-  await sb.from('answer_cache').delete().gte('created_at', '1970-01-01');
-  console.log('answer_cache cleared (corpus changing)');
+  await invalidateAnswerCache('corpus changing');
   const dataDir = path.resolve(process.env.DATA_DIR ?? '../Data');
   for (const m of manifest) {
     const fp = path.join(dataDir, m.file);

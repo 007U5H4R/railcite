@@ -15,6 +15,26 @@ export function normalizeQuestion(q: string): string {
   return q.toLowerCase().replace(/\s+/g, ' ').trim().replace(/[?.!\s]+$/u, '');
 }
 
+/**
+ * Drop every cached answer. Call this from ANYTHING that changes the corpus — not just
+ * ingest, but any backfill that rewrites document metadata.
+ *
+ * A cached row stores the whole answered QueryResponse verbatim, including a snapshot of
+ * each source document (circular_no, domain, is_ocr, text_quality). So a metadata migration
+ * silently un-does itself on every cache hit: after the domain/label/quality backfills, a
+ * cached "Vikalp scheme" answer kept replaying `title="FM-01", domain=goods, circular_no=null`
+ * and was served five more times — looking exactly like the bug the backfill had just fixed.
+ *
+ * This lived as two copy-pasted lines inside the ingest scripts, which is why the backfills
+ * did not honour it. One exported function, so the contract is findable from the cache module
+ * that owns it.
+ */
+export async function invalidateAnswerCache(reason: string): Promise<void> {
+  const { error } = await adminClient().from('answer_cache').delete().gte('created_at', '1970-01-01');
+  if (error) throw new Error(`answer_cache invalidation failed (${reason}): ${error.message}`);
+  console.log(`answer_cache cleared (${reason})`);
+}
+
 const threshold = () => Number(optionalEnv('ANSWER_CACHE_THRESHOLD', '0.95'));
 
 /** Cached answered response for this question (exact, then semantic), or null. */

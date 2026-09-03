@@ -26,6 +26,7 @@
  */
 import { pathToFileURL } from 'node:url';
 import { adminClient } from '@/lib/db';
+import { invalidateAnswerCache } from '@/lib/answerCache';
 import { deriveCircularNo } from '@/lib/circularNo';
 import { documentQuality } from '@/lib/textQuality';
 
@@ -134,6 +135,9 @@ async function main() {
     }
     if (ids.length) console.log(`  text_quality=${value}: ${ids.length} written`);
   }
+  // A cached answer embeds a snapshot of its source documents, so rewriting document
+  // metadata without this leaves the old values being replayed on every cache hit.
+  await invalidateAnswerCache('source-integrity backfill');
   console.log('done.');
 }
 

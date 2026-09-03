@@ -23,6 +23,7 @@
  */
 import { pathToFileURL } from 'node:url';
 import { adminClient } from '@/lib/db';
+import { invalidateAnswerCache } from '@/lib/answerCache';
 
 // adminClient() is called lazily inside main(): `classifyDomain` is a pure function and must
 // stay importable (by the unit test, or by the ingest path) without env vars present.
@@ -98,6 +99,9 @@ async function main() {
     }
     if (ids.length) console.log(`  ${target ?? 'null'}: ${ids.length} updated`);
   }
+  // A cached answer embeds a snapshot of its source documents, so rewriting document
+  // metadata without this leaves the old values being replayed on every cache hit.
+  await invalidateAnswerCache('domain backfill');
   console.log('done.');
 }
 
