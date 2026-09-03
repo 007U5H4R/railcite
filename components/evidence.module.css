@@ -21,6 +21,10 @@
 .badge svg { width: 11px; height: 11px; flex: none; }
 .verified { color: var(--ok-fg); background: var(--ok-bg); }
 .ocr { color: var(--warn-fg); background: var(--warn-bg); }
+/* Illegible extraction. Shares the caution palette with .ocr — both mean "do not rely on
+   this without opening the PDF" — but carries its own icon and wording so the two reasons
+   stay distinguishable, and neither is ever mistaken for the green Verified state. */
+.lowQuality { color: var(--warn-fg); background: var(--warn-bg); }
 .superseded { color: var(--past-fg); background: var(--past-bg); }
 .inForce { color: var(--ok-fg); background: var(--ok-bg); }
 

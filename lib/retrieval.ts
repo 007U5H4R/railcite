@@ -14,7 +14,7 @@ export async function matchChunks(embedding: number[],
   const rows = data as unknown as Array<Omit<MatchRow, 'document'>>;
   const docIds = [...new Set(rows.map(r => r.document_id))];
   const { data: docs, error: e2 } = await sb.from('documents')
-    .select('id,title,doc_type,circular_no,issue_date,is_ocr,source_url,domain,commodity')
+    .select('id,title,doc_type,circular_no,issue_date,is_ocr,text_quality,source_url,domain,commodity')
     .in('id', docIds);
   if (e2) throw e2;
   const byId = new Map((docs ?? []).map(d => [d.id, d as DocMeta]));

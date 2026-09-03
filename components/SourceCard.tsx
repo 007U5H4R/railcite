@@ -1,5 +1,5 @@
 import type { DocType, SourceView } from '@/lib/types';
-import { StatusBadge } from './StatusBadge';
+import { StatusBadge, statusForText } from './StatusBadge';
 import styles from './evidence.module.css';
 
 // Decorative tile abbreviation, derived from the document type (+ domain when known).
@@ -21,7 +21,7 @@ export function SourceCard({ source, active, onOpen }: {
 }) {
   const d = source.document;
   const label = d.doc_type === 'circular' ? 'Primary circular' : 'Supporting';
-  const kind = d.is_ocr ? 'ocr' : 'verified';
+  const kind = statusForText(d);
   const tile = TILE[d.doc_type];
   const rest = [d.issue_date, source.page_ref].filter((x): x is string => Boolean(x)).join(' · ');
 

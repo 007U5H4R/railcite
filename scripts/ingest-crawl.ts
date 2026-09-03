@@ -21,6 +21,9 @@ import { ocrPdf } from '@/lib/ingest/ocr';
 import { chunkPages } from '@/lib/ingest/chunk';
 import { embedTexts } from '@/lib/embeddings';
 import { requireEnv, optionalEnv } from '@/lib/env';
+import { classifyDomain } from './backfill-domain';
+import { deriveCircularNo } from '@/lib/circularNo';
+import { documentQuality } from '@/lib/textQuality';
 
 const run = promisify(execFile);
 const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
@@ -98,9 +101,18 @@ async function ingestOne(e: Entry, tmp: string, sb: ReturnType<typeof adminClien
   const chunks = chunkPages(pages);
   if (!chunks.length) return { status: 'skip', chunks: 0 };
   const hash = createHash('sha256').update(await readFile(tmp)).digest('hex');
+  // Domain and label come from the Board's own filing, not from the crawl manifest, so a
+  // newly crawled circular is classified by exactly the same rule as the backfilled corpus
+  // (the manifest is what wrote 'goods' onto 5,685 of 5,687 rows). Both fall back to the
+  // manifest value, then to null, rather than guessing.
+  const source_url = canonicalUrl(e.source_url);
+  const domain = classifyDomain(source_url, null) ?? e.domain ?? null;
+  const circular_no = deriveCircularNo(source_url) ?? e.circular_no ?? null;
+  // is_ocr says how the text arrived; text_quality says whether it is legible.
+  const text_quality = documentQuality(chunks.map(c => c.chunk_text));
   const { data: doc, error: e1 } = await sb.from('documents').insert({
-    title: e.title || '(untitled)', doc_type: e.doc_type, domain: e.domain, commodity: null,
-    source_url: canonicalUrl(e.source_url), circular_no: e.circular_no, issue_date: e.issue_date, file_hash: hash, is_ocr,
+    title: e.title || '(untitled)', doc_type: e.doc_type, domain, commodity: null,
+    source_url, circular_no, issue_date: e.issue_date, file_hash: hash, is_ocr, text_quality,
   }).select().single();
   if (e1) throw e1;
   // Postgres has no transaction across these calls, so if embedding or a chunk batch fails the

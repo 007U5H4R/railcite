@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import type { SourceView } from '@/lib/types';
 import { safeHref } from '@/lib/safe-href';
-import { StatusBadge } from './StatusBadge';
+import { StatusBadge, statusForText } from './StatusBadge';
 import styles from './evidence.module.css';
 
 const FOCUSABLE = 'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
@@ -48,7 +48,7 @@ export function SourceReader({ source, onClose }: { source: SourceView; onClose:
           <button type="button" ref={closeRef} className={styles.closeBtn} onClick={onClose}
             aria-label="Close source">✕</button>
         </div>
-        <StatusBadge kind={d.is_ocr ? 'ocr' : 'verified'} />
+        <StatusBadge kind={statusForText(d)} />
         {source.page_ref && <p className={`${styles.pageRef} mono`}>{source.page_ref}</p>}
         <p className={`${styles.readerBody} reading`}>{source.snippet}</p>
         {d.source_url && (
