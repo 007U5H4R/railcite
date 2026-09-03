@@ -26,11 +26,20 @@ describe('selectSweepChildren', () => {
     expect(selectSweepChildren(kids, NOW)).not.toContain('p,3');
   });
 
-  it('ignores children with no year, which are not year pages', () => {
-    expect(selectSweepChildren(kids, NOW)).not.toContain('p,4');
+  it('includes children with no year (subject pages like Rates Master topics)', () => {
+    expect(selectSweepChildren(kids, NOW)).toContain('p,4');
   });
 
-  it('returns nothing when a section has no year children at all', () => {
-    expect(selectSweepChildren([{ id: 'p,9', label: 'Misc', year: null }], NOW)).toEqual([]);
+  it('sweeps a subject (year-less) child even when there are no year pages', () => {
+    expect(selectSweepChildren([{ id: 'p,9', label: 'Misc', year: null }], NOW)).toEqual(['p,9']);
+  });
+
+  it('sweeps every child of a subject-indexed section (all year-less, like Rates Master)', () => {
+    const subjectKids = [
+      { id: 's,1', label: 'Demurrage, Wharfage', year: null },
+      { id: 's,2', label: 'Weighment of wagons', year: null },
+      { id: 's,3', label: 'Freight Incentive Schemes', year: null },
+    ];
+    expect(selectSweepChildren(subjectKids, NOW)).toEqual(['s,1', 's,2', 's,3']);
   });
 });

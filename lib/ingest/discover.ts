@@ -109,7 +109,14 @@ export function selectSweepChildren(
   now: Date,
 ): string[] {
   const y = now.getUTCFullYear();
-  return children.filter(c => c.year === y || c.year === y - 1).map(c => c.id);
+  // A year-labelled child is worth visiting only for the current or previous year — older
+  // years are already fully in the corpus. A child with NO year is a subject page (e.g. Rates
+  // Master's "Demurrage, Wharfage..." topics); its circulars are not partitioned by year, so a
+  // new one can land there at any time and it must always be swept. The URL diff + date floor
+  // still filter, so an extra sweep costs a page fetch, not a wrong ingest.
+  return children
+    .filter(c => c.year === null || c.year === y || c.year === y - 1)
+    .map(c => c.id);
 }
 
 // --- Delta computation and safety guards (Task 3) ---
