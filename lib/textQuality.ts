@@ -72,6 +72,17 @@ export function isLowQualityText(text: string): boolean {
 }
 
 /**
+ * How many distinct real-word markers appear in the head of the text — a coarse legibility
+ * measure. Mojibake scores 0-1; clean prose in this corpus scores 7-12. The re-OCR pass uses
+ * it to tell "OCR recovered readable words" from "OCR reproduced the same digit soup", so it
+ * only replaces a document's text when OCR genuinely improved it.
+ */
+export function markerHitCount(text: string): number {
+  const lower = (text || '').slice(0, SAMPLE).toLowerCase();
+  return MARKERS.filter(w => new RegExp(`\\b${w}\\b`).test(lower)).length;
+}
+
+/**
  * A document's quality is judged on its chunks. One bad chunk in a long, otherwise clean
  * circular is a table page, not a broken document — only flag when most of the sample is bad.
  */
