@@ -1,0 +1,3502 @@
+
+  <link rel="stylesheet" href="css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="flexslider.css" type="text/css" media="screen"/>
+  <script src="js/jquery.min.js"></script> 
+  <script src="js/bootstrap.min.js"></script>
+ 
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+	
+
+
+
+<script>
+var images = new Array()
+images[0] = "images/2medium.jpg";
+images[1] = "images/3medium.jpg";
+images[2] = "images/4medium.jpg";
+images[3] = "images/5medium.jpg";
+images[4] = "images/6medium.jpg";
+images[5] = "images/7medium.jpg";
+images[6] = "images/8medium.jpg";
+images[7] = "images/9medium.jpg";
+images[8] = "images/1medium.jpg";
+setInterval("changeImage()", 2500);
+var x=0;
+function changeImage()
+{
+document.getElementById("img").src=images[x]
+if (x!=8)
+{x++;
+} else
+{x=x-8; 
+} 
+}
+</script>
+<style> 
+
+#rm_link{
+font-size:28px!important;
+}
+
+.clearfix {
+    overflow: auto;
+}
+
+ #slidewrapper1 { width:350px; height:90px; overflow:hidden;}
+ #slidewrapper1 .slide2 { width:350px; height:90px; margin:0; background-color:#DDDDDD; }
+ #slidewrapper1 .slide2 img { z-index:100; }
+ #slidewrapper1 .slide2 .projektinfo1 { width:100%; height:38px; padding:0px 10px 0px; z-index:15; color:#fff; position:absolute; left:0; bottom:0px; }
+ #slidewrapper1 .slide2 .projektinfo1 p	{ z-index:15; position:relative; padding-top:10px;}
+ .bhashini-dropdown-content{z-index: 9999!important;}
+ 
+ .bhashini-plugin-container{
+     width: fit-content;
+    margin-left: auto;
+ }
+</style>
+	
+
+
+			<meta http-equiv="Content-type" content="text/html">
+
+
+	<script type="text/javascript" src="js/jquery_slideshow.js"></script> 
+    <script type="text/javascript" src="js/sliderscript.js"></script> 
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link href="images/title_logo.png" rel="icon" >
+	
+		<link href="https://indianrailways.gov.in/railwayboard//css/main.css" rel="stylesheet" type="text/css">
+	
+	<link href="https://indianrailways.gov.in/railwayboard//css/styles0.css" rel="stylesheet" type="text/css">
+	<TITLE>Ministry of Railways (Railway Board)</TITLE>
+	<script language="JavaScript" src="https://indianrailways.gov.in/railwayboard//javascripts/sbankJavascript.js" type="text/javascript"></script>
+
+	<link rel="stylesheet" type="text/css" href="anylinkcssmenu.css" >
+	<link rel="stylesheet" type="text/css" href="contentslider.css" > 
+	<script type="text/javascript" src="contentslider.js"></script> 
+	
+    <script type="text/javascript"> 
+	function brotarefx(){
+        featuredcontentslider.init({
+            id: "slider1",  //id of main slider DIV
+            contentsource: ["inline", ""],  //Valid values: ["inline", ""] or ["ajax", "path_to_file"]
+            toc: "#increment",  //Valid values: "#increment", "markup", ["label1", "label2", etc]
+            nextprev: ["<", ">"],  //labels for "prev" and "next" links. Set to "" to hide.
+            revealtype: "click", //Behavior of pagination links to reveal the slides: "click" or "mouseover"
+            enablefade: [true, 0.1],  //[true/false, fadedegree]
+            autorotate: [true, 4000],  //[true/false, pausetime]
+            onChange: function(previndex, curindex) {  //event handler fired whenever script changes slide
+                //previndex holds index of last slide viewed b4 current (1=1st slide, 2nd=2nd etc)
+                //curindex holds index of currently shown slide (1=1st slide, 2nd=2nd etc)
+            }
+        })
+		}
+        function goTurl(loc) {
+            window.top.location = loc;
+        }
+		
+		 function refreshpage() {
+           // window.location.reload();
+			
+        }
+		
+		//setTimeout("brotarefx()",2);
+		setTimeout("brotarefx()",0);
+		
+		//setTimeout("refreshpage()",27000);
+    </script> 
+	
+
+<script type="text/javascript" src="anylinkcssmenu.js">
+
+/***********************************************
+* AnyLink CSS Menu script v2.0- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit Project Page at http://www.dynamicdrive.com/dynamicindex1/anylinkcss.htm for full source code
+***********************************************/
+
+</script>
+<script type="text/javascript">
+//anylinkcssmenu.init("menu_anchors_class") ////Pass in the CSS class of anchor links (that contain a sub menu)
+anylinkcssmenu.init("anchorclass")
+</script>
+<script type="text/javascript">
+	function search(){
+		var strSearchString = document.getElementById("searchString").value;
+		if(strSearchString != ""){
+			var form = document.getElementById("myFormId");
+			document.forms["searchform"].action="cms_search.jsp?searchString="+strSearchString;
+			document.forms["searchform"].submit();
+		}
+	}
+</script>
+<link rel="stylesheet" type="text/css" href="IR/flexdropdown.css"/>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript" src="IR/flexdropdown.js"></script>
+<link rel="stylesheet" type="text/css" href="anylinkmenu/anylinkmenu.css">
+<script type="text/javascript" src="anylinkmenu/menucontents.js"></script>
+<script type="text/javascript" src="anylinkmenu/anylinkmenu.js"></script>
+<script type="text/javascript">
+//anylinkmenu.init("menu_anchors_class") //Pass in the CSS class of anchor links (that contain a sub menu)
+anylinkmenu.init("menuanchorclass")
+
+</script>
+
+<script>
+
+
+/*********Font size resize**********/
+
+ function settheCookie(cname, cvalue, exdays) {
+	  var d = new Date();
+	  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+	  var expires = "expires="+ d.toUTCString();
+	  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/railwayboard";
+	}
+ 
+function getCookie(cname) {
+	  var name = cname + "=";
+	  var decodedCookie = decodeURIComponent(document.cookie);
+	  var ca = decodedCookie.split(';');
+	  for(var i = 0; i <ca.length; i++) {
+	    var c = ca[i];
+	    while (c.charAt(0) == ' ') {
+	      c = c.substring(1);
+	    }
+	    if (c.indexOf(name) == 0) {
+	      return c.substring(name.length, c.length);
+	    }
+	  }
+	  return "";
+	}
+
+function set_font_size(fontType){
+var fontSizea =11;
+var fs = getCookie("fs");
+if(fs==""){
+	fs = 0;
+}
+	if(fontType == "large")
+	{
+		if(fs<4){
+			var currentfontSize = 14;
+			currentfontSize = 14*(1.1**fs);
+			fs++;	
+			settheCookie("fs", fs, 1);
+			fontSizea = currentfontSize*1.1;
+			$("a").css("font-size",fontSizea  + "px");
+			$("p").css("font-size",fontSizea  + "px");
+			$("span").css("font-size",fontSizea  + "px");
+			$("font").css("font-size",fontSizea  + "px");
+			var hsize = 21+fs;
+			$("h4").css("font-size",hsize + "px");
+			$("h3").css("font-size",hsize + "px");
+			var asize = 16+fs;
+			$(".btnMid a").css("font-size",asize  + "px");
+			$("body").css("font-size",fontSizea  + "px");
+			$("button").css("font-size",asize  + "px");
+		}
+	}
+	if(fontType == "normal")
+	{
+		fontSizea = 14;
+		settheCookie("fs", 0, 1);
+		$("a").css("font-size",fontSizea  + "px");
+		$("p").css("font-size",fontSizea  + "px");
+		$("span").css("font-size",fontSizea  + "px");
+		$("font").css("font-size",fontSizea  + "px");
+		$("h4").css("font-size","21" + "px");
+		$("h3").css("font-size","21" + "px");
+		$(".btnMid a").css("font-size","16"  + "px");
+		$("body").css("font-size",fontSizea  + "px");
+		$("button").css("font-size","16"  + "px");
+	}
+	if(fontType == "small")
+	{   if(fs>-3){
+			var currentfontSize = 14;
+			currentfontSize = 14*(1.1**fs);			
+		    fontSizea = currentfontSize/1.1;
+			fs--;	
+			settheCookie("fs", fs, 1);
+			$("a").css("font-size",fontSizea  + "px");
+			$("p").css("font-size",fontSizea  + "px");
+			$("span").css("font-size",fontSizea  + "px");
+			$("font").css("font-size",fontSizea  + "px");
+			var hsize = 21+fs;
+			$("h4").css("font-size",hsize + "px");
+			$("h3").css("font-size",hsize + "px");
+			var asize = 16+fs;
+			$(".btnMid a").css("font-size",asize  + "px");
+			$("body").css("font-size",fontSizea  + "px");
+			$("button").css("font-size",asize  + "px");
+	}
+	}
+	//alert($("#NavContainer a").css("font-size"));
+	
+		$("#rm_link").css("font-size","28px");
+
+}
+
+
+    $(function(){
+      $("#includedContent").load("index.jsp"); 
+    });
+</script>
+
+
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9Y4ZTDH3QS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-9Y4ZTDH3QS');
+</script>
+
+<div class="row" style="background-color:#FBFBFB;height:30px;line-height:30px">
+<div class="col-md-9"><div class="bhashini-plugin-container"></div></div>
+<div class="col-md-3">
+
+	<a  class="colorblack screenreader rightborder" id="ScreenReaderSpan" href="https://indianrailways.gov.in/ScreenReaderInformation.html" title="Screen Reader">
+		<img  title="Screen Reader Access" alt="Screen Reader Access" src='images/screenreader.png'  ></a>
+
+
+<a href="FetchFiles.jsp" target="_blank" style="font-weight:bold;" onMouseOver="this.style.color='blue'">Search Documents(Date Wise)</a>&nbsp;&nbsp;
+
+		<a href="cms_search.jsp?lang=0"  style="font-weight:bold;" onMouseOver="this.style.color='blue'">Search</a>
+		  |
+			
+ | <a class="LangSwitcher"  onclick="set_font_size('large')" ><img src="images/font_increase.gif" title="Increase Font size" alt="Increase Font size"></a>		
+    	<a class="LangSwitcher" onclick="set_font_size('normal')" ><img src="images/font_normal.gif" title="Normal Font size" alt="Increase Font size"></a>
+    	<a class="LangSwitcher" onclick="set_font_size('small')" ><img align="middle" src="images/font_decrease.gif" title="Decrease Font size" alt="Increase Font size"></a>|
+ 		
+</div>
+</div>
+
+
+<div class="col-md-12 top_header clearfix" style="background-color:#FFFFFF;padding-left:0px;padding-right:0px;">
+  
+  <!-- Logo Section -->
+  <div class="col-md-2" align="center" style="display:flex; align-items:center; justify-content:center;">
+  <a href="http://www.indianrailways.gov.in/railwayboard/">
+    <img alt="Indian Railway main logo" src="images/18 star.png" class="img-responsive" style="height:80px;width:80px;border:0px solid red;border-radius:50px;">
+  </a>
+</div>
+
+<!-- Government of India & Ministry Section -->
+<div class="col-md-3" style="display:flex; align-items:center; padding-left:0px; margin-left:-15px; margin-top:20px;">
+  <div style="line-height:1.3;">
+    <span style="font-size:15px; font-weight:bold; color:#000000; white-space:nowrap;">GOVERNMENT OF INDIA</span>
+    <br/>
+    <span style="font-size:14px; font-weight:normal; color:#000000; white-space:nowrap;">MINISTRY OF RAILWAYS (Railway Board)</span>
+  </div>
+</div>
+  
+  <!-- Center Hindi/English Text -->
+  <div class="col-md-4" align="center" style="line-height:30px">
+    <font style="font-size:22px;"><b>INDIAN RAILWAYS</b></font> Lifeline to the Nation...
+  </div>
+  
+  <!-- Right Side Logos -->
+  <div class="col-md-4" align="center">
+    <div class="row">
+      <div class="col-md-4" style="float:left;">
+        <img class="img-responsive" alt="National Emblem of India" src="image/voters.png" style="height:100px;width:100px;">
+      </div>
+      <div class="col-md-4">
+        <img class="img-responsive" alt="National Emblem of India" src="images/logo.png" style="height:100px;width:100px;">
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+
+
+<div class="col-md-12" style="text-align:center;margin-top:10px;padding-left:0px;padding-right:0px;">
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" href="css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" media="screen"/>
+  <link rel="stylesheet" href="flexslider.css" type="text/css" media="screen"/>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-migrate-3.4.1.min.js"></script>
+ 
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="modernizr.js"></script>
+  <script src="jquery.flexslider.js"></script>
+  <meta charset="UTF-8"/>
+ <style> 
+ 
+.navbar-default {
+  overflow: hidden;
+  background-color: #3E70CB;;
+} 
+
+.navbar-default a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 6px 8px;
+  text-decoration: none;
+  font-size: 16px;
+} 
+
+.navbar-default a:hover {
+  background-color: #3E70CB;
+  color: black;
+} 
+
+.active {
+  background-color: #4CAF50;
+  color: white;
+} 
+
+@media (max-width:771px) and (min-width:200px){
+ 
+  .col-xs-15{
+	 display: block!important; 
+	  
+  } 
+  .small{
+	 display:block!important; 
+  }
+  .large{
+	 display:none!important; 
+	  
+  } 
+  
+} 
+@media (max-width:1440) and (min-width:1200px ){
+	
+.headerNav{
+	width:1500px!important;  
+	  
+  }	
+	
+	
+} 
+@media (max-width:1201) and (min-width:1024px ){
+	
+.headerNav{
+	width:1100px!important;  
+	  
+  }	
+	
+	
+} 
+@media (max-width:1023) and (min-width:766px ){
+	
+.headerNav{
+	width:1100px!important; 
+	  
+  }	
+	
+	
+}
+@media screen and (min-width:770px ) {
+  .col-xs-15{
+	 display: none!important; 
+	  
+  }
+  
+  .mrg {
+	  margin-left:50px;
+  }
+  .col-md-2{
+	 display: block!important; 
+	  width: 150px;
+  } 
+  .col-sm-2{
+	 display: block!important; 
+	 width: 180px; 
+	 
+  } 
+  .large{
+	 display:block!important; 
+	  
+  }
+   .small{
+	 display:none!important; 
+  }
+  
+} 
+
+/*@media (max-width:1200px ) and (min-width:768px){
+  .col-xs-15{
+	 display: none!important; 
+	  
+  }
+  .col-md-2{
+	 display: block!important; 
+	  width: 150px;
+  } 
+  .col-sm-2{
+	 display: block!important; 
+	 width: 180px; 
+  } 
+  .large{
+	 display:block!important; 
+	  
+  }
+   .small{
+	 display:none!important; 
+  }
+  
+} */
+
+@media screen and (max-width: 320px) {
+  .navbar-default.responsive {position: absolute;}
+  .navbar-default.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  } 
+  
+  .navbar-default.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+} 
+
+.font_12px
+{
+margin:0px !important;
+font-size:16px
+}
+.flexdropdownmenu,.flexdropdownmenu ul{ 
+font: normal 16px Arial Narrow;
+margin: 2px;
+padding: 0;
+position: absolute;
+left: 0;
+top: 0;
+list-style-type: none;
+background: red;
+border: 0px solid black;
+border-bottom-width: 0;
+visibility: hidden;
+box-shadow: 0px 0px 0px #818181; 
+-webkit-box-shadow: 0px 0px 0px #818181;
+-moz-box-shadow: 0px 0px 0px #818181;
+}
+.flexdropdownmenu li a{
+display: block;
+/*width: 180px;*/ /*width of menu (not including side paddings)*/
+color: black;
+background: #fae7a9;
+border-bottom: 0px solid black;
+text-decoration: none;
+padding: 6px 8px;
+}
+.flexdropdownmenu{
+ font-family: 'Arial Narrow',Arial, sans-serif;
+ font-size:16px
+} 
+</style> 
+
+  <nav class=" navbar navbar-default"   style="padding:0px; border-radius: 0px; border-bottom: 2px solid red !important;style="padding-left:0px;padding-right:0px;"">
+  <div class="headerNav" style="padding-left:0px;padding-right:0px;">
+    <div class="navbar-header" >
+       <button type="button" class="navbar-toggle" style="padding-left:0px;padding-right:0px;" data-toggle="collapse" aria-expanded="false" aria-controls="myNavbar" data-target=".collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span> 
+      </button> 
+	  <a class="navbar-brand small" href="#">
+	     <div style="background-color:#CF343A;width:80px">
+         <img src="home-icon-white.png" style="background-color:#CF343A;height:35px; padding:7px;"/>
+		 </div>
+	  </a>
+    </div>  
+<div class="collapse navbar-collapse" id="myNavbar" style="padding-left:0px;padding-right:0px;">
+      <ul class="nav navbar-nav ">
+  <a class="navbar-brand large" href="index.jsp">
+	     <div style="background-color:#CF343A;width:80px">
+         <img src="home-icon-white.png" style="background-color:#CF343A;height:35px; padding:7px;"/>
+		 </div>
+	  </a>
+
+
+ 
+
+<div align="center"  class="col-xs-15  col-sm-2 " style="padding:0px;line-height:20px;float:left;background-color:#3E70CB; font-size: 16px; color:white!important; /*padding: 12px; margin-left: 8px;*/" 
+onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#3E70CB'" >
+
+  
+ 
+
+<p class="font_12px">
+<a href="view_section.jsp?lang=0&amp;id=0,1" data-flexmenu="flexmenu0" style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif; font-size: 16px;;">About Indian Railways</a></p>
+ 
+
+<ul id="flexmenu0"  class="flexdropdownmenu" style="background-color:#CF343A;">
+ 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,1,2550">Honourable Ministers</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,1,304">Corporate Overview</a>
+						
+								<ul  style="background-color:#CF343A;">
+										
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,1,304,305">Organisation Structure</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,1,304,365">Board Members/General Managers</a>
+									
+										
+									</li>
+									
+								</ul>
+							
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,1,304,366,554">Statistics</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,1,388">Railway Board Directorates</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,1,262">Citizen Charter</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,1,265">Portal Policies</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,1,1260">RTI</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,1,2469">IPR of Railway Officers</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,1,1289">Archives</a>
+						
+					</li>
+					
+	</ul>
+	</div>
+	
+
+ 
+
+<div align="center"  class="col-xs-15  col-sm-2 " style="padding:0px;line-height:20px;float:left;background-color:#3E70CB; font-size: 16px; color:white!important; /*padding: 12px; margin-left: 8px;*/" 
+onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#3E70CB'" >
+
+  
+ 
+
+<p class="font_12px">
+<a href="view_section.jsp?lang=0&amp;id=0,5" data-flexmenu="flexmenu1" style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif; font-size: 16px;;">For IR Personnel</a></p>
+ 
+
+<ul id="flexmenu1"  class="flexdropdownmenu" style="background-color:#CF343A;">
+ 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,373">Vacancy Circulars</a>
+						
+								<ul  style="background-color:#CF343A;">
+										
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,373,3147">Vacancy_Circular_2026</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,373,3067">Vacancy_Circular_2025</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,373,2101">E(O)III_Vacancy_Circulars</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,373,1411"> VC for RB Posting for Executive Directors</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,373,1763">VC for RB Posting for Directors</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,373,2238">Deputation Instructions</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,373,1550">VC for RDSO Posting for Exe. Director</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,373,1487">VC for RDSO Posting for Directors</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,373,3087">VC for Non-Gaz Emp.</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,373,1449">VC for RB Posting- Ex Cadre Post</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,373,2606">VC_RCT</a>
+									
+										
+									</li>
+									
+								</ul>
+							
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1387">Empanelments (Beta Version)</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418">Promotion/Posting/Other Orders</a>
+						
+								<ul  style="background-color:#CF343A;">
+										
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1448">E(O)-II&rsquo;s Orders</a>
+									
+										
+											<ul style="background-color:#CF343A;">
+													
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1448,3153">2026</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1448,2985">2024</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1448,3068">2025</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1448,2432">2021</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1448,2654">2022</a>
+													
+												</li>
+											
+											</ul>
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1459">E(O)-III&rsquo;s Orders</a>
+									
+										
+											<ul style="background-color:#CF343A;">
+													
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1459,3152">2026</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1459,3065">2025</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1459,2984">2024</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1459,2812">2023</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1459,2650">2022</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1459,2440">2021</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1459,2439">2020</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1459,2377">2019</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1459,2376">2018</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1459,2375">2017</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1459,2374">2016</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1459,2373">2015</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1459,2372">2014</a>
+													
+												</li>
+											
+											</ul>
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1447">ERB-I Orders</a>
+									
+										
+											<ul style="background-color:#CF343A;">
+													
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1447,1801">Previous_Orders</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1447,1971">Organised Services</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1447,1972">Orders of RBSS/RBSSS</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1447,2020">Misc.Services </a>
+													
+												</li>
+											
+											</ul>
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,2629">E(O)-I Orders</a>
+									
+										
+											<ul style="background-color:#CF343A;">
+													
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,2629,2635">Voluntary Retirement(VR)</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,2629,2636">Seniority</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,2629,2637">Miscellaneous Orders</a>
+													
+												</li>
+											
+											</ul>
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1985">ERB-II Orders</a>
+									
+										
+											<ul style="background-color:#CF343A;">
+													
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1985,3030">2024</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1985,3078">2025</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1985,3237">2026</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1985,2814">2023</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1985,2513">2021</a>
+													
+												</li>
+											
+											</ul>
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,2433">EO-IIs Deputation orders-2020</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1464">ERB_V_Orders</a>
+									
+										
+											<ul style="background-color:#CF343A;">
+													
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1464,3243">2025</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,1464,3058">2024</a>
+													
+												</li>
+											
+											</ul>
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,2784">E(GR)-I&rsquo;s Orders</a>
+									
+										
+											<ul style="background-color:#CF343A;">
+													
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,2784,2993">2024</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,2784,3119">2025</a>
+													
+												</li>
+											
+											
+												<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1418,2784,3214">2026</a>
+													
+												</li>
+											
+											</ul>
+										
+									</li>
+									
+								</ul>
+							
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1749">Recruitment Rules</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,353">IRWO</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,377">Codes And Manuals</a>
+						
+								<ul  style="background-color:#CF343A;">
+										
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,377,1345">IRPWM-2019</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,377,1900">IRAC_Vol_1</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,377,1901">IREC</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,377,1902">IRTCC</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,377,1945">Manual for Inspection of Station Accounts</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,377,2023">IRSC-I</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,377,2595">IRPWM-2020</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,377,2866">IRAC_Vol-2</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,377,2966">IRPWM-2004</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,377,1899">IRA&F</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,377,1896">IRFC_Vol_II</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,377,1895">IRFC_Vol_1</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,377,1685">IRSEM</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,377,1829">AT Welding Manual</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,377,1830">FBW_Manual</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,377,1831">USFD_Manual</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,377,1882">Correction Slip to Manual Glued Insulated Rail Joints</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,377,1886">IREC_Vol_1</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,377,1887">IREC_Vol_II</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,377,1894">IREM-Vol_I</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,377,3055">IRPWM-2024</a>
+									
+										
+									</li>
+									
+								</ul>
+							
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,384">FROA</a>
+						
+								<ul  style="background-color:#CF343A;">
+										
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,384,819">Governing Council</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,384,3204">Federation_Units</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,384,2931">Objectives</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,384,823">Importent Issues</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,384,2932">IMPORTANT FACTS</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,384,824">Important Correspondence</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,384,826">Promotion/Posting Order</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,384,827">Vacancies Notices</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,384,828">Important Circulars</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,384,829">Meeting/Seminar</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,384,830">FAQ&rsquo;s</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,384,831">  Contact_Us</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,384,832">Disclaimer</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,384,2933">News Flash (Old)</a>
+									
+										
+									</li>
+									
+								</ul>
+							
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,385">Training Circulars</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1144">FEDERATION</a>
+						
+								<ul  style="background-color:#CF343A;">
+										
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1144,1152">AIRF</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1144,1299">IRPOF</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1144,1145">NFIR</a>
+									
+										
+									</li>
+									
+								</ul>
+							
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,1940">IR Good Work Portal</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,3135">Selection for L-17 posts</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,2703">Empanelment to ex-cadre Level 16 posts</a>
+						
+								<ul  style="background-color:#CF343A;">
+										
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,2703,3124">Notification for ex-cadre Level 16 posts</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,2703,3125">List of Empanelled Officers</a>
+									
+										
+									</li>
+									
+								</ul>
+							
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,3036">SPARROW</a>
+						
+								<ul  style="background-color:#CF343A;">
+										
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,3036,3038">Circulars</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,5,3036,3039">Progress report</a>
+									
+										
+									</li>
+									
+								</ul>
+							
+					</li>
+					
+	</ul>
+	</div>
+	
+
+ 
+	
+<div align="center" class="col-xs-15 col-sm-2 " style="padding:0px;line-height:20px;float:left;background-color:#3E70CB; font-size: 16px; color:white!important; /*padding: 12px; margin-left: 8px;*/" 
+onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#3E70CB'" >
+	
+	 
+ 
+
+<p class="font_12px">
+<a href="view_section.jsp?lang=0&amp;id=0,2" data-flexmenu="flexmenu2" style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif; font-size: 16px;;">Passenger Info</a></p>
+ 
+
+<ul id="flexmenu2"  class="flexdropdownmenu" style="background-color:#CF343A;">
+ 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,2,320">Tourist Information</a>
+						
+								<ul  style="background-color:#CF343A;">
+										
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,2,320,3154">Rail Tourism in India</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,2,320,379">Tourist Cars</a>
+									
+										
+									</li>
+									
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,2,320,381">Hotels</a>
+									
+										
+									</li>
+									
+								</ul>
+							
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,2,1360">Concessions List</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,2,1491">Concession Certificates</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,2,266">Time Table Information </a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,2,330">Reservation & Ticketing</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,2,280">Claims Passenger</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,2,281">Concession Rules</a>
+						
+								<ul  style="background-color:#CF343A;">
+										
+								
+									<li><a  style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,2,281,877">GENERAL RULES FOR CONCESSION</a>
+									
+										
+									</li>
+									
+								</ul>
+							
+					</li>
+					
+	</ul>
+	</div>
+	
+
+ 
+	
+<div align="center" class="col-xs-15 col-sm-2 " style="padding:0px;line-height:20px;float:left;background-color:#3E70CB; font-size: 16px; color:white!important; /*padding: 12px; margin-left: 8px;*/" 
+onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#3E70CB'" >
+	
+	 
+ 
+
+<p class="font_12px">
+<a href="view_section.jsp?lang=0&amp;id=0,6" data-flexmenu="flexmenu3" style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif; font-size: 16px;;">Freight Info</a></p>
+ 
+
+<ul id="flexmenu3"  class="flexdropdownmenu" style="background-color:#CF343A;">
+ 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,6,287">Claims Freight</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,6,338">Freight Rate</a>
+						
+					</li>
+					
+	</ul>
+	</div>
+	
+
+ 
+
+<div align="center"  class="col-xs-15  col-sm-2 " style="padding:0px;line-height:20px;float:left;background-color:#3E70CB; font-size: 16px; color:white!important; /*padding: 12px; margin-left: 8px;*/" 
+onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#3E70CB'" >
+
+  
+ 
+
+<p class="font_12px">
+<a href="view_section.jsp?lang=0&amp;id=0,3" data-flexmenu="flexmenu4" style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif; font-size: 16px;;">Tenders</a></p>
+ 
+
+<ul id="flexmenu4"  class="flexdropdownmenu" style="background-color:#CF343A;">
+ 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,3,269">Railway Board Tenders </a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,3,1243">CPP Portal Instructions</a>
+						
+					</li>
+					
+	</ul>
+	</div>
+	
+
+ 
+	
+<div align="center" class="col-xs-15 col-sm-2 " style="padding:0px;line-height:20px;float:left;background-color:#3E70CB; font-size: 16px; color:white!important; /*padding: 12px; margin-left: 8px;*/" 
+onmouseover="style.backgroundColor='#3D76C0';" onmouseout="style.backgroundColor='#3E70CB'" >
+	
+	 
+ 
+
+<p class="font_12px">
+<a href="view_section.jsp?lang=0&amp;id=0,7" data-flexmenu="flexmenu5" style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif; font-size: 16px;;">Contact Us </a></p>
+ 
+
+<ul id="flexmenu5"  class="flexdropdownmenu" style="background-color:#CF343A;">
+ 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,7,367">Tel. Directory & Email ID</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,7,1281">RRBs Website</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,7,276">Other Railway Sites</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,7,277">Sitemap</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,7,286">Disclaimer</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,7,332">Terms & Conditions</a>
+						
+					</li>
+					 
+					<li> 
+<a style="color:white!important;text-decoration:none; font-family: 'Arial Narrow',Arial, sans-serif;background-color:#CF343A;border-color:#3D76C0; font-size: 16px;;" onmouseover="style.backgroundColor='#3D76C0';" 
+onmouseout="style.backgroundColor='#CF343A'" href="view_section.jsp?lang=0&amp;id=0,7,333">Privacy Policy</a>
+						
+					</li>
+					
+	</ul>
+	</div>
+	
+</div>
+</div>
+
+</div>
+</div>
+</div>
+ 
+
+<!-- HEADER ENDS HERE -->
+ 
+<style>
+.linkwr{
+	
+	font-family: 'Arial Narrow',Arial, sans-serif;
+	
+	color:white!important;
+}
+
+</style>
+<script language="JavaScript">
+ 
+   function  selectYear(){
+		var lang = document.yearform.lang.value;
+		var id = document.yearform.id.value;
+		var year = document.yearform.year.value;
+		var newsType = document.yearform.newsType.value;
+        document.yearform.action="view_section.jsp?lang="+lang+"&id="+id+"&year="+year+"&newsType="+newsType+"";
+        document.yearform.submit();
+    } 
+	
+</script>
+
+<!-- BODY CONTENT STARTS HERE -->
+<div class="container-fluid" style="padding:0px">
+<div class="row" style="margin:0px;padding:0px;">
+<div class="col-md-12" style="padding:0px">
+<div align="center">
+	<table border="0" cellspacing="0" width="100%" id="table15" cellpadding="0">
+		<tr>
+			<td><img src="images/spacer.gif" height="10"></td>
+		</tr>
+	</table>
+</div>
+<div align="center" >
+	<table border="0" cellspacing="0" width="100%" id="table16" cellpadding="0" >
+		<tr style="padding:40px;margin:40px;">
+			<td  align="left" valign="top"  bgcolor="#2352b9" style="background-repeat:repeat-x;margin:20px;padding:20px;margin-top:20px;padding-top:20px;" align="left" >		
+			
+			<!--    THIS IS THE MAIN LINK TABLE - HOME     -->
+			
+			<div align="center" style="background-color:#2352b9;">
+				<table border="0" cellspacing="0" width="100%" id="table18" cellpadding="5" bgcolor="#3D76C0">
+					<tr>
+						<td>
+							
+								<button type="button" class="btn btn-info btn-block" align="center" style="border-radius:0px!important; background-color:#133c86!important; border-color: #2c61b1!important;">
+								<a class="linkwr" href="http://www.indianrailways.gov.in/railwayboard">Home</a></button>
+							
+						</td>
+					</tr>
+				</table>
+			</div>	
+			<!--     MAIN LINK TABLE ENDS HERE  -->	
+			<!-- THIS IS THE SECTION LINK TABLE -->			
+
+			<div align="center" style="background-color:#2352b9;">
+				<table border="0" cellspacing="0" width="100%" id="table18" cellpadding="0" bgcolor="#2352b9">
+					<tr>
+						<td width="10" height="25"><img border="0" src="images/spacer.gif" width="15" height="1"></td>
+						<td ><a class="linkwr" href="view_section.jsp?lang=0&id=0,1" class="linkn"><strong>About Indian Railways</strong></a>
+
+								<br>&nbsp;&nbsp;&nbsp;<img src="images/arrow_section.gif" border="0"><a class="linkwr" href="view_section.jsp?lang=0&id=0,1,304" class="linkn"><strong>Corporate Overview</strong></a>
+								<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/arrow_section.gif" border="0"><a class="linkwr" href="view_section.jsp?lang=0&id=0,1,388" class="linkn"><strong>Railway Board Directorates</strong></a>
+								<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/arrow_section.gif" border="0"><a class="linkwr" href="view_section.jsp?lang=0&id=0,1,304,366,555" class="linkn"><strong>Traffic Commercial </strong></a>
+						</td>
+					</tr>
+				</table>
+			</div>			
+			
+			<!--     SECTION LINK TABLE ENDS HERE     -->
+						
+			<!-- THIS IS THE SECTION SUB LINKS TABLE    -->
+				<div align="center" style="background-color:#2352b9;">
+				
+				<table border="0" cellspacing="0"  id="table18" cellpadding="0" >
+
+
+							
+							
+
+									<tr>
+										<td width="27" height="25" align="center"></td>
+										<td width="27" height="25" align="center"><img src="images/bullet4.gif" alt="" width="6" height="5"  border="0"></td>
+										<td valign="top" class="">
+				
+				
+				
+											<a class="linkwr" href="view_section.jsp?lang=0&id=0,1,304,366,555,1430"></b>
+				
+										Rates Master Circulars</b></a>
+										</td>
+									</tr>
+				
+									<tr>
+										<td width="27" height="25" align="center"></td>
+										<td width="27" height="25" align="center"><img src="images/bullet4.gif" alt="" width="6" height="5"  border="0"></td>
+										<td valign="top" class="">
+				
+				
+				
+											<a class="linkwr" href="view_section.jsp?lang=0&id=0,1,304,366,555,1608"></b>
+				
+										RCT</b></a>
+										</td>
+									</tr>
+				
+									<tr>
+										<td width="27" height="25" align="center"></td>
+										<td width="27" height="25" align="center"><img src="images/bullet4.gif" alt="" width="6" height="5"  border="0"></td>
+										<td valign="top" class="">
+				
+				
+				
+											<a class="linkwr" href="view_section.jsp?lang=0&id=0,1,304,366,555,1615"></b>
+				
+										TestPage</b></a>
+										</td>
+									</tr>
+				
+									<tr>
+										<td width="27" height="25" align="center"></td>
+										<td width="27" height="25" align="center"><img src="images/bullet4.gif" alt="" width="6" height="5"  border="0"></td>
+										<td valign="top" class="">
+				
+				
+				
+											<a class="linkwr" href="view_section.jsp?lang=0&id=0,1,304,366,555,1796"></b>
+				
+										Claims_Circulars</b></a>
+										</td>
+									</tr>
+				
+									<tr>
+										<td width="27" height="25" align="center"></td>
+										<td width="27" height="25" align="center"><img src="images/bullet4.gif" alt="" width="6" height="5"  border="0"></td>
+										<td valign="top" class="">
+				
+				
+				
+											<a class="linkwr" href="view_section.jsp?lang=0&id=0,1,304,366,555,1913"></b>
+				
+										Compendium_Goods Traffic</b></a>
+										</td>
+									</tr>
+				
+									<tr>
+										<td width="27" height="25" align="center"></td>
+										<td width="27" height="25" align="center"><img src="images/bullet4.gif" alt="" width="6" height="5"  border="0"></td>
+										<td valign="top" class="">
+				
+				
+				
+											<a class="linkwr" href="view_section.jsp?lang=0&id=0,1,304,366,555,2187"></b>
+				
+										Passenger_Marketing_Letters</b></a>
+										</td>
+									</tr>
+				
+									<tr>
+										<td width="27" height="25" align="center"></td>
+										<td width="27" height="25" align="center"><img src="images/bullet4.gif" alt="" width="6" height="5"  border="0"></td>
+										<td valign="top" class="">
+				
+				
+				
+											<a class="linkwr" href="view_section.jsp?lang=0&id=0,1,304,366,555,3045"></b>
+				
+										Public Grievances</b></a>
+										</td>
+									</tr>
+				
+									<tr>
+										<td width="27" height="25" align="center"></td>
+										<td width="27" height="25" align="center"><img src="images/bullet4.gif" alt="" width="6" height="5"  border="0"></td>
+										<td valign="top" class="">
+				
+				
+				
+											<a class="linkwr" href="view_section.jsp?lang=0&id=0,1,304,366,555,3062"></b>
+				
+										Important Policy Measures for Freight Customers</b></a>
+										</td>
+									</tr>
+				
+									<tr>
+										<td width="27" height="25" align="center"></td>
+										<td width="27" height="25" align="center"><img src="images/bullet4.gif" alt="" width="6" height="5"  border="0"></td>
+										<td valign="top" class="">
+				
+				
+				
+											<a class="linkwr" href="view_section.jsp?lang=0&id=0,1,304,366,555,3173"></b>
+				
+										Archive</b></a>
+										</td>
+									</tr>
+				
+									<tr>
+										<td width="27" height="25" align="center"></td>
+										<td width="27" height="25" align="center"><img src="images/bullet4.gif" alt="" width="6" height="5"  border="0"></td>
+										<td valign="top" class="">
+				
+				
+				
+											<a class="linkwr" href="view_section.jsp?lang=0&id=0,1,304,366,555,737"></b>
+				
+										Commercial Circular</b></a>
+										</td>
+									</tr>
+				
+									<tr>
+										<td width="27" height="25" align="center"></td>
+										<td width="27" height="25" align="center"><img src="images/bullet4.gif" alt="" width="6" height="5"  border="0"></td>
+										<td valign="top" class="">
+				
+				
+				
+											<a class="linkwr" href="view_section.jsp?lang=0&id=0,1,304,366,555,765"></b>
+				
+										Freight Rate Circulars</b></a>
+										</td>
+									</tr>
+				
+									<tr>
+										<td width="27" height="25" align="center"></td>
+										<td width="27" height="25" align="center"><img src="images/bullet4.gif" alt="" width="6" height="5"  border="0"></td>
+										<td valign="top" class="">
+				
+				
+				
+											<a class="linkwr" href="view_section.jsp?lang=0&id=0,1,304,366,555,787"></b>
+				
+										Rates Letters - Clarifications/Instructions</b></a>
+										</td>
+									</tr>
+				
+									<tr>
+										<td width="27" height="25" align="center"></td>
+										<td width="27" height="25" align="center"><img src="images/bullet4.gif" alt="" width="6" height="5"  border="0"></td>
+										<td valign="top" class="">
+				
+				
+				
+											<a class="linkwr" href="view_section.jsp?lang=0&id=0,1,304,366,555,788"></b>
+				
+										Freight Rates </b></a>
+										</td>
+									</tr>
+				
+									<tr>
+										<td width="27" height="25" align="center"></td>
+										<td width="27" height="25" align="center"><img src="images/bullet4.gif" alt="" width="6" height="5"  border="0"></td>
+										<td valign="top" class="">
+				
+				
+				
+											<a class="linkwr" href="view_section.jsp?lang=0&id=0,1,304,366,555,860"></b>
+				
+										Classification of Commodities(( Goods Tariff )</b></a>
+										</td>
+									</tr>
+				
+									<tr>
+										<td width="27" height="25" align="center"></td>
+										<td width="27" height="25" align="center"><img src="images/bullet4.gif" alt="" width="6" height="5"  border="0"></td>
+										<td valign="top" class="">
+				
+				
+				
+											<a class="linkwr" href="view_section.jsp?lang=0&id=0,1,304,366,555,861"></b>
+				
+										Notified PCC Routes((Permissible Carrying Capacity)</b></a>
+										</td>
+									</tr>
+				
+									<tr>
+										<td width="27" height="25" align="center"></td>
+										<td width="27" height="25" align="center"><img src="images/bullet4.gif" alt="" width="6" height="5"  border="0"></td>
+										<td valign="top" class="">
+				
+				
+				
+											<a class="linkwr" href="view_section.jsp?lang=0&id=0,1,304,366,555,862"></b>
+				
+										Freight Marketing Circulars</b></a>
+										</td>
+									</tr>
+				
+									<tr>
+										<td width="27" height="25" align="center"></td>
+										<td width="27" height="25" align="center"><img src="images/bullet4.gif" alt="" width="6" height="5"  border="0"></td>
+										<td valign="top" class="">
+				
+				
+				
+											<a class="linkwr" href="view_section.jsp?lang=0&id=0,1,304,366,555,2274"></b>
+				
+										Traffic Commercial Master Circular - Halt Stations</b></a>
+										</td>
+									</tr>
+				
+									<tr>
+										<td width="27" height="25" align="center"></td>
+										<td width="27" height="25" align="center"><img src="images/bullet4.gif" alt="" width="6" height="5"  border="0"></td>
+										<td valign="top" class="">
+				
+				
+				
+											<a class="linkwr" href="view_section.jsp?lang=0&id=0,1,304,366,555,2548"></b>
+				
+										MOU and Gazette Notifications</b></a>
+										</td>
+									</tr>
+				
+									<tr>
+										<td width="27" height="25" align="center"></td>
+										<td width="27" height="25" align="center"><img src="images/bullet4.gif" alt="" width="6" height="5"  border="0"></td>
+										<td valign="top" class="">
+				
+				
+				
+											<a class="linkwr" href="view_section.jsp?lang=0&id=0,1,304,366,555,2545"></b>
+				
+										bkup</b></a>
+										</td>
+									</tr>
+				
+</table>
+
+			</div>	
+<table border="0" cellspacing="0" style="border-collapse: collapse" width="160" align="center">
+<tr>
+	<td width="100%" align="center" valign="top">
+	
+<!--------------------Start bookmarks -------------------->	
+
+
+<!--------------------END BOOK MARK----------------------->
+
+	</td>
+</tr>
+</table>
+
+
+<br><br>
+
+
+
+
+			<!-- SECTION SUB LINK TABLE ENDS HERE -->						
+			</td>
+			
+			<td align="left" width="10" valign="top">&nbsp;</td>
+			<td align="left" width="100%" valign="top">
+			<div align="center" style="margin:40px;padding:30px;">
+				<table border="0" cellspacing="1" width="100%" id="table17" cellpadding="7" bgcolor="#EFEFEF">
+								
+					<tr>
+						<td bgcolor="#FFFFFF" valign="top">
+						<div align="center">
+							<table border="0" cellspacing="3" width="100%" height="100%" id="table19">
+								<tr>
+									<td class="texth"  align="left" valign="top">
+							<!-- CONTENT HEADING -->
+							
+Traffic Commercial 
+									</td>
+								</tr>
+							</table>
+						</div>
+						
+						<div align="center">
+
+<!------------------------------------------------------>
+
+
+<!------------------------------------------------------>
+
+</div>						
+						<div align="center">
+							<table border="0" cellspacing="3" width="100%" height="100%" id="table20" valign="top">
+								<tr>
+									<td align="left" valign="top" >
+						
+									<div id="ntext">
+									
+<p align=justify><div>
+	<span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:12px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></span></div>
+<div align="center">
+	<table border="1" cellpadding="0" cellspacing="0" style="width: 976px">
+		<tbody>
+			<tr>
+				<td colspan="3" style="width:972px;">
+					<span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:12px;"><img alt="" src="./uploads/images/1296892417099-tra_com_dir.jpg" /></span></span></td>
+			</tr>
+			<tr>
+				<td colspan="3" style="width:972px;">
+					<p style="text-align: right;">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/New-concession-Category-250722.pdf"> <strong style="font-weight: 400; text-decoration: none"> <font color="#000000">Passenger Amenities Committee</font></strong></a></span></span></p>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" style="width:972px;">
+					<p style="text-align: center;">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><a class=linkn href="https://indianrailways.gov.in/railwayboard/view_section.jsp?lang=0&amp;id=0,1,304,366,555,3062"><span style="color: rgb(0, 0, 255);">&quot;Important Policy Measures for Freight Customers</span></a><span style="color: rgb(0, 0, 255);"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Important%20Policy-compressed.pdf" target="_blank">&quot;</a></span></span></span></p>
+					<p style="text-align: center;">
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2026/DIGITAL%20ENABLEMENT%20IN%20FREIGHT%20BUSINESS.pdf" target="_blank">&quot;DIGITAL ENABLEMENT IN FREIGHT BUSINESS&quot;</a></p>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" style="width:972px;">
+					<p align="center">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><strong style="font-weight: 400">What&rsquo;s New</strong></span></span></span></p>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Hire%20Charges%20on%20Wagons%20Interchanged-Corri%2006%20to%20RC%2021%20of%202020.pdf" target="_blank"><span style="color: rgb(0, 0, 0); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 13.3333px;">Revision of Hire charges on wagons interchanged</span></a></td>
+				<td style="width: 840px;">
+					14.08.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Notified%20Stations%20dt_14_08_2026_001.pdf" target="_blank"><span style="font-size:14px;"><span new="" style="color: rgb(0, 0, 0); font-family: " times="">Notified Stations&nbsp;</span></span></a></td>
+				<td style="width: 840px;">
+					14.08.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Corri%20151%20to%20RMC-PCC-CC%2B8-Running%20of%20freight%20trains%20on%20CC%2B6%20tonne%20routes.pdf" target="_blank"><span font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: ">Running of freight trains on CC+6 routes</span></a></td>
+				<td style="width: 840px;">
+					<p>
+						12.08.2026</p>
+				</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/2026/Clarification%20to%20FOIS-Charging-Two%20Commodities.pdf"><span style="color: rgb(0, 0, 0); font-family: verdana, geneva, sans-serif; font-size: 14px;">Charging of wagon loaded with 2 commodities-Clarification</span></a></td>
+				<td style="width: 840px;">
+					07.08.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/2026/Corri%2001%20to%20RC%2015%20of%202026-TEFD(1).pdf" target="_blank"><span font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: ">Liberalized Automatic Freight Rebate Scheme for traffic loaded in Traditional Empty Flow Directions (TEFD)</span></a></p>
+				</td>
+				<td style="width: 840px;">
+					06.08.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/2026/Soda%20Ash-Corr_02-%20RC%2015%20of%202024.pdf" target="_blank">Reduction in classification of &lsquo;Soda Ash, Soda Ash Dense, Soda Ash Light&rsquo;</a></p>
+				</td>
+				<td style="width: 840px;">
+					05.08.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Rationalisation-%20RO-RO%20Traffic-RC%2016%20of%202026.pdf" target="_blank"><span style="font-size:12px;"><span helvetica="" style="color: rgb(0, 0, 0); font-family: ">Rationalization and Simplification of Freight Rate Structure for Roll-on/Roll-off (RO-RO) Traffic</span></span></a></td>
+				<td style="width: 840px;">
+					<span style="font-size:12px;"><span helvetica="" style="color: rgb(0, 0, 0); font-family: ">04.08.2026</span></span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2026/Corri65%20container%20mini%20rake.pdf" target="_blank"><span style="font-size:12px;"><span helvetica="" style="color: rgb(51, 51, 51); font-family: ">Transportation Product: Mini Rake(containers)</span></span></a></p>
+				</td>
+				<td style="width: 840px;">
+					28.07.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates-Letters/2026/Levy%20of%20Punitive%20Charge%20dated%2028_07_2026_001.pdf" target="_blank">Levy of Punitive Charge</a></td>
+				<td style="width: 840px;">
+					28.07.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Corrigendum%20150-RMC-PCC-SWR-25T-BAYP%20Single%20Line.pdf" target="_blank"><span font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: ">Notification of rates Circular for 25T axle routes</span></a></td>
+				<td style="width: 840px;">
+					24.07.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/TEFD%20Circular-RC%2015%20of%202026.pdf" target="_blank"><span style="font-size:12px;"><span helvetica="" style="color: rgb(0, 0, 0); font-family: ">Liberalized Automatic Freight Rebate Scheme for traffic loaded in Traditional Empty Flow Directions (TEFD)</span></span></a></td>
+				<td style="width: 840px;">
+					23.07.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<span style="font-size:12px;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2026/Corri%2018%20to%20Corri%2097%20RMC-PCC-PCC%20for%20Coal%20and%20Fly%20Ash%20over%2025T.pdf" target="_blank"><span helvetica="" style="color: rgb(0, 0, 0); font-family: ">PCC for Coal and Fly Ash loading over 25T Axle Load Route</span></a></span></td>
+				<td style="width: 840px;">
+					<span style="color: rgb(0, 0, 0);">17.07.2026</span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Comm_Cir_2026/Corrrigendum%20no%2064%20to%20RMC-Block%20Rake-Mini%20Rake-Two%20Point%20for%20DBKM%20wagons-IGU-MLPM.pdf" target="_blank"><span style="font-size:12px;"><span helvetica="" style="color: rgb(0, 0, 0); font-family: ">Transportation Products-Rakes from Two Originating Terminal for Automobile Traffic in DBKM wagons</span></span></a></td>
+				<td style="width: 840px;">
+					<span style="font-size:12px;"><span helvetica="" style="color: rgb(0, 0, 0); font-family: ">17.07.2026</span></span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Comm_Cir_2026/POL-Circular.pdf" target="_blank"><span style="color:#000000;">Rationalisation of Freight rate for transportation of &#39;Petroleum Products and Gases&#39;</span></a></p>
+				</td>
+				<td style="width: 840px;">
+					15.07.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Comm_Cir_2026/Fly%20Ash-Bed%20Ash-Circular.pdf" target="_blank"><span font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: ">Rationalisation of Freight rate for transportation of &#39;Fly Ash/Bed Ash.&#39;</span></a></p>
+				</td>
+				<td style="width: 840px;">
+					15.07.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Comm_Cir_2026/Fertilizer%20Circular.pdf" target="_blank"><span font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: ">Rationalisation of Freight rate for transportation of Fertilizer.</span></a></td>
+				<td style="width: 840px;">
+					15.07.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Comm_Cir_2026/FOOD%20GRAIN%20Circular.pdf" target="_blank"><span font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: ">Rationalisation of Freight rate for transportation of &#39;Food grain , Flours and Pulses.</span></a></td>
+				<td style="width: 840px;">
+					<span style="color: rgb(0, 0, 0); font-family: arial, helvetica, sans-serif;">15.07.2026</span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2026/Rates%20for%20Military%20Traffic%20dated%2015_07_2026_001.pdf" target="_blank"><span style="font-size:12px;"><span new="" style="color: rgb(0, 0, 0); font-family: " times="">Rates for Military Traffic</span></span></a></td>
+				<td style="width: 840px;">
+					<span style="font-size:12px;"><span style="color: rgb(0, 0, 0); font-family: arial, helvetica, sans-serif;">15.07.2026</span></span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2026/Dispensation%20from%20mandatory%20(100%25)%20weighment%20in%20case%20of%20Bamboo%203_001.pdf" target="_blank"><span style="font-size:12px;"><span new="" style="color: rgb(0, 0, 0); font-family: " times="">Dispensation from mandatory (100%) weighment in case of Bamboo Chips loaded in covered rake (BCN etc.)</span></span></a></td>
+				<td style="width: 840px;">
+					<span style="color: rgb(0, 0, 0); font-family: arial, helvetica, sans-serif;">30.06.2026</span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2026/All%20India%20Engine%20Hour%20Cost%20(AIEHC)%20for%20recovery%20of%20dated%2029_06_2_001.pdf" target="_blank"><span style="font-size:12px;"><span new="" style="color: rgb(0, 0, 0); font-family: " times="">All India Engine Hour Cost(AIEHC) for recovery of Siding and Shunting Charges</span></span></a></td>
+				<td style="width: 840px;">
+					<span style="color: rgb(0, 0, 0); font-family: arial, helvetica, sans-serif;">29.06.2026</span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Corri_%20149%20to%20RMC%20PCC.pdf" target="_blank"><span style="font-size:12px;"><span helvetica="" style="color: rgb(0, 0, 0); font-family: ">Notification of CC+8 routes over Indian Railway</span></span></a></p>
+				</td>
+				<td style="width: 840px;">
+					<span style="color: rgb(0, 0, 0); font-family: arial, helvetica, sans-serif;">29.06.2026</span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Corri_148%20to%20RMC%20PCC.pdf" target="_blank"><span style="font-size:12px;"><span helvetica="" style="color: rgb(0, 0, 0); font-family: ">Notification of Rates Circular for 25 T axle routes</span></span></a></p>
+				</td>
+				<td style="width: 840px;">
+					<span style="color: rgb(0, 0, 0); font-family: arial, helvetica, sans-serif;">29.06.2026</span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates-Letters/2026/Rates%20of%20Military%20Traffic%20dt_25_6_26_001.pdf" target="_blank"><span style="font-size:12px;"><span new="" style="color: rgb(0, 0, 0); font-family: " times="">Rates of Military Traffic</span></span></a></td>
+				<td style="width: 840px;">
+					<span style="font-size:12px;"><span style="color: rgb(0, 0, 0); font-family: arial, helvetica, sans-serif;">25.06.2026</span></span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2026/Electronic%20Payment%20System%20dt_%2022_06_2026_001.pdf" target="_blank">Electronic Payment System</a></p>
+				</td>
+				<td style="width: 840px;">
+					22.06.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2026/Incentive%20to%20enhance%20modal%20share%20in%20containerized%20traffic%20of%20tiles%20dt_22_06_26.pdf" target="_blank">Incentive to enhance modal share in containerized traffic of Tiles</a></p>
+				</td>
+				<td style="width: 840px;">
+					22.06.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/corr_%2012%20to%20RMC%20Dynamic%20Pricing-Busy%20Season%20Charge.pdf" target="_blank"><span style="font-size:12px;"><span helvetica="" style="color: rgb(0, 0, 0); font-family: ">Dynamic Pricing Policy-Notification of Lean Season i.e. Exemption from Levy of Busy Season Charge during the Lean Season for Financial Year 2026-27</span></span></a></p>
+				</td>
+				<td style="width: 840px;">
+					17.06.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Corri%2011%20to%20RMC-Dynamic%20Pricing-Exemption%20of%20BSC-Empty%20Flat%20wagons-Middle%20East.pdf" target="_blank">Temporary Exemption of Busy Season Charge for movement of empty flat wagons to ports due to the ongoing situation in the middle east</a></p>
+				</td>
+				<td style="width: 840px;">
+					15.06.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates-Letters/MGR%20RC%208%20of%202026.pdf" target="_blank">Operation of Merry-Go-Round (MGR) system by Railways beyond 30.04.2026</a></td>
+				<td style="width: 840px;">
+					<span style="color: rgb(51, 51, 51);">30.04.2026</span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates-Letters/2026/Corrigendum%20No%2010%20to%20RMC-Dynamic%20Pricing%20Policy-BSC-Bamboo-NFR.pdf" target="_blank"><span style="font-size:12px;"><span helvetica="" style="color: rgb(51, 51, 51); font-family: ">Exemption of Busy Season Charge in Covered wagons-Bamboo traffic NFR</span></span></a></p>
+				</td>
+				<td style="width:83px;">
+					<span style="font-size:12px;"><span helvetica="" style="color: rgb(51, 51, 51); font-family: ">28.04.2026</span></span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates-Letters/2026/Corri-63%20to%20RMC%20Block%20Rake-Two%20point%20Rake%20for%20POL%20traffic.pdf" target="_blank"><span style="font-size:12px;"><span helvetica="" style="color: rgb(0, 0, 0); font-family: ">Transportation Products- Two point Rake for POL traffic</span></span></a></p>
+				</td>
+				<td style="width:83px;">
+					<span helvetica="" style="color: rgb(51, 51, 51); font-family: ">28.04.2026</span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Corri%20147%20to%20RMC-PCC-cc%2B8-%20Route%20over%20SECR%20(1).pdf" target="_blank"><span font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: ">Running of freight trains on CC+8 tonne routes</span></a></p>
+				</td>
+				<td style="width:83px;">
+					22.04.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Corri%20No%20146%20to%20RMC-PCC-CC%2B8-%20one%20route%20over%20ECR.pdf" target="_blank"><span font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: ">Notification of CC+8 routes over Indian Railway</span></a></td>
+				<td style="width:83px;">
+					22.04.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Rate%20of%20Stabling%20Charge%20dated%2022_04_2026_001(2).pdf" target="_blank"><span style="font-size:12px;"><span style="color: rgb(0, 0, 0); font-family: arial, helvetica, sans-serif;">Rate of Stabling Charge</span></span></a></p>
+				</td>
+				<td style="width:83px;">
+					22.04.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rationalization%20of%20Freight%20Rate%2016_04%20-%20Copy.pdf" target="_blank"><span font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: ">Rationalisation of Freight rate for transportation of Salt</span></a></p>
+				</td>
+				<td style="width:83px;">
+					16.04.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/2026/TEFD-Corri%2006%20to%20RC%2009%20of%202024.pdf" target="_blank"><span font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: ">Liberalized Automatic Freight Rebates Scheme for&nbsp; traffic loaded in Traditional Empty Flow Directions (TEFD)</span></a></p>
+				</td>
+				<td style="width:83px;">
+					<span font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: ">08.04.2026</span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates-Letters/2026/Liberalised%20Automatic%20Freight%20Scheme%20for%20traffic%20loaded%20in%20TEFD-%20Corri%20No%205%20to%20RC%2009%20of%202024.pdf" target="_blank"><strong>Liberalised Automatic freight rebate Scheme for traffic loaded in Traditional Empty Flow Directions (TEFD)</strong></a></p>
+				</td>
+				<td style="width:83px;">
+					30.03.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Rebate%20in%20freight-Privately%20Owned%20Wagons-RC%207%20of%202026.pdf" target="_blank"><span style="font-size:12px;"><span helvetica="" style="color: rgb(51, 51, 51); font-family: ">Rebate in freight for traffic transported in privately owned wagons</span></span></a></p>
+				</td>
+				<td style="width:83px;">
+					30.03.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Haulage%20Charge%20for%20running%20of%20Double%20Stack%20Dwarf%20Container%2025_03_001.pdf" target="_blank">Haulage Charge for running of Double Stack Dwarf Containers</a></p>
+				</td>
+				<td style="width:83px;">
+					25.03.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Charging%20of%20Automobile%20Traffic-%20RC%2006%20of%202026.pdf" target="_blank">Charging of Automobile traffic</a></p>
+				</td>
+				<td style="width:83px;">
+					25.03.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Rationalisation%20of%20Freight%20rate%20for%20transportation%20of%20Salt-RC%2005%20of%202026.pdf" target="_blank">Rationalisation of Freight rate for transportation of Salt</a></p>
+				</td>
+				<td style="width:83px;">
+					25.03.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/downloads/Freight_Rate_2026/PCC%20of%20BLSS%20Car%20A%20and%20Car%20B%20on%2025T%20Axle%20load%20route%20of%20IR%20and%20WDFC.pdf" target="_blank">Corrigendum No. 17 to Corrigendum No.97 to Rates Master Circular/PCC/CC+8 etc./2020/0(<span style="box-sizing: border-box; font-size: 14px"><span style="box-sizing: border-box; font-family: verdana, geneva, sans-serif;">Permissible Carrying Capacity(PCC)&nbsp; of&nbsp; BLSS Car A and Car B on 25T Axle load route of IR and WDFC.)</span></span></a></p>
+				</td>
+				<td style="width:83px;">
+					19.03.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/2026/Review%20of%20Demurrage%20Penal%20Demurrage_001.pdf" target="_blank">Review of Demurrage/Penal Demurrage&nbsp;</a></td>
+				<td style="width:83px;">
+					13.03.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/2026/Rates%20Circular%20No_%2004%20of%202026.pdf" target="_blank">Rates of terminal Charges to be collected by Port Trust Railways directly from customers.(R.C. No. 04 of 2026)</a></td>
+				<td style="width:83px;">
+					13.03.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Guidelines%20for%20preparation%20of%20RRs_001.pdf" target="_blank">Guidelines for preparation of RRs and Clearance of Outstanding dues before closure of FY2025-26&nbsp;</a></p>
+				</td>
+				<td style="width:83px;">
+					13.03.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/RC%2003%20of%202026-Rates%20of%20Miscellaneous%20Charges.pdf" target="_blank">Revision of rates of Miscellaneous charges (RC 03 of 2026)</a></p>
+				</td>
+				<td style="width:83px;">
+					12.03.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/2026/Corri%2011%20to%20RC%2032%20of%202021-New%20Wagons-NMGHSFS%20and%20NMGHSR.pdf" target="_blank"><span font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: ">Charging of newly introduced automobile carrier wagon NMGHSFS and NMGHSR</span></a></p>
+				</td>
+				<td style="width:83px;">
+					<span style="color: rgb(0, 0, 0);">09.03.2026</span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/2026/Corri%2016%20to%20Corri%2097%20to%20RMC-PCC-Bauxite%20over%2025%20T%20axle%20load%20route.pdf" target="_blank"><span font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: ">Permissible Carrying Capacity (PCC) of BOXNS wagons for Bauxite over 25 T Axle Load Route</span></a></p>
+				</td>
+				<td style="width:83px;">
+					<span font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: ">09.03.2026</span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates-Letters/2026/Guidelines%20regarding%20Waiver%20and%20Write%20off%20of%20DC%20and%20WC%2005_02_202_001.pdf" target="_blank"><span style="font-family: verdana, geneva, sans-serif;"><span style="color: rgb(0, 0, 0); text-align: start;">Guidelines regarding Waiver/Write off of Demurrage/Wharfage</span></span></a></td>
+				<td style="width:83px;">
+					05.03.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Guidelines%20regarding%20Waiver%20Write%20off%20of%20Demurrage%20and%20Wharfage_001.pdf" target="_blank">Guidelines regarding waiver/write off of Demurrage/Wharfage</a></p>
+				</td>
+				<td style="width:83px;">
+					<span style="font-family: Arial, Helvetica, sans-serif; font-size: small;">23.02.2026</span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/2026/Notified%20stations%20dated%2024_02_2026_001.pdf" target="_blank"><span font-size:="" new="" style="color: rgb(0, 0, 0); font-family: " times="">Notified Stations&nbsp;</span></a></p>
+				</td>
+				<td style="width:83px;">
+					24.02.2026</td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2025/25%20T%20routes-%20Corri%20145%20to%20RMC-PCC-CC%2B8.pdf" target="_blank"><span font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: ">Routes of running of 25 Tonne Axle load wagons (Corri 145 to RMC/PCC/CC+8/2020)</span></a></p>
+				</td>
+				<td style="width:83px;">
+					<span style="color: rgb(0, 0, 0); font-family: arial, helvetica, sans-serif; font-size: 14px;">16.02.2026</span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Comm_Cir_2026/Classification%20of%20Shea%20Nuts.pdf" target="_blank"><span font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: ">Classification of Shea Nuts</span></a></p>
+				</td>
+				<td style="width:83px;">
+					<span style="color: rgb(0, 0, 0); font-family: arial, helvetica, sans-serif; font-size: 14px;">09.02.2026</span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2026/Exemption%20from%20mandatory%20(100%25)%20weighment%20for%20certain%20commoditie_001.pdf" target="_blank">Exemption from mandatory (100%) weighment for certain commodities&nbsp;</a></td>
+				<td style="width:83px;">
+					<span style="font-size:12px;"><span style="color: rgb(0, 0, 0); font-family: arial, helvetica, sans-serif;">02.02.2026</span></span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/2026/Corr_144-25tonne%20routes-SWR.pdf" target="_blank"><span font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: ">Running of freight trains on 25 Tonne routes over SWR-MBIV served by Vyasa Colony Jn.(VC) MSPV siding served by Vyasa Colony Jn. (Corri 144 to RMC/PCC)</span></a></span></span></p>
+				</td>
+				<td style="width:83px;">
+					<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color: rgb(0, 0, 0);">06.01.2026</span></span></span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/2026/Corr_143-25tonne%20routes-NR.pdf" target="_blank"><span font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: ">Running of freight trains on 25 Tonne routes over NR-PWL to PRLN &amp; PWL to HTPP (Corri 143 to RMC/PCC)</span></a></span></span></p>
+				</td>
+				<td style="width:83px;">
+					<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: ">06.01.2026</span></span></span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Haulage%20Charge%20for%20transportation%20of%20Bulk%20Cement(Cement%20in%20loose%20form)%20in%20Tank%20Containers.pdf" target="_blank"><span font-size:="" new="" style="color: rgb(0, 0, 0); font-family: " times="">Haulage Charge for transportation of Bulk Cement(Cement in loose form) in Tank Containers&nbsp;</span></a></span></span></p>
+				</td>
+				<td style="width:83px;">
+					<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color: rgb(0, 0, 0);">29.12.2025</span></span></span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Circular-Short%20Lead%20Traffic-Corri%2007%20to%20RC%2016%20of%202020.pdf" target="_blank"><span font-size:="" helvetica="" style="color: rgb(51, 51, 51); font-family: ">Policy Guidelines for concession in freight charges for Short Lead Traffic</span></a></span></span></p>
+				</td>
+				<td style="width:83px;">
+					<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;">17.12.2025</span></span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Comm_Cir_2025/Clarification%20on%20concession%20in%20freight.pdf" target="_blank"><span helvetica="" style="color: rgb(0, 0, 0); font-family: ">Clarification on concession in freight rate of non-refined iodized Salt meant for human consumption-Grant of two or more concessions.</span></a></span></span></p>
+				</td>
+				<td style="width:83px;">
+					<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;">09.12.2025</span></span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/PCC%20of%20BTAPM1-Corrigendum%20No_14%20to%20Corr_97%20to%20RMC%20PCC.pdf" target="_blank"><span font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: ">Permissible Carrying Capacity (PCC) of BTAPM1 wagon.</span></a></span></span></p>
+				</td>
+				<td style="width:83px;">
+					<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;">08.12.2025</span></span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/PCC%20of%20BLSS%20Car%20A%20and%20BLSS%20Car%20B-Corrigendum%20No_15%20to%20Corr_97%20to%20RMC%20PCC.pdf" target="_blank"><span font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: ">Permissible Carrying Capacity (PCC) of BLSS Car A and BLSS Car B on 25T Axle Load Route of WDFC</span></a></span></span></p>
+				</td>
+				<td style="width:83px;">
+					<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;">08.12.2025</span></span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Rates_Master_Circulars/2025/Incentive%20to%20enhance%20modal%20share%20in%20containerised%20traffic%20%20of%20Chemical%20Gypsum%20(1).pdf" target="_blank"><span style="color: rgb(0, 0, 0);">Incentive to enhance modal share in containerized traffic of Chemical Gypsum&nbsp;</span></a></span></span></p>
+				</td>
+				<td style="width:83px;">
+					<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color: rgb(0, 0, 0);">26.11.2025</span></span></span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Capturing%20of%20indents%20and%20generation%20of%20RRS%20though%20the%20system%20dt__001.pdf" target="_blank">Capturing of indents and generation of Railway Receipt through the system in case of Military Traffic&nbsp;</a></span></span></p>
+				</td>
+				<td style="width:83px;">
+					<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;">21.11.2025</span></span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/De-notification%20of%20stainless%20steel%20in%20Coil%20form%20%20dt_20_11_2025_001.pdf" target="_blank"><span style="background-color:#ffffff;">De-notification of&nbsp; &quot;Stainless Steel in Coil form&quot;</span></a></span></span></td>
+				<td style="width:83px;">
+					<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;">20.11.2025</span></span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2025/Haulage%20Charge%2018_11_25.pdf" target="_blank"><span style="color: rgb(0, 0, 0);">Haulage Charge for transportation of Bulk Cement (Cement in loose form) in Tank Containers</span></a></span></span></td>
+				<td style="width:83px;">
+					<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;">18.11.2025</span></span></td>
+			</tr>
+			<tr>
+				<td style="width: 31px; text-align: center;">
+					<ul>
+						<li>
+							&nbsp;</li>
+					</ul>
+				</td>
+				<td style="width: 840px; text-align: justify">
+					<p>
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Comm_Cir_2025/PCC%20of%20Open%20Wagon%20Salt_002.pdf" target="_blank"><span helvetica="" style="color: rgb(0, 0, 0); font-family: ">Permissible Carrying Capacity (PCC) of Open wagon- &quot;Salt&quot;</span></a></span></span></p>
+				</td>
+				<td style="width:83px;">
+					<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: ">12.11.2025</span></span></span></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<p align="center">
+	<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;">======</span></span></span></p>
+<div align="center">
+	<table border="1" width="976">
+		<tbody>
+			<tr>
+				<td height="29" style="border-left-style: solid; border-left-width: 1px; border-right-style: none; border-right-width: medium; border-top-style: solid; border-top-width: 1px; border-bottom-style: none; border-bottom-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="13" /></span></span></span></p>
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td height="29" style="border-left-style: none; border-left-width: medium; border-right-style: none; border-right-width: medium; border-top-style: solid; border-top-width: 1px; border-bottom-style: none; border-bottom-width: medium" valign="top" width="22%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><strong style="font-weight: 400"><a class=linkn href="./view_section.jsp?lang=0&amp;id=0,1,304,366,555,1430"> <span style="text-decoration: none">Rates Master Circulars - Subjectwise</span></a></strong></span><br />
+						<span style="color:#0000ff;">&nbsp;</span></span></span></p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: none; border-right-width: medium; border-top-style: solid; border-top-width: 1px; border-bottom-style: none; border-bottom-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span></span></span></p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: none; border-right-width: medium; border-top-style: solid; border-top-width: 1px; border-bottom-style: none; border-bottom-width: medium" valign="top" width="15%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/pdf/id_proof_220715.pdf"> <span style="text-decoration: none">List of permissible proof of identity while travelling</span></a></span></span></span></p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: none; border-right-width: medium; border-top-style: solid; border-top-width: 1px; border-bottom-style: none; border-bottom-width: medium" valign="top" width="1%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span></span></span></p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: none; border-right-width: medium; border-top-style: solid; border-top-width: 1px; border-bottom-style: none; border-bottom-width: medium" valign="top" width="15%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><strong style="font-weight: 400"><a class=linkn href="./view_section.jsp?lang=0&amp;id=0,1,304,366,555,1608" target="_blank"> <span style="text-decoration: none">Railway Claim Tribunal - Gazette Notifications</span></a></strong></span></span></span></p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: none; border-right-width: medium; border-top-style: solid; border-top-width: 1px; border-bottom-style: none; border-bottom-width: medium" valign="top" width="1%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span></span></span></p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: none; border-right-width: medium; border-top-style: solid; border-top-width: 1px; border-bottom-style: none; border-bottom-width: medium" valign="top" width="19%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/downloads/Freight_Rate_2019/List_Coal_Siding_090719.pdf" target="_blank"> <strong style="font-weight: 400; text-decoration: none"> List of Coal Sidings and Railway Goods Sheds over Indian Railway.</strong></a></span></span></span></p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: none; border-right-width: medium; border-top-style: solid; border-top-width: 1px; border-bottom-style: none; border-bottom-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span></span></span></p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: solid; border-right-width: 1px; border-top-style: solid; border-top-width: 1px; border-bottom-style: none; border-bottom-width: medium" valign="top" width="16%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><a class=linkn href="./view_section.jsp?lang=0&amp;id=0,1,304,366,555,1796"> <span style="text-decoration: none">Claims Circulars</span></a></span><br />
+						<br />
+						<br />
+						<span style="color:#0000ff;">&nbsp;</span></span></span></p>
+				</td>
+			</tr>
+			<tr>
+				<td height="29" style="border-left-style: solid; border-left-width: 1px; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span></span></span></p>
+				</td>
+				<td height="29" style="border-style: none; border-width: medium" valign="top" width="22%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><font style="text-decoration: none"><a class=linkn href="view_section.jsp?lang=0&amp;id=0,1,304,366,555,765"> <span style="text-decoration: none">Freight Rate Circulars</span></a></font></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" width="10" /></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="15%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><span style="text-decoration: none;"><a class=linkn href="view_section.jsp?lang=0&amp;id=0,1,304,366,555,737"> <span style="text-decoration: none">Commercial Circulars</span></a></span></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="1%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="15%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><a class=linkn href="view_section.jsp?lang=0&amp;id=0,1,304,366,555,862"> <span style="text-decoration:none">Freight Marketing Circulars</span></a></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="1%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="19%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span></span></span></p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: solid; border-right-width: 1px; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top" width="16%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><span style="text-decoration: none;"><a class=linkn href="http://www.indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/Freight-Mktg-2k13/FM_21_Annexure_parcel_rate_table.pdf" target="_blank"> <span style="text-decoration: none">Parcel Rates</span></a></span></span></span></span></p>
+				</td>
+			</tr>
+			<tr>
+				<td height="29" style="border-left-style: solid; border-left-width: 1px; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span></span></span></p>
+				</td>
+				<td height="29" style="border-style: none; border-width: medium" valign="top" width="22%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><font style="text-decoration: none;"><a class=linkn href="view_section.jsp?lang=0&amp;id=0,1,304,366,555,787"> <span style="text-decoration: none">Rate Letters - Clarifications/Instructions</span></a></font></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" width="10" /></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="15%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><strong style="font-weight: 400"><a class=linkn href="http://www.indianrailways.gov.in/railwayboard/view_section.jsp?lang=0&amp;id=0,1,304,366,555,2274"> <span style="text-decoration: none">Traffic Commercial Master Circular - Halt Stations</span></a></strong></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="1%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="15%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><strong style="font-weight: 400"><a class=linkn href="http://www.indianrailways.gov.in/railwayboard/view_section.jsp?lang=0&amp;id=0,1,304,366,555,2187" target="_blank"> <span style="text-decoration: none">Passenger Marketing Letters</span></a></strong></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="1%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="19%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span></span></span></p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: solid; border-right-width: 1px; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top" width="16%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><span style="text-decoration: none"><a class=linkn href="http://rbs.indianrail.gov.in/ShortPath/index.jsp" target="_blank"> <span style="text-decoration: none">Rates&nbsp;</span></a></span></span><a class=linkn href="http://rbs.indianrail.gov.in/ShortPath/index.jsp" target="_blank"><span style="color:#0000ff;"><span style="text-decoration:none">Branch System(RBS)</span></span></a></span></span></p>
+				</td>
+			</tr>
+			<tr>
+				<td height="29" style="border-left-style: solid; border-left-width: 1px; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span></span></span></p>
+				</td>
+				<td height="29" style="border-style: none; border-width: medium" valign="top" width="22%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><strong style="font-weight: 400"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/downloads/Chapter-I%20of%20IRCA%20Goods%20Tariff%20No_41%20Part_I%20Vol_I.pdf" target="_blank"> <span style="text-decoration: none">Goods Tariff No.41 Part I - Volume I (Chapter-I) containing General Rules</span></a></strong></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" width="10" /></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="15%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2K14/FULL_PASSENGER-TABLE_2014-15.pdf" target="_blank"> <span style="text-decoration: none">L</span></a></span><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/List%20of%2050%20stations.pdf" target="_blank"><span style="color:#0000ff;"><span style="text-decoration: none">ist of 50 major stations identified for Integrated cleanliness contract</span></span></a></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="1%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="15%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="1%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="19%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span></span></span></p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: solid; border-right-width: 1px; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top" width="16%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;">Tenders</span></span></span></p>
+				</td>
+			</tr>
+			<tr>
+				<td height="29" style="border-left-style: solid; border-left-width: 1px; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span></span></span></p>
+				</td>
+				<td height="29" style="border-style: none; border-width: medium" valign="top" width="22%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/downloads/Chaper%20II-VIII%20of%20Goods%20Tariff%20No_41%20Part-I%20Vol_I.pdf" target="_blank"> <strong style="font-weight: 400"> <span style="text-decoration: none;"> Goods Tariff No.41 Part I - Volume I (Chapter-II-VIII) containing General Rules</span></strong></a></span></span></span></p>
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" width="10" /></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="15%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2K14/FULL_PASSENGER-TABLE_2014-15.pdf" target="_blank"> <span style="text-decoration: none">Passenger Fare Table In force from 25.06.2014</span></a></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="1%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="15%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="1%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="19%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span></span></span></p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: solid; border-right-width: 1px; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top" width="16%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><a class=linkn href="https://indianrailways.gov.in/railwayboard/view_section.jsp?lang=0&amp;id=0,1,304,366,555,3045"><span style="color:#0000ff;"><strong style="font-weight: 400">Public Grievances</strong></span></a></span></span></p>
+				</td>
+			</tr>
+			<tr>
+				<td height="29" style="border-left-style: solid; border-left-width: 1px; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span></span></span></p>
+				</td>
+				<td height="29" style="border-style: none; border-width: medium" valign="top" width="22%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/GOODS%20TARIFF%20NO_49%20%20PART%20I%20VOL_PART%20-%20II_Rev_120219.pdf" target="_blank"> <strong style="font-weight: 400; text-decoration: none"> GOODS TARIFF NO.49&nbsp; PART I (VOL.II) &amp; PART-II</strong></a></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" width="10" /></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="15%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2K14/Rev-2nd-ordy-Suburban_240614.pdf" target="_blank"> <span style="text-decoration: none">Revised Second Ordinary (Suburban) Fare Table w.e.f. 28.06.2014</span></a></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="1%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="15%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="1%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="19%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span></span></span></p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: solid; border-right-width: 1px; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top" width="16%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;">Innovations</span></span></span></p>
+				</td>
+			</tr>
+			<tr>
+				<td height="29" style="border-left-style: solid; border-left-width: 1px; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span></span></span></p>
+				</td>
+				<td height="29" style="border-style: none; border-width: medium" valign="top" width="22%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/downloads/Freight_Rate_2019/List_Coal_Siding_090719.pdf" target="_blank"> <strong style="font-weight: 400; text-decoration: none"> List of Coal Sidings and Railway Goods Sheds over Indian Railway.</strong></a></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" width="10" /></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="15%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Freight_Rate_2K14/Rev-MST-Fare.pdf" target="_blank"> <span style="text-decoration: none">Revised Basic Fares for Monthly Season Ticket&nbsp;w.e.f. 28.06.2014</span></a></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="1%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="15%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="1%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="19%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: solid; border-right-width: 1px; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top" width="16%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<a class=linkn href="https://indianrailways.gov.in/railwayboard/view_section.jsp?lang=0&amp;id=0,1,304,366,555,3173">Archive</a></p>
+				</td>
+			</tr>
+			<tr>
+				<td height="29" style="border-left-style: solid; border-left-width: 1px; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span></span></span></p>
+				</td>
+				<td height="29" style="border-style: none; border-width: medium" valign="top" width="22%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><a class=linkn href="https://indianrailways.gov.in/railwayboard/view_section.jsp?lang=0&amp;id=0,1,304,366,555,2548"> <span style="text-decoration: none;"> MOU and Gazette Notifications</span></a></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" width="10" /></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="15%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><a class=linkn href="./uploads/directorate/traffic_comm/Comm-cir-2k13/Explanatory_Note_and_FareTable.pdf" target="_blank"> <span style="text-decoration: none">Passenger Fare Table In force from 07.10.2013 upto 24.06.2014</span></a></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="1%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="15%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="1%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="19%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: solid; border-right-width: 1px; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top" width="16%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+			</tr>
+			<tr>
+				<td height="29" style="border-left-style: solid; border-left-width: 1px; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span></span></span></p>
+				</td>
+				<td height="29" style="border-style: none; border-width: medium" valign="top" width="22%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Freight_Marketing_2020/FM_09_20.pdf" style="text-align: justify; text-decoration:none"> General Purpose Wagon Investment Scheme(GPWIS)</a></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Comm-cir-2k13/DURONTO%20FARE.pdf" target="_blank"> <span style="text-decoration: none"> <img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" width="10" /></span></a></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="15%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Comm-cir-2k13/DURONTO%20FARE.pdf" target="_blank"> <span style="text-decoration: none">Passenger Fare of Duronto Exp. w.e.f. 10.10.2013 upto 24.06.2014</span></a></span></span></span></p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="1%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="15%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="1%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="19%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-style: none; border-width: medium" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: solid; border-right-width: 1px; border-top-style: none; border-top-width: medium; border-bottom-style: none; border-bottom-width: medium" valign="top" width="16%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+			</tr>
+			<tr>
+				<td height="29" style="border-left-style: solid; border-left-width: 1px; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: solid; border-bottom-width: 1px" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span></span></span></p>
+				</td>
+				<td height="29" style="border-left-style: none; border-left-width: medium; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: solid; border-bottom-width: 1px" valign="top" width="22%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><span style="text-align: center;"><strong style="font-weight: 400"><a class=linkn href="/railwayboard/uploads/DATA/AKASH/Goods%20Tariff%20No_48%20Pt_I%20Vol_II%20%26%20Pt_II.pdf" style="text-align: center; text-decoration:none"> GOODS TARIFF NO. 48, PART I (VOL.II) &amp; PART - II</a></strong></span></span></span></span></p>
+					<p style="text-align: center; margin-top:5px; margin-bottom:5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><strong style="font-weight: 400">&rsquo;CORRECTION SLIPS&rsquo;</strong></span></span></span></p>
+					<p style="text-align: center; margin-top:5px; margin-bottom:5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span><a class=linkn class="linkn" href="http://www.indianrailways.gov.in/railwayboard/uploads/CS%201(1).pdf"><span style="color:#0000ff;"><strong style="font-weight: 400"><span style="text-decoration:none">No. 01</span></strong></span></a></span></span></p>
+					<p style="text-align: center; margin-top:5px; margin-bottom:5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span><strong style="font-weight: 400"><a class=linkn class="linkn" href="http://www.indianrailways.gov.in/railwayboard/uploads/CS%202(1).pdf"><span style="color:#0000ff;"><span style="text-decoration: none">No. 02</span></span></a></strong></span></span></p>
+					<p style="text-align: center; margin-top:5px; margin-bottom:5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span><strong style="font-weight: 400"><a class=linkn class="linkn" href="http://www.indianrailways.gov.in/railwayboard/uploads/CS%203(1).pdf"><span style="color:#0000ff;"><span style="text-decoration: none">No. 03</span></span></a></strong></span></span></p>
+					<p style="text-align: center; margin-top:5px; margin-bottom:5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span><strong style="font-weight: 400"><a class=linkn class="linkn" href="http://www.indianrailways.gov.in/railwayboard/uploads/CS%204(1).pdf"><span style="color:#0000ff;"><span style="text-decoration: none">No. 04&nbsp;</span></span></a></strong></span></span></p>
+					<p style="text-align: center; margin-top:5px; margin-bottom:5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" style="font-family: Verdana; " width="10" /></span><strong style="font-weight: 400"><a class=linkn class="linkn" href="http://www.indianrailways.gov.in/railwayboard/uploads/CS%205(2).pdf"><span style="color:#0000ff;"><span style="text-decoration: none">No. 05</span></span></a></strong></span></span></p>
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: solid; border-bottom-width: 1px" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" width="10" /></span></span></span></p>
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img alt="" border="0" height="10" src="./uploads/directorate/traffic_comm/images/1dot1a.gif" width="10" /></span></span></span></p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: solid; border-bottom-width: 1px" valign="top" width="15%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Comm-cir-2k13/GAZETTE%20NOTIFICATION.pdf" target="_blank"> <span style="text-decoration: none"> Amendments in the certain provisions of Refund Rules.</span></a></span></span></span></p>
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Comm-cir-2k13/Corrigendum_Refund_Rule.pdf"> <span style="text-decoration: none">Corrigendum for Amendments in the certain provisions of Refund Rules.</span></a></span></span></span></p>
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						<span style="font-size:14px;"><span style="font-family:times new roman,times,serif;"><span style="color:#0000ff;"><img src="https://indianrailways.gov.in/railwayboard/uploads/directorate/traffic_comm/images/1dot1a.gif" style="height: 10px; width: 10px;" /></span><a class=linkn href="/railwayboard/uploads/directorate/traffic_comm/Station_Name_8477.pdf" target="_blank" title="From TG-IV Br."><span style="color:#0000ff;"><span style="text-decoration: none">Station Name Index</span></span></a></span></span></p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: solid; border-bottom-width: 1px" valign="top" width="1%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: solid; border-bottom-width: 1px" valign="top" width="15%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: solid; border-bottom-width: 1px" valign="top" width="1%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: solid; border-bottom-width: 1px" valign="top" width="19%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: none; border-right-width: medium; border-top-style: none; border-top-width: medium; border-bottom-style: solid; border-bottom-width: 1px" valign="top" width="2%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+				<td style="border-left-style: none; border-left-width: medium; border-right-style: solid; border-right-width: 1px; border-top-style: none; border-top-width: medium; border-bottom-style: solid; border-bottom-width: 1px" valign="top" width="16%">
+					<p style="margin-top: 5px; margin-bottom: 5px">
+						&nbsp;</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<p>
+	&nbsp;</p>
+<p>
+	<gdiv id="ginger-floatingG-container" style="position: absolute; top: 0px; left: 0px;"><gdiv class="ginger-floatingG ginger-floatingG-closed" style="display: none;"><gdiv class="ginger-floatingG-disabled-main"><gdiv class="ginger-floatingG-bar-tool-tooltip"><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:12px;">Enable Ginger</span></span></gdiv></gdiv><gdiv class="ginger-floatingG-offline-main"><gdiv class="ginger-floatingG-bar-tool-tooltip"><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:12px;"><em>Cannot connect to Ginger</em> Check your internet connection<br />
+	or reload the browser</span></span></gdiv></gdiv><gdiv class="ginger-floatingG-enabled-main"><gdiv class="ginger-floatingG-bar"><gdiv class="ginger-floatingG-bar-tool ginger-floatingG-bar-tool-disable"><ga></ga><gdiv class="ginger-floatingG-bar-tool-tooltip"><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:12px;">Disable in this text field</span></span></gdiv></gdiv><gdiv class="ginger-floatingG-bar-tool ginger-floatingG-bar-tool-rephrase ginger-floatingG-bar-tool-rephrase_small-circle"><ga class="ginger-floatingG-bar-tool-rephrase__btn" id="ginger__floatingG-bar-tool-rephrase__btn"><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:12px;">Rephrase</span></span></ga><gdiv class="ginger-floatingG-bar-tool-tooltip ginger-floatingG-bar-tool-tooltip_rephrase"><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:12px;">Rephrase current sentence</span></span></gdiv></gdiv><gdiv class="ginger-floatingG-bar-tool ginger-floatingG-bar-tool-mistakes"><ga></ga><gdiv class="ginger-floatingG-bar-tool-tooltip"><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:12px;">Edit in Ginger</span></span></gdiv></gdiv></gdiv></gdiv><gdiv class="ginger-floatingG-contentPopup"><gdiv class="ginger-floatingG-contentPopup-wrap"><ga class="ginger-floatingG-contentPopup-close"><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:12px;">&times;</span></span></ga><gdiv class="ginger-floatingG-contentPopup-frame"><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:12px;"><iframe scrolling="no"></iframe></span></span></gdiv></gdiv></gdiv></gdiv></gdiv></p>
+<p>
+	<gdiv id="ginger-floatingG-container" style="position: absolute; top: 0px; left: 0px;"><gdiv class="ginger-floatingG ginger-floatingG-closed" style="display: none;"><gdiv class="ginger-floatingG-disabled-main"><gdiv class="ginger-floatingG-bar-tool-tooltip"><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:12px;">Enable Ginger</span></span></gdiv></gdiv><gdiv class="ginger-floatingG-offline-main"><gdiv class="ginger-floatingG-bar-tool-tooltip"><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:12px;"><em>Cannot connect to Ginger</em> Check your internet connection<br />
+	or reload the browser</span></span></gdiv></gdiv><gdiv class="ginger-floatingG-enabled-main"><gdiv class="ginger-floatingG-bar"><gdiv class="ginger-floatingG-bar-tool ginger-floatingG-bar-tool-disable"><ga></ga><gdiv class="ginger-floatingG-bar-tool-tooltip"><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:12px;">Disable in this text field</span></span></gdiv></gdiv><gdiv class="ginger-floatingG-bar-tool ginger-floatingG-bar-tool-rephrase ginger-floatingG-bar-tool-rephrase_small-circle"><ga class="ginger-floatingG-bar-tool-rephrase__btn" id="ginger__floatingG-bar-tool-rephrase__btn"><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:12px;">Rephrase</span></span></ga><gdiv class="ginger-floatingG-bar-tool-tooltip ginger-floatingG-bar-tool-tooltip_rephrase"><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:12px;">Rephrase current sentence</span></span></gdiv></gdiv><gdiv class="ginger-floatingG-bar-tool ginger-floatingG-bar-tool-mistakes"><ga></ga><gdiv class="ginger-floatingG-bar-tool-tooltip"><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:12px;">Edit in Ginger</span></span></gdiv></gdiv></gdiv></gdiv><gdiv class="ginger-floatingG-contentPopup"><gdiv class="ginger-floatingG-contentPopup-wrap"><ga class="ginger-floatingG-contentPopup-close"><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:12px;">&times;</span></span></ga><gdiv class="ginger-floatingG-contentPopup-frame"><span style="font-family:verdana,geneva,sans-serif;"><span style="font-size:12px;"><iframe scrolling="no"></iframe></span></span></gdiv></gdiv></gdiv></gdiv></gdiv></p>
+<p>
+	&nbsp;</p>
+<p>
+	&nbsp;</p>
+<p>
+	&nbsp;</p>
+<table background-color:="" border="1" border-collapse:="" border-spacing:="" cellpadding="0" cellspacing="0" font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: " width:="">
+	<tbody style="box-sizing: border-box;">
+		<tr style="box-sizing: border-box;">
+			<td style="box-sizing: border-box; padding: 0px; width: 840px; text-align: justify;">
+				<p style="box-sizing: border-box; margin: 0px 0px 10px; font-size: 14px;">
+					Operation of Merry-Go-Round (MGR) system by Railways beyond&nbsp;<span aria-haspopup="true" aria-label="Add a task, event, or reminder for 30.04.2026" class="zm_inLnk_disabled" data-value="2026-04-30 13:00:00" role="button" tabindex="0">30.04.2026</span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	&nbsp;</p>
+<table background-color:="" border="1" border-collapse:="" border-spacing:="" cellpadding="0" cellspacing="0" font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: " width:="">
+	<tbody style="box-sizing: border-box;">
+		<tr style="box-sizing: border-box;">
+			<td style="box-sizing: border-box; padding: 0px; width: 840px; text-align: justify;">
+				<p style="box-sizing: border-box; margin: 0px 0px 10px; font-size: 14px;">
+					Operation of Merry-Go-Round (MGR) system by Railways beyond&nbsp;<span aria-haspopup="true" aria-label="Add a task, event, or reminder for 30.04.2026" class="zm_inLnk_disabled" data-value="2026-04-30 13:00:00" role="button" tabindex="0">30.04.2026</span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	&nbsp;</p>
+<table background-color:="" border="1" border-collapse:="" border-spacing:="" cellpadding="0" cellspacing="0" font-size:="" helvetica="" style="color: rgb(0, 0, 0); font-family: " width:="">
+	<tbody style="box-sizing: border-box;">
+		<tr style="box-sizing: border-box;">
+			<td style="box-sizing: border-box; padding: 0px; width: 840px; text-align: justify;">
+				Rationalisation of Freight rate for transportation of &#39;Fertilizer.&#39;</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	&nbsp;</p>
+</p>
+									<br>
+
+
+
+<!---------------- section type listing start --------------------->
+
+
+
+<!---------------- section type listing end --------------->
+
+									</div>
+									<br>
+									<div align="center">										
+										<a href=# class=linkn><img src=images/top.gif height=10 align=right border=0></a><br>
+										<span style="font-size:12px;font-family: 'Arial Narrow',Arial, sans-serif;background-color:white;width:50px;"><b>Source :</b> Ministry of Railways (Railway Board) CMS Team Last Reviewed on: 14-08-2026 &nbsp;<img src="images/sourceiconw.gif"></span>
+									</div><br>							
+									</td>
+								</tr>								
+							</table>
+						</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			</td>
+		</tr>
+	</table>
+</div>
+
+</div>
+</div>
+</div>
+<div align="center">
+	<table border="0" cellspacing="0" width="770" id="table15" cellpadding="0">
+		<tr>
+			<td><img src="images/spacer.gif" height="10"></td>
+		</tr>
+	</table>
+</div>
+<!-- BODY CONTENT ENDS HERE -->
+<script>
+$('a[href$=".pdf"]').each(function() {
+if(this.href!=null&&this.href!='undefined'){
+if(!UrlExists(this.href)){
+	console.log(this.href);
+	var fileName = this.href.substring(this.href.lastIndexOf('/')+1);
+    	this.href = 'https://indianrailways.gov.in/railwayboard/uploads/PDF/'+fileName;
+}
+}
+
+});
+function UrlExists(url) {
+    var http = new XMLHttpRequest();
+    http.open('HEAD', url, false);
+    http.send();
+    if (http.status != 404)
+        return true;
+    else
+        return false;
+}
+
+</script>
+<!-- FOOTER STARTS HERE -->
+<div class="col-md-12" style="padding:0px">
+<style>
+.white {
+    color: white;
+	font-size:14px;
+	font-family:Arial Narrow;
+	
+}
+
+/* a:hover{
+    color: white;
+} */
+.grey {
+ 
+    color: #888888;
+}
+</style>
+
+
+<div class="col-md-12 white" style="line-height: 1.12857143; font-family: 'Arial Narrow',Arial, sans-serif;font-weight:bold;text-align:center;background-color:#353535;color:white!important;  ">
+
+						<a class="white" style="color:white!important;text-decoration:none!important;" href="https://indianrailways.gov.in/railwayboard/webadmin/" target="_blank">Admin Login</a> |
+						<a class="white" style="color:white!important;text-decoration:none!important;" href="view_section.jsp?lang=0&amp;id=0,7,277">&nbsp;Site Map&nbsp;</a>
+						<font class="grey"> | </font>
+						<a class="white"  style="color:white!important;text-decoration:none!important;" href="view_section.jsp?lang=0&amp;id=0,7">&nbsp;Contact Us&nbsp;</a>
+						<font class="grey"> | </font>
+						<a class="white" style="color:white!important;text-decoration:none!important;" href="https://rtionline.gov.in/">&nbsp;RTI&nbsp;</a>
+						<font class="grey"> | </font>
+						<a class="white" style="color:white!important;text-decoration:none!important;" href="view_section.jsp?lang=0&amp;id=0,7,286">&nbsp;Disclaimer&nbsp;</a>
+						<font class="grey"> | </font>
+						<a class="white" style="color:white!important;text-decoration:none!important;" href="view_section.jsp?lang=0&amp;id=0,7,332">&nbsp;Terms & Conditions&nbsp;</a>
+						<!--<font class="grey"> | </font>
+						<a class="white" style="color:white!important;text-decoration:none!important;" href="https://indianrailways.gov.in/railwayboard/view_section.jsp?lang=0&id=0,7,2834">Web Information Manager</a>-->
+						<font class="grey"> | </font>
+						<a class="white" style="color:white!important;text-decoration:none!important;" href="view_section.jsp?lang=0&amp;id=0,7,333">&nbsp;Privacy Policy&nbsp;</a>
+						
+
+						<a class="white" href="http://jigsaw.w3.org/css-validator/check/referer" target="_blank" style="float:right">
+       <img style="border: 0pt none; width: 70px; height: 20px;" src="http://jigsaw.w3.org/css-validator/images/vcss" alt="Valid CSS!">
+   </a><a class="white" href="http://validator.w3.org/check?uri=referer" target="_blank" style="float:right">
+   <img style="border: 0pt none; width: 70px; height: 20px;" src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Strict" ></a>
+   
+   <br/>
+   	
+						<br>© 2016&nbsp; All Rights Reserved.<br><br>
+						This is the Portal of Indian Railways, developed with an objective to enable a 
+						single window access to information and services being provided by the 
+						various Indian Railways entities. The content in this Portal is the result of a 
+						collaborative effort of various Indian Railways Entities and Departments Maintained by CRIS, Ministry of Railways, Government of India.
+						
+   </div>
+   
+<script>
+$(window).on("load",function (){
+	var fontSizea =14;
+	var fs = getCookie("fs");
+	if(fs==""){
+		fs = 0;
+	}
+				var currentfontSize = 14*(1.1**fs);
+				fontSizea = currentfontSize;
+				$("a").css("font-size",fontSizea  + "px");
+				$("p").css("font-size",fontSizea  + "px");
+				$("span").css("font-size",fontSizea  + "px");
+				$("font").css("font-size",fontSizea  + "px");
+				var hsize = 21+fs;
+				$("h4").css("font-size",hsize + "px");
+				$("h3").css("font-size",hsize + "px");
+				var asize = 16+fs;
+				$(".btnMid a").css("font-size",asize  + "px");
+				$("body").css("font-size",fontSizea  + "px");
+			});
+</script>
+<script initial_preferred_language="hi" src="https://translation-plugin.bhashini.co.in/v3/website_translation_utility.js"></script>
+
+
+
+
+
+</div>
