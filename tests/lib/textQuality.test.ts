@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { scoreText, isLowQualityText, documentQuality } from '../../lib/textQuality';
+import { scoreText, isLowQualityText, documentQuality, markerHitCount } from '../../lib/textQuality';
 
 // Regression scar: garbled extractions were being shown under the green "Verified text"
 // badge, because is_ocr=false only means "came from the embedded text layer" — it says
@@ -56,6 +56,21 @@ describe('textQuality', () => {
 
     it('defaults to ok when there is nothing long enough to judge', () => {
       expect(documentQuality(['', '  ', 'CC-1'])).toBe('ok');
+    });
+  });
+
+  // The re-OCR recovery pass uses this to tell "OCR recovered readable words" from "OCR
+  // reproduced the same digit soup", so it only replaces text it actually improved.
+  describe('markerHitCount', () => {
+    it('clean Board prose scores several markers', () => {
+      const s = 'Government of India Ministry of Railways Railway Board New Delhi. Sub: rate for the scheme shall be no less';
+      expect(markerHitCount(s)).toBeGreaterThanOrEqual(7);
+    });
+    it('mojibake scores near zero', () => {
+      expect(markerHitCount("6 ]O t'oN a6Dd s^D,ultDd .ra;;o.r1duo2 s^pJDog")).toBeLessThanOrEqual(1);
+    });
+    it('handles empty input', () => {
+      expect(markerHitCount('')).toBe(0);
     });
   });
 });
