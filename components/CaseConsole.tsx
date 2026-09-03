@@ -30,9 +30,22 @@ type AnsweredResponse = Extract<QueryResponse, { status: 'answered' }>;
 // directly below), so the type now lives here, its sole consumer.
 export interface Scope { verifiedOnly: boolean; domain: string | null }
 
-// The corpus is Traffic Commercial in full (Goods + Coaching + all-domain circulars), so the
-// scope collapses to a single label: every query searches the whole commercial corpus
-// (domain === null). Kept as one static pill rather than a multi-option filter.
+// Domain scope options. `documents.domain` is derived from the Board's own directorate
+// folders (see scripts/backfill-domain.ts): Commercial Circulars -> 'coaching', the
+// Freight Marketing / Freight Rate / Rates Master family -> 'goods'. Documents we cannot
+// place from their path keep domain = null, so they are reachable under Commercial Domain
+// but never claimed for either side.
+const DOMAINS: { label: string; value: string | null; hint: string }[] = [
+  { label: 'Commercial Domain', value: null, hint: 'Search the whole Traffic Commercial corpus — Goods, Coaching and unclassified circulars' },
+  { label: 'Goods', value: 'goods', hint: 'Freight only — Freight Marketing, Freight Rate and Rates Master circulars' },
+  { label: 'Coaching', value: 'coaching', hint: 'Coaching only — Commercial Circulars (CC series)' },
+];
+
+// Scope is a real three-way choice again. It was collapsed to a single inert
+// "Commercial Domain" label in R3 because documents.domain was unusable — the bulk crawl
+// had written 'goods' onto 5,685 of 5,687 rows, so filtering could not discriminate. With
+// domain backfilled from the Board's folder taxonomy, the filter does real work: a
+// Coaching query no longer retrieves Freight-Marketing circulars.
 
 // Ask screen recomposed into the mockup's single column: case field, filter pills, then the
 // cited conclusion with its sources inline below, then the five states. Query state, the
@@ -188,8 +201,28 @@ export function CaseConsole() {
       <OfflineBanner />
       <CaseInput value={text} onChange={setText} onSubmit={doSubmit} disabled={s.state === 'loading'} />
 
-      <div className={styles.filters} role="group" aria-label="Scope" data-tour="scope">
-        <span className={`${styles.pill} ${styles.pillOn}`}>Commercial Domain</span>
+      {/* Domain scope. The selected value is passed to /api/query and applied by
+          match_chunks() as a SQL filter on documents.domain BEFORE ranking — so an
+          out-of-domain circular never enters the candidate set, rather than being
+          discouraged in the prompt. `null` = the whole commercial corpus. */}
+      <div className={styles.filters} role="radiogroup" aria-label="Domain scope" data-tour="scope">
+        {DOMAINS.map(d => {
+          const on = scope.domain === d.value;
+          return (
+            <button
+              key={d.label}
+              type="button"
+              role="radio"
+              aria-checked={on}
+              title={d.hint}
+              disabled={s.state === 'loading'}
+              className={`${styles.pill} ${on ? styles.pillOn : ''}`}
+              onClick={() => setScope({ ...scope, domain: d.value })}
+            >
+              {d.label}
+            </button>
+          );
+        })}
       </div>
 
       {s.state === 'idle' && !cachedLast && <EmptyState onPick={pickExample} />}
