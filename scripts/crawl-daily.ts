@@ -50,9 +50,13 @@ export function passesDateFloor(issueDate: string | null, floor: string): boolea
 }
 
 async function fetchPage(url: string): Promise<string> {
-  const res = await fetch(url, { headers: { 'user-agent': UA }, redirect: 'follow' });
-  if (!res.ok) throw new Error(`http ${res.status} for ${url}`);
-  return await res.text();
+  const ctrl = new AbortController();
+  const to = setTimeout(() => ctrl.abort(), 30000);
+  try {
+    const res = await fetch(url, { headers: { 'user-agent': UA }, redirect: 'follow', signal: ctrl.signal });
+    if (!res.ok) throw new Error(`http ${res.status} for ${url}`);
+    return await res.text();
+  } finally { clearTimeout(to); }
 }
 
 async function discover(now: Date): Promise<{ found: Discovered[]; pages: number }> {
@@ -88,8 +92,9 @@ async function main() {
   const sb = adminClient();
   const now = new Date();
 
-  const { data: runRow } = await sb.from('crawl_runs')
+  const { data: runRow, error: runErr } = await sb.from('crawl_runs')
     .insert({ status: 'running' }).select('id').single();
+  if (runErr) console.error(`crawl_runs insert failed (run will proceed unrecorded): ${runErr.message}`);
   const runId = (runRow as { id: string } | null)?.id;
 
   const finish = async (patch: Record<string, unknown>) => {
@@ -137,7 +142,11 @@ async function main() {
       try {
         const res = await ingestOne(entry, tmp, sb);
         if (res.status === 'skip') { failed++; continue; }
-        // Date floor is applied post-parse, against what ingest actually stored.
+        // Date floor (fail-open secondary net). NOTE: the daily path currently stores issue_date=null
+        // (ingestOne does not parse a date from the PDF), so passesDateFloor(null) is always true and
+        // this prunes nothing today — the URL + filename dedup above is the operative "only new" filter,
+        // and the flood guard backstops any burst of old-but-missing docs. TODO: populate issue_date on
+        // the daily path (PDF-header date extraction) to make the floor actually prune old circulars.
         const { data: doc } = await sb.from('documents')
           .select('id,issue_date').eq('source_url', item.source_url).maybeSingle();
         const row = doc as { id: string; issue_date: string | null } | null;
