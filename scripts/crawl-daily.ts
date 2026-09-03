@@ -21,6 +21,7 @@ import { ingestOne, type Entry } from './ingest-crawl';
 import {
   SECTIONS, sectionUrl, extractPdfLinks, extractChildSections, selectSweepChildren,
   computeDelta, assertSectionProductive, assertDeltaSane, DriftError, type Discovered,
+  isTrafficCommercial, basenameKey,
 } from '@/lib/ingest/discover';
 
 const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) RailCite-ingest';
@@ -63,7 +64,7 @@ async function discover(now: Date): Promise<{ found: Discovered[]; pages: number
 
     let pdfCount = 0;
     for (const l of extractPdfLinks(rootHtml, rootUrl)) {
-      found.push({ source_url: l.url, title: l.title, domain: section.domain }); pdfCount++;
+      if (isTrafficCommercial(l.url)) { found.push({ source_url: l.url, title: l.title, domain: section.domain }); pdfCount++; }
     }
 
     for (const childId of selectSweepChildren(extractChildSections(rootHtml, section.id), now)) {
@@ -71,7 +72,7 @@ async function discover(now: Date): Promise<{ found: Discovered[]; pages: number
       const childHtml = await fetchPage(childUrl); pages++;
       await sleep(THROTTLE_MS);
       for (const l of extractPdfLinks(childHtml, childUrl)) {
-        found.push({ source_url: l.url, title: l.title, domain: section.domain }); pdfCount++;
+        if (isTrafficCommercial(l.url)) { found.push({ source_url: l.url, title: l.title, domain: section.domain }); pdfCount++; }
       }
     }
 
@@ -97,15 +98,16 @@ async function main() {
   try {
     const { found, pages } = await discover(now);
 
-    const known = new Set<string>();
+    const knownUrls = new Set<string>();
+    const knownFilenames = new Set<string>();
     for (let from = 0; ; from += 1000) {
       const { data } = await sb.from('documents').select('source_url').range(from, from + 999);
       const rows = (data ?? []) as { source_url: string | null }[];
-      for (const r of rows) if (r.source_url) known.add(r.source_url);
+      for (const r of rows) if (r.source_url) { knownUrls.add(r.source_url); knownFilenames.add(basenameKey(r.source_url)); }
       if (rows.length < 1000) break;
     }
 
-    const delta = computeDelta(found, known);
+    const delta = computeDelta(found, knownUrls, knownFilenames);
     assertDeltaSane(delta.length, MAX_NEW);
 
     console.log(`pages=${pages} pdfs_seen=${found.length} new=${delta.length}`);

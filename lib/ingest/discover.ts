@@ -130,16 +130,33 @@ export class DriftError extends Error {
   constructor(message: string) { super(message); this.name = 'DriftError'; }
 }
 
+/** Decode a URL safely (some source URLs contain malformed % sequences that throw). */
+function safeDecode(u: string): string { try { return decodeURIComponent(u); } catch { return u; } }
+
+/** The corpus identity key for a PDF: its decoded, lowercased basename. Two links to the same
+ *  file under different folder paths / encodings share this key even when their canonical URLs
+ *  differ (the corpus was seeded from a different crawl than the daily job reads). */
+export function basenameKey(url: string): string {
+  return safeDecode(url).split('/').pop()!.toLowerCase();
+}
+
+/** RailCite's corpus is the Traffic Commercial directorate only. Section pages cross-link PDFs
+ *  from other directorates (civil_engg, vigilance, ...) in their nav; those are out of scope. */
+export function isTrafficCommercial(url: string): boolean {
+  return /\/directorate\/traffic_comm\//i.test(url);
+}
+
 /**
- * New documents only. Canonicalises first: the corpus stores canonical urls, and
- * http/https twins and percent-encoding variants of one PDF are common on this
- * site — comparing raw strings would re-ingest documents already held.
+ * New documents only. A doc is already held if its canonical URL matches, OR its filename matches
+ * an existing document — the corpus and the CMS disagree on URL form, so URL-only comparison
+ * treats hundreds of already-held files as new. Canonicalises before comparing and stores the
+ * canonical url (what documents.source_url holds).
  */
-export function computeDelta(found: Discovered[], known: Set<string>): Discovered[] {
+export function computeDelta(found: Discovered[], knownUrls: Set<string>, knownFilenames: Set<string>): Discovered[] {
   const out = new Map<string, Discovered>();
   for (const f of found) {
     const url = canonicalUrl(f.source_url);
-    if (known.has(url) || out.has(url)) continue;
+    if (knownUrls.has(url) || knownFilenames.has(basenameKey(url)) || out.has(url)) continue;
     out.set(url, { ...f, source_url: url });
   }
   return [...out.values()];
