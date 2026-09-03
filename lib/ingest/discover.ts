@@ -95,3 +95,19 @@ export function extractChildSections(
     return { id, label, year: y ? Number(y[0]) : null };
   });
 }
+
+/**
+ * Which child year-pages the DAILY sweep visits.
+ *
+ * Only current and previous year. New circulars land in the current-year page;
+ * previous year covers a January filing and late filing. Sweeping every year
+ * page of every section would be ~300 fetches a night for no benefit — the
+ * monthly structural walk is what covers the rest (spec §5).
+ */
+export function selectSweepChildren(
+  children: { id: string; label: string; year: number | null }[],
+  now: Date,
+): string[] {
+  const y = now.getUTCFullYear();
+  return children.filter(c => c.year === y || c.year === y - 1).map(c => c.id);
+}
