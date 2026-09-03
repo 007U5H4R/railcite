@@ -36,10 +36,14 @@ export interface Scope { verifiedOnly: boolean; domain: string | null }
 // place from their path keep domain = null, so they are reachable under Commercial Domain
 // but never claimed for either side.
 const DOMAINS: { label: string; value: string | null; hint: string }[] = [
+  { label: 'Auto', value: 'auto', hint: 'Let RailCite read your question and scope it to Goods or Coaching automatically — falls back to the whole corpus when the question fits neither cleanly' },
   { label: 'Commercial Domain', value: null, hint: 'Search the whole Traffic Commercial corpus — Goods, Coaching and unclassified circulars' },
   { label: 'Goods', value: 'goods', hint: 'Freight only — Freight Marketing, Freight Rate and Rates Master circulars' },
   { label: 'Coaching', value: 'coaching', hint: 'Coaching only — Commercial Circulars (CC series)' },
 ];
+
+// Human label for a resolved scope value, for the "Auto-detected" hint shown after an answer.
+const DOMAIN_LABEL: Record<string, string> = { goods: 'Goods', coaching: 'Coaching' };
 
 // Scope is a real three-way choice again. It was collapsed to a single inert
 // "Commercial Domain" label in R3 because documents.domain was unusable — the bulk crawl
@@ -54,7 +58,7 @@ const DOMAINS: { label: string; value: string | null; hint: string }[] = [
 // app/layout.tsx, so this component renders just the Ask content.
 export function CaseConsole() {
   const [text, setText] = useState('');
-  const [scope, setScope] = useState<Scope>({ verifiedOnly: false, domain: null });
+  const [scope, setScope] = useState<Scope>({ verifiedOnly: false, domain: 'auto' });
   const { s, submit, retry, reset, reopen, translate, translating, translateError } = useCaseQuery();
   // ONE remembered output language for the whole answered view (response, note, refuse card,
   // loading line). Both segment toggles drive it, so flipping either switches everything and the
@@ -224,6 +228,16 @@ export function CaseConsole() {
           );
         })}
       </div>
+
+      {/* When Auto scoped the answer, say so plainly — the user chose "let RailCite decide", so
+          which body of rules it decided on must be visible, not silent. */}
+      {scope.domain === 'auto' && s.state === 'done' && s.data.meta.auto_detected && (
+        <p className={styles.autoScope} aria-live="polite">
+          {s.data.meta.resolved_domain
+            ? <>Auto-detected scope: <b>{DOMAIN_LABEL[s.data.meta.resolved_domain] ?? s.data.meta.resolved_domain}</b> — tap a pill above to change it.</>
+            : <>Searched the whole Commercial corpus — the question didn’t map cleanly to Goods or Coaching.</>}
+        </p>
+      )}
 
       {s.state === 'idle' && !cachedLast && <EmptyState onPick={pickExample} />}
       {s.state === 'loading' && <TransparencyLine text={searching(s.searched, uiLang)} />}

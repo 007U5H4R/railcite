@@ -16,7 +16,12 @@
   font-size: var(--fs-caption);
   font-weight: 600;
   line-height: 1.4;
-  white-space: nowrap;
+  /* Wrap, don't clip: the longest copy ("Low-quality extraction — verify against
+     original") must stay fully readable inside the compact SourceCard column. As a
+     flex child of .detail it also needs min-width:0 so it can shrink below its
+     single-line intrinsic width instead of overflowing the card. */
+  min-width: 0;
+  text-align: left;
 }
 .badge svg { width: 11px; height: 11px; flex: none; }
 .verified { color: var(--ok-fg); background: var(--ok-bg); }
