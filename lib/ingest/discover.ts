@@ -179,3 +179,29 @@ export function assertDeltaSane(deltaCount: number, max: number): void {
       `changed; refusing to bulk-ingest unreviewed documents into a citable corpus.`);
   }
 }
+
+/**
+ * Compare the live child sections of Traffic Commercial against the configured
+ * table. Run monthly. Lists only — downloads no PDFs — so it costs a handful of
+ * page fetches and nothing else.
+ */
+export function diffSectionTable(
+  liveChildIds: string[], configured: Section[],
+): { added: string[]; removed: string[] } {
+  const live = new Set(liveChildIds);
+  const known = new Set(configured.map(s => s.id));
+  return {
+    added: [...live].filter(id => !known.has(id)),
+    removed: [...known].filter(id => !live.has(id)),
+  };
+}
+
+/** A structure change must interrupt a human — see the 2011 rot in spec §5. */
+export function assertSectionTableCurrent(diff: { added: string[]; removed: string[] }): void {
+  if (diff.added.length || diff.removed.length) {
+    throw new DriftError(
+      `Traffic Commercial section structure changed — added: [${diff.added.join(', ')}], ` +
+      `removed: [${diff.removed.join(', ')}]. Update SECTIONS in lib/ingest/discover.ts ` +
+      `deliberately, including the domain mapping for anything new.`);
+  }
+}

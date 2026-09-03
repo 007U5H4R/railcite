@@ -21,7 +21,7 @@ import { ingestOne, type Entry } from './ingest-crawl';
 import {
   SECTIONS, sectionUrl, extractPdfLinks, extractChildSections, selectSweepChildren,
   computeDelta, assertSectionProductive, assertDeltaSane, DriftError, type Discovered,
-  isTrafficCommercial, basenameKey,
+  isTrafficCommercial, basenameKey, TC_ROOT_ID, diffSectionTable, assertSectionTableCurrent,
 } from '@/lib/ingest/discover';
 
 const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) RailCite-ingest';
@@ -96,6 +96,15 @@ async function main() {
   };
 
   try {
+    // Monthly: re-derive the section table from the site so a rename cannot rot
+    // silently. Costs a single page fetch and downloads nothing.
+    if (now.getUTCDate() === 1 || process.argv.includes('--check-structure')) {
+      const tcHtml = await fetchPage(sectionUrl(TC_ROOT_ID));
+      const liveIds = extractChildSections(tcHtml, TC_ROOT_ID).map(c => c.id);
+      assertSectionTableCurrent(diffSectionTable(liveIds, SECTIONS));
+      console.log('section structure unchanged');
+    }
+
     const { found, pages } = await discover(now);
 
     const knownUrls = new Set<string>();
