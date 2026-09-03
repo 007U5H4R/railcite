@@ -14,6 +14,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
+import { pathToFileURL } from 'node:url';
 import manifest from '@/ingest/crawl-manifest.json';
 import { adminClient } from '@/lib/db';
 import { invalidateAnswerCache } from '@/lib/answerCache';
@@ -29,7 +30,7 @@ import { documentQuality } from '@/lib/textQuality';
 const run = promisify(execFile);
 const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
 
-interface Entry { source_url: string; title: string; doc_type: string; domain: string | null; circular_no: string | null; issue_date: string | null }
+export interface Entry { source_url: string; title: string; doc_type: string; domain: string | null; circular_no: string | null; issue_date: string | null }
 
 const THROTTLE_MS = Number(optionalEnv('INGEST_THROTTLE_MS', '1200'));
 const DB_LIMIT_MB = Number(optionalEnv('INGEST_DB_LIMIT_MB', '480'));
@@ -94,7 +95,7 @@ async function download(url: string, dest: string): Promise<void> {
   catch { await sleep(1500); await fetchToFile(u, dest); }
 }
 
-async function ingestOne(e: Entry, tmp: string, sb: ReturnType<typeof adminClient>): Promise<{ status: 'ok' | 'ocr' | 'skip'; chunks: number }> {
+export async function ingestOne(e: Entry, tmp: string, sb: ReturnType<typeof adminClient>): Promise<{ status: 'ok' | 'ocr' | 'skip'; chunks: number }> {
   await download(e.source_url, tmp);
   let { pages } = await extractPdfText(tmp);
   const is_ocr = needsOcr(pages);
@@ -194,4 +195,7 @@ async function main() {
   if (errors.length) { await writeFile('ingest-crawl-errors.log', errors.join('\n')); console.log(`${errors.length} errors → ingest-crawl-errors.log`); }
 }
 
-main().catch(e => { console.error(e); process.exit(1); });
+// Only run when invoked directly; importing this module for reuse (the daily crawl) or for
+// tests must not open a DB connection, wipe the cache, or start a crawl.
+const invokedDirectly = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
+if (invokedDirectly) main().catch(e => { console.error(e); process.exit(1); });
