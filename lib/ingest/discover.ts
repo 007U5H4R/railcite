@@ -111,3 +111,47 @@ export function selectSweepChildren(
   const y = now.getUTCFullYear();
   return children.filter(c => c.year === y || c.year === y - 1).map(c => c.id);
 }
+
+// --- Delta computation and safety guards (Task 3) ---
+
+import { canonicalUrl } from '../../scripts/ingest-crawl';
+
+export interface Discovered { source_url: string; title: string; domain: SectionDomain }
+
+/** Structural surprise: the site changed shape, or the delta is implausible. */
+export class DriftError extends Error {
+  constructor(message: string) { super(message); this.name = 'DriftError'; }
+}
+
+/**
+ * New documents only. Canonicalises first: the corpus stores canonical urls, and
+ * http/https twins and percent-encoding variants of one PDF are common on this
+ * site — comparing raw strings would re-ingest documents already held.
+ */
+export function computeDelta(found: Discovered[], known: Set<string>): Discovered[] {
+  const out = new Map<string, Discovered>();
+  for (const f of found) {
+    const url = canonicalUrl(f.source_url);
+    if (known.has(url) || out.has(url)) continue;
+    out.set(url, { ...f, source_url: url });
+  }
+  return [...out.values()];
+}
+
+/** A section that lists nothing has moved or changed shape. Fail, never shrug. */
+export function assertSectionProductive(label: string, pdfCount: number): void {
+  if (pdfCount === 0) {
+    throw new DriftError(
+      `section "${label}" yielded 0 PDF links — the page has moved or changed shape. ` +
+      `Re-derive the section table (spec §5) rather than treating this as "no new circulars".`);
+  }
+}
+
+/** Refuse to mass-ingest on an unexplained flood. */
+export function assertDeltaSane(deltaCount: number, max: number): void {
+  if (deltaCount > max) {
+    throw new DriftError(
+      `discovery found ${deltaCount} new documents (ceiling ${max}). Something upstream ` +
+      `changed; refusing to bulk-ingest unreviewed documents into a citable corpus.`);
+  }
+}
