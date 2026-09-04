@@ -1,8 +1,10 @@
 # Daily incremental crawl.
 #
-# Runs on GitHub Actions rather than Vercel Cron because ingest shells out to
-# pdftotext and tesseract and can run for minutes — neither fits a serverless
-# function. Typical night ingests 0-5 PDFs.
+# Runs on a SELF-HOSTED macOS runner (railcite-mac), not a GitHub-hosted one:
+# indianrailways.gov.in refuses connections from GitHub's Azure IP ranges
+# (deterministic "fetch failed" at connect time), while the identical request
+# succeeds from this Mac. Ingest also shells out to pdftotext and tesseract and
+# can run for minutes. Typical night ingests 0-5 PDFs.
 name: daily-crawl
 
 on:
@@ -12,10 +14,17 @@ on:
 
 jobs:
   crawl:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, railcite]
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+
+      # Homebrew's bin (pdftotext, tesseract) is not on the launchd service's
+      # default PATH. Add it BEFORE setup-node so node 22 still wins for `node`
+      # while pdftotext/tesseract stay resolvable for later steps and the
+      # pdftotext/tesseract subprocesses the ingest shells out to.
+      - name: Add Homebrew to PATH
+        run: echo "/opt/homebrew/bin" >> "$GITHUB_PATH"
 
       - uses: actions/setup-node@v4
         with:
@@ -24,9 +33,11 @@ jobs:
 
       - run: npm ci
 
-      # The ingest path shells out to these; without them every scanned PDF fails.
-      - name: Install OCR toolchain
-        run: sudo apt-get update && sudo apt-get install -y poppler-utils tesseract-ocr
+      # OCR toolchain (poppler + tesseract) is provided by Homebrew on this
+      # self-hosted runner; fail loudly if either is missing rather than letting
+      # every scanned PDF fail silently downstream.
+      - name: Verify OCR toolchain
+        run: command -v pdftotext && command -v tesseract
 
       # No Anthropic key: ingest embeds (Voyage) but never synthesises.
       - name: Crawl and ingest new circulars
