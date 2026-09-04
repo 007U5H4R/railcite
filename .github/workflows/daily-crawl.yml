@@ -19,17 +19,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Homebrew's bin (pdftotext, tesseract) is not on the launchd service's
-      # default PATH. Add it BEFORE setup-node so node 22 still wins for `node`
-      # while pdftotext/tesseract stay resolvable for later steps and the
-      # pdftotext/tesseract subprocesses the ingest shells out to.
+      # This self-hosted runner already has node, npm, pdftotext and tesseract
+      # via Homebrew — none are on the launchd service's default PATH, so add
+      # its bin. We deliberately do NOT use actions/setup-node: on a self-hosted
+      # runner it hangs contacting the hosted tool-cache/npm-cache service, and
+      # the system node runs the ingest fine.
       - name: Add Homebrew to PATH
         run: echo "/opt/homebrew/bin" >> "$GITHUB_PATH"
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: npm
+      - name: Show toolchain
+        run: node --version && npm --version
 
       - run: npm ci
 
