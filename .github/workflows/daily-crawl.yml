@@ -24,8 +24,14 @@ jobs:
       # its bin. We deliberately do NOT use actions/setup-node: on a self-hosted
       # runner it hangs contacting the hosted tool-cache/npm-cache service, and
       # the system node runs the ingest fine.
-      - name: Add Homebrew to PATH
-        run: echo "/opt/homebrew/bin" >> "$GITHUB_PATH"
+      #
+      # Also pin npm's cache to the runner's internal temp: the user's global
+      # npmrc points the cache at an external volume the launchd runner cannot
+      # access, which silently hangs `npm ci` and `npx`.
+      - name: Prepare environment
+        run: |
+          echo "/opt/homebrew/bin" >> "$GITHUB_PATH"
+          echo "npm_config_cache=$RUNNER_TEMP/.npm" >> "$GITHUB_ENV"
 
       - name: Show toolchain
         run: node --version && npm --version
