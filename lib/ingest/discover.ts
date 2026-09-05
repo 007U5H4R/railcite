@@ -167,15 +167,60 @@ export function isTrafficCommercial(url: string): boolean {
  * an existing document — the corpus and the CMS disagree on URL form, so URL-only comparison
  * treats hundreds of already-held files as new. Canonicalises before comparing and stores the
  * canonical url (what documents.source_url holds).
+ *
+ * `deadFilenames` (basename keys of links the site lists but no longer serves — see dead_urls
+ * migration 008 and deadFilenames() below) is excluded on the same basename key as the corpus,
+ * so a 404 phantom never re-enters the delta and never re-trips the flood guard.
  */
-export function computeDelta(found: Discovered[], knownUrls: Set<string>, knownFilenames: Set<string>): Discovered[] {
+export function computeDelta(
+  found: Discovered[],
+  knownUrls: Set<string>,
+  knownFilenames: Set<string>,
+  deadFilenames: Set<string> = new Set(),
+): Discovered[] {
   const out = new Map<string, Discovered>();
   for (const f of found) {
     const url = canonicalUrl(f.source_url);
-    if (knownUrls.has(url) || knownFilenames.has(basenameKey(url)) || out.has(url)) continue;
+    const bn = basenameKey(url);
+    if (knownUrls.has(url) || knownFilenames.has(bn) || deadFilenames.has(bn) || out.has(url)) continue;
     out.set(url, { ...f, source_url: url });
   }
   return [...out.values()];
+}
+
+// --- Dead-link skip set (Task: dead-link phantom backlog) ---
+
+/**
+ * How many times a non-permanent failure must repeat before the delta stops offering the URL.
+ * The gov PDF server randomly aborts ~1 download per run (observed during the re-OCR work), so a
+ * single failure must never blacklist a real document — only a link that keeps failing is dead.
+ */
+export const DEAD_URL_THRESHOLD = 3;
+
+/** One row of the dead_urls skip set, as the delta exclusion needs to read it. */
+export interface DeadUrlRow { filename: string; fail_count: number; last_error: string | null }
+
+/**
+ * A 4xx means the site lists a link it no longer serves — the file is gone, and re-fetching it
+ * tonight, tomorrow, or next month yields the same 404. One failure is enough to stop counting it.
+ * Everything else (a truncated body, an aborted connection, a timeout) can be the flaky server and
+ * must earn its way onto the skip set by failing repeatedly instead.
+ */
+export function isPermanentFailure(errorMessage: string | null | undefined): boolean {
+  return /\bhttp\s*(?:404|410|403)\b/i.test(errorMessage ?? '');
+}
+
+/**
+ * The basename keys computeDelta must exclude: permanently-dead links, plus anything that has
+ * failed at least `threshold` times. Building this from the persisted dead_urls rows is what turns
+ * the nightly delta from a permanent phantom backlog back into "only genuinely new documents".
+ */
+export function deadFilenames(rows: DeadUrlRow[], threshold: number = DEAD_URL_THRESHOLD): Set<string> {
+  const out = new Set<string>();
+  for (const r of rows) {
+    if (isPermanentFailure(r.last_error) || r.fail_count >= threshold) out.add(r.filename.toLowerCase());
+  }
+  return out;
 }
 
 /** A section that lists nothing has moved or changed shape. Fail, never shrug. */

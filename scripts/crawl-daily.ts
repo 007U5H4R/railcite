@@ -22,7 +22,7 @@ import {
   SECTIONS, sectionUrl, extractPdfLinks, extractChildSections, selectSweepChildren,
   computeDelta, assertSectionProductive, assertDeltaSane, DriftError, type Discovered,
   isTrafficCommercial, basenameKey, TC_ROOT_ID, diffSectionTable, assertSectionTableCurrent,
-  EXCLUDED_SECTION_IDS,
+  EXCLUDED_SECTION_IDS, deadFilenames, type DeadUrlRow,
 } from '@/lib/ingest/discover';
 
 const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) RailCite-ingest';
@@ -47,6 +47,33 @@ export function passesDateFloor(issueDate: string | null, floor: string): boolea
   const f = Date.parse(floor);
   if (Number.isNaN(d) || Number.isNaN(f)) return true;
   return d >= f;
+}
+
+/**
+ * Remember a download that failed, so the next run's delta can exclude a link the site lists but
+ * no longer serves (see migration 008 + deadFilenames). Bookkeeping, not the crawl: a write error
+ * here must never fail the run — it just means one dead link is retried once more, which is safe.
+ */
+async function recordFailure(sb: ReturnType<typeof adminClient>, url: string, message: string): Promise<void> {
+  try {
+    const { data } = await sb.from('dead_urls').select('fail_count').eq('url', url).maybeSingle();
+    const prev = (data as { fail_count: number } | null)?.fail_count ?? 0;
+    await sb.from('dead_urls').upsert({
+      url, filename: basenameKey(url), fail_count: prev + 1,
+      last_error: message.slice(0, 300), last_failed_at: new Date().toISOString(),
+    }, { onConflict: 'url' });   // first_failed_at is omitted, so ON CONFLICT preserves it
+  } catch (e) {
+    console.error(`  (dead_urls record failed for ${url}: ${(e as Error).message})`);
+  }
+}
+
+/**
+ * A URL that downloaded fine is not dead — drop any stale skip-set row so a transient blip can
+ * never blacklist a real document for good. Fail-soft for the same reason as recordFailure.
+ */
+async function clearFailure(sb: ReturnType<typeof adminClient>, url: string): Promise<void> {
+  try { await sb.from('dead_urls').delete().eq('url', url); }
+  catch (e) { console.error(`  (dead_urls clear failed for ${url}: ${(e as Error).message})`); }
 }
 
 async function fetchPage(url: string): Promise<string> {
@@ -122,10 +149,15 @@ async function main() {
       if (rows.length < 1000) break;
     }
 
-    const delta = computeDelta(found, knownUrls, knownFilenames);
+    // Links the site lists but no longer serves (404s + repeatedly-failing files). Excluding them
+    // is what stops the delta from carrying a permanent phantom backlog past the flood guard.
+    const { data: deadRows } = await sb.from('dead_urls').select('filename,fail_count,last_error');
+    const dead = deadFilenames((deadRows ?? []) as DeadUrlRow[]);
+
+    const delta = computeDelta(found, knownUrls, knownFilenames, dead);
     assertDeltaSane(delta.length, MAX_NEW);
 
-    console.log(`pages=${pages} pdfs_seen=${found.length} new=${delta.length}`);
+    console.log(`pages=${pages} pdfs_seen=${found.length} new=${delta.length} dead_excluded=${dead.size}`);
     if (!apply) {
       console.log('DRY RUN — nothing ingested. Re-run with --apply.');
       await finish({ status: 'ok', sections_checked: SECTIONS.length, pdfs_seen: found.length, new_found: delta.length });
@@ -141,7 +173,8 @@ async function main() {
       };
       try {
         const res = await ingestOne(entry, tmp, sb);
-        if (res.status === 'skip') { failed++; continue; }
+        if (res.status === 'skip') { failed++; await recordFailure(sb, item.source_url, 'no extractable text'); continue; }
+        await clearFailure(sb, item.source_url);   // downloaded & extracted: not dead (recovered if it was)
         // Date floor (fail-open secondary net). NOTE: the daily path currently stores issue_date=null
         // (ingestOne does not parse a date from the PDF), so passesDateFloor(null) is always true and
         // this prunes nothing today — the URL + filename dedup above is the operative "only new" filter,
@@ -157,7 +190,9 @@ async function main() {
         ingested++;
       } catch (err) {
         failed++;
-        console.error(`  FAILED ${item.source_url}: ${(err as Error).message}`);
+        const message = (err as Error).message;
+        console.error(`  FAILED ${item.source_url}: ${message}`);
+        await recordFailure(sb, item.source_url, message);
       } finally {
         await rm(tmp, { force: true });
         await sleep(THROTTLE_MS);
