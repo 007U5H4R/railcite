@@ -1,8 +1,8 @@
 import { z } from 'zod';
-import Anthropic from '@anthropic-ai/sdk';
 import { getUserFromRequest } from '@/lib/auth';
 import { embedTexts } from '@/lib/embeddings';
 import { classifyQueryDomain } from '@/lib/classifyQueryDomain';
+import { LlmUnavailableError } from '@/lib/llm';
 import { matchChunks, corpusStats } from '@/lib/retrieval';
 import { synthesize } from '@/lib/synthesize';
 import { findCachedAnswer, storeCachedAnswer } from '@/lib/answerCache';
@@ -82,11 +82,11 @@ export async function POST(req: Request): Promise<Response> {
     return json(response);
   } catch (e) {
     console.error('query failed:', e);
-    // An error thrown BY the Anthropic API (exhausted credits, rate limit, overload, outage)
+    // An error thrown BY the LLM provider API (exhausted credits, rate limit, overload, outage)
     // means the ANSWERING SERVICE is unavailable — not that RailCite broke. Surface it as 503
     // with its own code so the client can show an honest "temporarily unavailable" state
     // instead of a raw server error; the details stay in the server log only.
-    if (e instanceof Anthropic.APIError) return json({ error: 'generation_unavailable' }, 503);
+    if (e instanceof LlmUnavailableError) return json({ error: 'generation_unavailable' }, 503);
     return json({ error: 'query_failed' }, 500);
   }
 }

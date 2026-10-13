@@ -1,5 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk';
-import { requireEnv } from './env';
+import { callTool, type ToolSpec } from './llm';
 
 // Query-time domain auto-detection (the "Auto" scope). match_chunks enforces documents.domain
 // as a HARD SQL filter, but that only helps if a domain is chosen. Users ask coaching questions
@@ -26,11 +26,11 @@ rules that governs it. Answer with the set_domain tool.
 
 Choose "unclear" unless the question clearly belongs to one domain.`;
 
-const TOOL = {
+const TOOL: ToolSpec = {
   name: 'set_domain',
   description: 'Record which domain of railway commercial rules governs the question.',
   input_schema: {
-    type: 'object' as const,
+    type: 'object',
     properties: { domain: { type: 'string', enum: ['goods', 'coaching', 'unclear'] } },
     required: ['domain'],
   },
@@ -48,17 +48,11 @@ export function resolveQueryDomain(toolInput: unknown): QueryDomain | null {
  */
 export async function classifyQueryDomain(query: string, client?: Anthropic): Promise<QueryDomain | null> {
   try {
-    const c = client ?? new Anthropic({ apiKey: requireEnv('ANTHROPIC_API_KEY') });
-    const msg = await c.messages.create({
+    const { input } = await callTool({ tier: 'fast', system: SYSTEM, tool: TOOL, user: query,
       // Cheapest capable model — this runs on every "Auto" query, concurrently with the
       // embedding call, so its latency is hidden behind retrieval prep.
-      model: 'claude-haiku-4-5-20251001', max_tokens: 64,
-      system: SYSTEM,
-      tools: [TOOL], tool_choice: { type: 'tool', name: 'set_domain' },
-      messages: [{ role: 'user', content: query }],
-    });
-    const tu = msg.content.find(b => b.type === 'tool_use' && b.name === 'set_domain');
-    return resolveQueryDomain(tu && tu.type === 'tool_use' ? tu.input : null);
+      maxTokens: 64, anthropic: client });
+    return resolveQueryDomain(input);
   } catch (e) {
     // Fail-open: classification is an optimisation, never a gate. A coaching query that fails to
     // classify simply searches all domains, exactly as it did before this feature existed.

@@ -1,7 +1,6 @@
-import Anthropic from '@anthropic-ai/sdk';
 import { z } from 'zod';
 import type { SynthesisResult } from './types';
-import { requireEnv } from './env';
+import { callTool, type ToolSpec } from './llm';
 
 export interface PromptSource { n: number; header: string; text: string }
 
@@ -33,11 +32,11 @@ const ToolInput = z.discriminatedUnion('status', [
   z.object({ status: z.literal('refused') }),
 ]);
 
-const TOOL = {
+const TOOL: ToolSpec = {
   name: 'record_conclusion',
   description: 'Record the cited conclusion (or refusal) for the case.',
   input_schema: {
-    type: 'object' as const,
+    type: 'object',
     properties: {
       status: { type: 'string', enum: ['answered', 'refused'] },
       blocks: { type: 'array', items: { type: 'object', properties: {
@@ -57,22 +56,15 @@ const TOOL = {
 // headroom; the model only emits what it needs, so normal answers cost no more.
 const MAX_TOKENS = 4096;
 
-async function recordConclusionOnce(client: Anthropic, caseText: string, sources: PromptSource[]) {
-  const msg = await client.messages.create({
-    // NOTE: claude-sonnet-5 (and the 4.7/4.8/5 family) removed sampling params —
-    // sending `temperature` returns 400 invalid_request_error. Do not re-add it.
-    model: 'claude-sonnet-5', max_tokens: MAX_TOKENS,
-    system: SYSTEM_PROMPT,
-    tools: [TOOL], tool_choice: { type: 'tool', name: 'record_conclusion' },
-    messages: [{ role: 'user', content: buildUserPrompt(caseText, sources) }],
-  });
+async function recordConclusionOnce(caseText: string, sources: PromptSource[]) {
+  const { input, truncated } = await callTool({ tier: 'smart', system: SYSTEM_PROMPT, tool: TOOL,
+    maxTokens: MAX_TOKENS, user: buildUserPrompt(caseText, sources) });
   // Truncation is THE recurring failure as the corpus grows (it already forced 2000→4096), and a
   // cut that lands after `blocks` but before `note` still parses — silently shipping an answer
   // with no justification note. Detect it explicitly so it retries and is visible in logs.
-  if (msg.stop_reason === 'max_tokens') throw new Error('synthesis truncated at max_tokens');
-  const tu = msg.content.find(b => b.type === 'tool_use' && b.name === 'record_conclusion');
-  if (!tu || tu.type !== 'tool_use') throw new Error('no record_conclusion tool call in response');
-  const parsed = ToolInput.parse(tu.input);   // throws (ZodError) on a truncated/malformed tool call
+  if (truncated) throw new Error('synthesis truncated at max_tokens');
+  if (input === undefined) throw new Error('no record_conclusion tool call in response');
+  const parsed = ToolInput.parse(input);   // throws (ZodError) on a truncated/malformed tool call
   if (parsed.status === 'answered' && !parsed.note) {
     // Not fatal (the answer itself is valid and cited), but the SYSTEM_PROMPT mandates a note on
     // every answered result — so this is a real signal, not a normal outcome. Never silent.
@@ -82,20 +74,19 @@ async function recordConclusionOnce(client: Anthropic, caseText: string, sources
 }
 
 export async function synthesize(caseText: string, sources: PromptSource[]): Promise<SynthesisResult> {
-  const client = new Anthropic({ apiKey: requireEnv('ANTHROPIC_API_KEY') });
   // Fail-safe: a truncated/malformed tool call is typically transient (observed live — the same
   // query failed then succeeded on manual retry). Retry ONCE before surfacing the error, so a
   // single bad generation doesn't fail the user's query. Bounded to 2 attempts — never a loop —
   // and we still only ever accept a well-formed tool result, so this never fabricates.
   let parsed;
   try {
-    parsed = await recordConclusionOnce(client, caseText, sources);
+    parsed = await recordConclusionOnce(caseText, sources);
   } catch (first) {
     // Log the FIRST error before retrying: swallowing it makes a truncation pattern
     // indistinguishable from a rate-limit or auth failure in production logs — which is exactly
     // how the previous max_tokens ceiling had to be diagnosed from scratch.
     console.warn('synthesize attempt 1 failed, retrying once:', first);
-    parsed = await recordConclusionOnce(client, caseText, sources);
+    parsed = await recordConclusionOnce(caseText, sources);
   }
   return parsed.status === 'refused'
     ? { status: 'refused' }

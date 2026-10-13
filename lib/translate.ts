@@ -1,6 +1,5 @@
-import Anthropic from '@anthropic-ai/sdk';
 import { z } from 'zod';
-import { requireEnv } from './env';
+import { callTool, type ToolSpec } from './llm';
 
 // Translation layer for the Hindi toggle. This NEVER sees or emits citations — it takes an
 // array of already-validated English prose strings and returns the same number of Hindi
@@ -23,11 +22,11 @@ Output via the record_translation tool only.`;
 
 const ToolInput = z.object({ items: z.array(z.string()) });
 
-const TOOL = {
+const TOOL: ToolSpec = {
   name: 'record_translation',
   description: 'Return the Hindi translations, one per input item, in order.',
   input_schema: {
-    type: 'object' as const,
+    type: 'object',
     properties: { items: { type: 'array', items: { type: 'string' } } },
     required: ['items'],
   },
@@ -35,28 +34,21 @@ const TOOL = {
 
 export async function translate(texts: string[]): Promise<string[]> {
   if (texts.length === 0) return [];   // no work — never spend a model call
-  const client = new Anthropic({ apiKey: requireEnv('ANTHROPIC_API_KEY') });
   const numbered = texts.map((t, i) => `[[${i + 1}]] ${t}`).join('\n\n');
-  const msg = await client.messages.create({
-    // claude-sonnet-5 family removed sampling params — sending temperature 400s. Do not add it.
+  const { input, truncated } = await callTool({ tier: 'smart', system: TRANSLATE_SYSTEM_PROMPT, tool: TOOL,
     // 8192, not 3000: the same content's ENGLISH synthesis already needs 4096 (see synthesize.ts —
     // raised after live truncation), and Devanagari tokenizes ~1.5–2× heavier, so a rich 8-source
     // answer + note truncated DETERMINISTICALLY at 3000 — the tool JSON was cut mid-array and the
     // toggle failed forever on exactly the biggest answers. Unused headroom costs nothing.
-    model: 'claude-sonnet-5', max_tokens: 8192,
-    system: TRANSLATE_SYSTEM_PROMPT,
-    tools: [TOOL], tool_choice: { type: 'tool', name: 'record_translation' },
-    messages: [{ role: 'user', content:
-      `Translate each of the following ${texts.length} items to Hindi. Return exactly ${texts.length} items in order.\n\n${numbered}` }],
-  });
+    maxTokens: 8192,
+    user: `Translate each of the following ${texts.length} items to Hindi. Return exactly ${texts.length} items in order.\n\n${numbered}` });
   // Fail LOUD on truncation rather than surfacing it as an opaque parse/count error — this is the
   // one failure mode that recurs as the corpus (and answer length) grows.
-  if (msg.stop_reason === 'max_tokens') {
+  if (truncated) {
     throw new Error(`translation truncated at max_tokens (${texts.length} items) — raise the ceiling`);
   }
-  const tu = msg.content.find(b => b.type === 'tool_use' && b.name === 'record_translation');
-  if (!tu || tu.type !== 'tool_use') throw new Error('no record_translation tool call in response');
-  const { items } = ToolInput.parse(tu.input);
+  if (input === undefined) throw new Error('no record_translation tool call in response');
+  const { items } = ToolInput.parse(input);
   if (items.length !== texts.length) {
     throw new Error(`translation count mismatch: asked ${texts.length}, got ${items.length}`);
   }
