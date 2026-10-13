@@ -11,6 +11,7 @@ import { classifyQueryDomain } from '@/lib/classifyQueryDomain';
 import { matchChunks } from '@/lib/retrieval';
 import { synthesize } from '@/lib/synthesize';
 import { getUserFromRequest } from '@/lib/auth';
+import { LlmUnavailableError } from '@/lib/llm';
 
 const req = (body: unknown) => new Request('http://x/api/query',
   { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
@@ -75,4 +76,18 @@ it('refuses when validator strips everything', async () => {
     blocks: [{ text: 'fab', citations: [42] }], note: [] });
   const j = await (await POST(req({ case_text: 'fabrication test case here' }))).json();
   expect(j.status).toBe('refused');
+});
+it('503 generation_unavailable when every LLM provider rejects the call (not a raw 500)', async () => {
+  // Regression (2026-10-13): a dead Anthropic key 401'd every query. The route must map the
+  // provider-agnostic LlmUnavailableError to 503 so the client shows "temporarily unavailable".
+  vi.mocked(matchChunks).mockResolvedValue([HIT(0.8)]);
+  vi.mocked(synthesize).mockRejectedValue(new LlmUnavailableError('gemini', 429, new Error('quota')));
+  const res = await POST(req({ case_text: 'provider outage test case' }));
+  expect(res.status).toBe(503);
+  expect(await res.json()).toEqual({ error: 'generation_unavailable' });
+});
+it('500 query_failed for a non-provider error (a real bug is not dressed up as an outage)', async () => {
+  vi.mocked(matchChunks).mockResolvedValue([HIT(0.8)]);
+  vi.mocked(synthesize).mockRejectedValue(new TypeError('boom'));
+  expect((await POST(req({ case_text: 'internal bug test case' }))).status).toBe(500);
 });
